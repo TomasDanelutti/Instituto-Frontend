@@ -1,0 +1,16 @@
+<span class="p-float-label">
+  <p-calendar
+          [(ngModel)]="fecha"
+          [minDate]="fechaMinima"
+          (onSelect)="emitirFecha($event)"
+          [maxDate]="fechaMaxima"
+          [monthNavigator]="true"
+          [yearNavigator]="true"
+          dateFormat="dd/mm/yy"
+          [locale]="es"
+          yearRange="1900:2030" [inputId]="label"
+          [disabled]="disabled"
+          [style]="{'width':'100%'}"
+          appendTo="body"></p-calendar>
+    <label [for]="label">{{label}}</label>
+</span>

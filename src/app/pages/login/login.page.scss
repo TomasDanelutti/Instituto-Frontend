@@ -1,0 +1,10 @@
+.vertical-align-content>* {
+  display: flex!important;
+  align-content: center!important;
+  align-items: center!important;
+  height: 95vh;
+}
+
+ion-card {
+  --background: white;
+}

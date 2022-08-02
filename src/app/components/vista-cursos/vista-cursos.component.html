@@ -1,0 +1,20 @@
+<p-dataView [value]="cursos" [paginator]="true" [rows]="4" filterBy="name" layout="grid">
+  <ng-template let-curso pTemplate="gridItem">
+    <div class="p-col-8 p-md-3">
+      <div class="product-grid-item card">
+        <div class="product-grid-item-content">
+          <img [src]="curso.imagen">
+          <div class="product-name"> {{curso.nombre}}</div>
+          <br>
+        </div>
+        <br>
+        <div class="product-grid-item-bottom">
+          <!--                    <span class="product-price">${{100}}</span>-->
+          <p-button *ngIf="home === false" icon="pi pi-window-maximize"></p-button>
+          <p-button *ngIf="insc" icon="pi pi-plus" (click)="inscribirse(curso)"></p-button>
+          <p-button pTooltip="Mas Informacion" *ngIf="home === true" icon="pi pi-plus" (click)="masInformacion()"></p-button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dataView>

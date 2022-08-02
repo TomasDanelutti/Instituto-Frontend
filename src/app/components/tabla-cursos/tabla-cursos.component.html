@@ -1,0 +1,32 @@
+<p-table [value]="cursos" [rows]="5" [paginator]="true" autoLayout="true">
+  <ng-template let-columns pTemplate="header">
+    <tr>
+      <th style="text-align: center">Foto</th>
+      <th style="text-align: center">nombre</th>
+      <th style="text-align: center">profesor</th>
+      <th style="text-align: center">turno</th>
+      <th style="text-align: center">Modificar</th>
+      <th style="text-align: center">Eliminar</th>
+    </tr>
+  </ng-template>
+  <ng-template let-curso let-i="rowIndex" pTemplate="body">
+    <tr>
+      <td>
+        <img width="50px" [src]="curso.imagen">
+      </td>
+      <td>{{ curso.nombre }}</td>
+      <td>{{ curso.profesor }}</td>
+      <td>{{ curso.turno }}</td>
+      <td>
+        <p-button color="primary" size="small" (click)="modificar(curso)">
+          <ion-icon slot="icon-only" name="create"></ion-icon>
+        </p-button>
+      </td>
+      <td>
+        <p-button color="primary" size="small" (click)="eliminar(curso)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </p-button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

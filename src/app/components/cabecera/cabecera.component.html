@@ -1,0 +1,12 @@
+<p-toolbar [style]="{'background-color':'#1262e0','border-color':'#ffffff','margin-bottom':'1em'}">
+  <div class="p-toolbar-group-left">
+    <div>
+      <app-menu *ngIf="usuario">Menu</app-menu>
+    </div>
+  </div>
+  <div class="p-toolbar-group-right">
+    <a *ngIf="usuario" class="saraza" (click)="navegarHome()">
+      {{usuario?.rol.nombre}} - {{usuario?.nombre}} {{usuario?.apellido}}
+    </a>
+  </div>
+</p-toolbar>

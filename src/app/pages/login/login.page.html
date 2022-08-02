@@ -1,0 +1,40 @@
+<ion-content>
+    <div class="p-grid p-jc-center" style="margin-top: 6em;">
+        <div class="p-col-4">
+            <p-card header="Iniciar sesión">
+
+                <form [formGroup]="loginForm">
+
+                    <div class="p-grid">
+                        <div class="p-col">
+                            <input pInputText placeholder="Dni *" id="email" type="number" formControlName="dni"[style]="{'width':'100%'}"/>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="p-grid">
+                        <div class="p-col-10">
+                            <input pInputText placeholder="Contraseña *" id="password" [type]="pwdInputType" formControlName="clave" [style]="{'width':'100%'}" (keyup.enter)="login()">
+                        </div>
+                        <div class="p-col-1">
+                            <p-toggleButton onIcon="pi pi-eye" offIcon="pi pi-eye-slash" (onChange)="pwdVisibility()"></p-toggleButton>
+                        </div>
+                    </div>
+
+                    <div class="p-grid">
+                        <div class="p-col">
+                            <ion-button color="primary" (click)="login()">
+                                Ingresar
+                                <ion-icon class="padding-left-icono" name="send" slot="end"></ion-icon>
+                            </ion-button>
+                        </div>
+                        <div style="margin-top: 5px">
+                            <ion-button (click)="login()" color="light">
+                                Registrarse
+                            </ion-button>
+                        </div>
+                    </div>
+                </form>
+            </p-card>
+        </div>
+    </div>
+</ion-content>

@@ -1,0 +1,4 @@
+<button #btn class="colorBordo" type="button" pButton icon="pi pi-bars"
+        label="Menu" (click)="menu.toggle($event)"></button>
+<p-slideMenu #menu [model]="rutasMenu" [popup]="true" [viewportHeight]="225"
+             backLabel="Volver" easing="ease-in"></p-slideMenu>
