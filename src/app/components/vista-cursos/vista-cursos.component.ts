@@ -1,12 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Curso} from '../../model/Curso';
-import {SetCursosInscriptos, SetCursosNoInscriptos, UsuarioLogueadoState} from '../../state/usuarioLogueado.state';
+import {SetCursosInscriptos, SetCursosNoInscriptos, UsuarioLogueadoState} from '../../state/states/usuarioLogueado.state';
 import {MessagesService} from '../../services/messages.service';
 import {Select, Store} from '@ngxs/store';
 import {InscripcionService} from '../../services/inscripcion.service';
 import {Observable} from 'rxjs';
 import {Usuario} from '../../model/Usuario';
-import {Inscripcion} from '../../model/Inscripcion';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 
@@ -16,7 +15,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./vista-cursos.component.scss'],
 })
 export class VistaCursosComponent implements OnInit {
-  @Select(UsuarioLogueadoState.getUsuario) usuarioLogueado: Observable<Usuario>;
+  @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioLogueado: Observable<Usuario>;
   @Input() cursos: Curso[];
   @Input() insc = true;
   @Input() home = false;

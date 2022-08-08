@@ -1,15 +1,14 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Curso} from '../../model/Curso';
-import {Programa} from '../../model/Programa';
 import {Router} from '@angular/router';
 import {MessagesService} from '../../services/messages.service';
 import {CursosService} from '../../services/cursos.service';
 import {InscripcionService} from '../../services/inscripcion.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {Select, Store} from '@ngxs/store';
 import {Observable} from 'rxjs';
 import {Usuario} from '../../model/Usuario';
-import {SetCursosInscriptos, SetCursosNoInscriptos, UsuarioLogueadoState} from '../../state/usuarioLogueado.state';
+import {SetCursosInscriptos, SetCursosNoInscriptos, UsuarioLogueadoState} from '../../state/states/usuarioLogueado.state';
 
 @Component({
   selector: 'app-tabla-cursos',
@@ -17,7 +16,7 @@ import {SetCursosInscriptos, SetCursosNoInscriptos, UsuarioLogueadoState} from '
   styleUrls: ['./tabla-cursos.component.scss'],
 })
 export class TablaCursosComponent implements OnInit {
-  @Select(UsuarioLogueadoState.getUsuario) usuarioLogueado: Observable<Usuario>;
+  @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioLogueado: Observable<Usuario>;
   @Input() cursos: Curso[];
   inscripcion: FormGroup;
   usuario: Usuario;

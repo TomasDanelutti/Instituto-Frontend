@@ -3,10 +3,8 @@ import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MessagesService} from '../../services/messages.service';
 import {LoginService} from '../../services/login.service';
-import {Subject} from 'rxjs';
 import {Store} from '@ngxs/store';
-import {ResetUsuario, SetCursosInscriptos, SetCursosNoInscriptos, SetUsuarioAction} from '../../state/usuarioLogueado.state';
-import {Programa} from '../../model/Programa';
+import {SetCursosInscriptos, SetCursosNoInscriptos, SetUsuarioLogueadoAction} from '../../state/states/usuarioLogueado.state';
 
 @Component({
   selector: 'app-login',
@@ -43,7 +41,7 @@ export class LoginPage implements OnInit {
       this.loginService.login(this.loginForm.controls.dni.value, this.loginForm.controls.clave.value)
           .subscribe(usuario => {
             this.router.navigate(['/home'], {replaceUrl: true});
-            this.store.dispatch(new SetUsuarioAction(usuario));
+            this.store.dispatch(new SetUsuarioLogueadoAction(usuario));
             this.store.dispatch(new SetCursosInscriptos(usuario.idUsuario));
             this.store.dispatch(new SetCursosNoInscriptos(usuario.idUsuario));
           }, error => this.messages.showAlert('Error', 'usuario o clave incorrecto', 3));

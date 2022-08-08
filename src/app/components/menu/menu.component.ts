@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {MenuItem} from 'primeng/api';
 import {Select, Store} from '@ngxs/store';
-import {ResetUsuario, SetUsuarioAction, UsuarioLogueadoState} from '../../state/usuarioLogueado.state';
+import {ResetUsuarioLogueado, UsuarioLogueadoState} from '../../state/states/usuarioLogueado.state';
 import {Observable} from 'rxjs';
 import {Rol} from '../../model/rol';
 
@@ -28,7 +28,7 @@ export class MenuComponent implements OnInit {
                     {label: 'Mi perfil', icon: 'pi pi-book', routerLink: '/mi-perfil'},
                     {label: 'Cursos', icon: 'pi pi-book', routerLink: '/cursos'},
                     {label: 'Salir', icon: 'pi pi-sign-out', command: () => {
-                            this.store.dispatch(new ResetUsuario());
+                            this.store.dispatch(new ResetUsuarioLogueado());
                             this.router.navigate(['/login'], {replaceUrl: true});
                         } },
                 ];
@@ -66,7 +66,7 @@ export class MenuComponent implements OnInit {
                             }]
                     },
                     {label: 'Salir', icon: 'pi pi-sign-out', command: () => {
-                            this.store.dispatch(new ResetUsuario());
+                            this.store.dispatch(new ResetUsuarioLogueado());
                             this.router.navigate(['/login'], {replaceUrl: true});
                         } },
                 ];
@@ -105,7 +105,7 @@ export class MenuComponent implements OnInit {
                             }]
                     },
                     {label: 'Salir', icon: 'pi pi-sign-out', command: () => {
-                            this.store.dispatch(new ResetUsuario());
+                            this.store.dispatch(new ResetUsuarioLogueado());
                             this.router.navigate(['/login'], {replaceUrl: true});
                         } },
                 ];
