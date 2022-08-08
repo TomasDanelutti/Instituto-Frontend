@@ -13,7 +13,7 @@ import {SetCursosInscriptos, SetCursosNoInscriptos, SetUsuarioLogueadoAction} fr
 })
 export class LoginPage implements OnInit {
   pwdInputType: string;
-  hide = false;
+  hide = true;
   loginForm: FormGroup;
   constructor(
       private router: Router,
@@ -28,6 +28,10 @@ export class LoginPage implements OnInit {
       dni: ['', Validators.required],
       clave: ['', Validators.required],
     });
+  }
+
+  ionViewWillEnter() {
+    this.pwdInputType = this.hide ? 'password' : 'text';
   }
 
 
