@@ -1,8 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {EnumService} from '../../services/enum.service';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {TurnoService} from '../../services/turno.service';
-import {Turno} from '../../model/turno';
 
 @Component({
   selector: 'app-turno',
