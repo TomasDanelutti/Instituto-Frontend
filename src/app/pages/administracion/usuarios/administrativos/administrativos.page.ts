@@ -18,7 +18,6 @@ export class AdministrativosPage implements OnInit {
 
   ionViewWillEnter() {
     this.usuarioService.getAdministrativos().subscribe(value => this.administrativos = value);
-
   }
 
   crearAdministrativo() {
