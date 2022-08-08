@@ -3,6 +3,8 @@ import {Programa} from '../../../model/Programa';
 import {ProgramaService} from '../../../services/programa.service';
 import {Router} from '@angular/router';
 import {MessagesService} from '../../../services/messages.service';
+import {Store} from "@ngxs/store";
+import {SetProgramaAction} from "../../../state/states/programa.state";
 
 @Component({
   selector: 'app-programas',
@@ -14,7 +16,8 @@ export class ProgramasPage implements OnInit {
   constructor(
       private programaService: ProgramaService,
       private router: Router,
-      private messagesService: MessagesService) { }
+      private messagesService: MessagesService,
+      private store: Store) { }
 
   ngOnInit() {
     this.programaService.getProgramas().subscribe(value => this.programas = value);
@@ -25,7 +28,7 @@ export class ProgramasPage implements OnInit {
   }
 
   modificar(programa: Programa) {
-    // this.storage.set('programa', programa);
+    this.store.dispatch(new SetProgramaAction(programa));
     this.router.navigate(['administrar/programas/crear-modificar-programa'], { replaceUrl: true });
   }
 
