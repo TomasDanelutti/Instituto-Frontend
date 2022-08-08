@@ -49,7 +49,6 @@ export class CrearModificarCursoPage implements OnInit {
     });
   }
 
-
   volver() {
     this.router.navigate(['/administrar/cursos'], {replaceUrl: true});
   }
