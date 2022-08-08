@@ -5,6 +5,7 @@ import {Injectable} from '@angular/core';
 import {Curso} from '../model/Curso';
 import {Reseteable} from './Reseteable';
 import {Rol} from '../model/rol';
+import {tap} from "rxjs/operators";
 
 export class SetUsuarioAction {
     static readonly type = '[Usuario] Definir usuario';
@@ -86,17 +87,16 @@ export class UsuarioLogueadoState {
 
     @Action(SetCursosInscriptos)
     setCursosInscriptos(ctx: StateContext<UsuarioLogueadoModel>, action: SetCursosInscriptos) {
-        this.cursosService.getCursoInscriptosByUsuario(action.idUsuario).subscribe(value => {
-            console.log(value);
+        return this.cursosService.getCursoInscriptosByUsuario(action.idUsuario).pipe(tap(value => {
             ctx.patchState({ cursosInscriptos: value });
-        });
+        }))
     }
 
     @Action(SetCursosNoInscriptos)
     setCursosNpInscriptos(ctx: StateContext<UsuarioLogueadoModel>, action: SetCursosInscriptos) {
-        this.cursosService.getCursoNoInscriptosByUsuario(action.idUsuario).subscribe(value => {
+        return this.cursosService.getCursoNoInscriptosByUsuario(action.idUsuario).pipe(tap(value => {
             ctx.patchState({ cursosNoInscriptos: value });
-        });
+        }))
     }
 
     @Action(ResetUsuario)
