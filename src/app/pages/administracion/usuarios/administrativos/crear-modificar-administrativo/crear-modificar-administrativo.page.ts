@@ -4,6 +4,9 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Usuario} from '../../../../../model/Usuario';
 import {MessagesService} from '../../../../../services/messages.service';
 import {UsuarioService} from '../../../../../services/usuario.service';
+import {Select} from "@ngxs/store";
+import {UsuarioState} from "../../../../../state/states/usuario.state";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-crear-modificar-administrativo',
@@ -11,8 +14,9 @@ import {UsuarioService} from '../../../../../services/usuario.service';
   styleUrls: ['./crear-modificar-administrativo.page.scss'],
 })
 export class CrearModificarAdministrativoPage implements OnInit {
+  @Select(UsuarioState.getUsuario) usuarioState: Observable<Usuario>
   formulario: FormGroup;
-  administrativo: Usuario;
+  cardHeader: string;
 
   constructor(
       private router: Router,
@@ -22,6 +26,7 @@ export class CrearModificarAdministrativoPage implements OnInit {
 
   ngOnInit() {
     this.formulario = this.formBuilder.group({
+      idUsuario: [],
       dni: [],
       fechaNacimiento: [],
       nombre: [],
@@ -34,13 +39,15 @@ export class CrearModificarAdministrativoPage implements OnInit {
       email: [],
       repetirEmail: [],
     });
-  }
-
-  async ionViewWillEnter() {
-    // this.administrativo = (await this.storage.get('administrativo')) || new Usuario() && this.formulario.reset();
-    if (this.administrativo) {
-      this.formulario.patchValue(this.administrativo);
-    }
+    this.usuarioState.subscribe(usuario => {
+      if (usuario) {
+        this.formulario.patchValue(usuario);
+      }
+      else {
+        this.formulario.reset();
+      }
+      this.cardHeader = this.formulario.value.idUsuario ? 'Modificar administrativo' : 'Crear administrativo';
+    });
   }
 
   volver() {
@@ -48,10 +55,10 @@ export class CrearModificarAdministrativoPage implements OnInit {
   }
 
   guardarAdministrativo() {
-    this.administrativo = this.formulario.value;
     if (this.formulario.valid) {
-      this.usuarioService.guardarAdministrativo(this.administrativo).subscribe(rta => {
-        this.messagesService.showMessage('Exito', 'Administrativo guardado correctamente', 5000);
+      this.usuarioService.guardarAdministrativo(this.formulario.value).subscribe(rta => {
+        const estado: string = this.formulario.value.idUsuario ? 'modificado' : 'creado';
+        this.messagesService.showMessage('Éxito', `Administrativo ${this.formulario.value.nombre} ${estado}`, 5000);
         this.router.navigate(['administrar/administrativos'], {replaceUrl: true});
       }, error => {
         this.messagesService.showMessage('Atención', 'No se pudo guardar el Administrativo', 5000);
