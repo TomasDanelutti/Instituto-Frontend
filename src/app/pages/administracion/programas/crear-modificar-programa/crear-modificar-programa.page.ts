@@ -4,6 +4,11 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProgramaService} from '../../../../services/programa.service';
 import {Programa} from '../../../../model/Programa';
 import {MessagesService} from '../../../../services/messages.service';
+import {Select, Store} from "@ngxs/store";
+import {CursoState} from "../../../../state/states/curso.state";
+import {Observable} from "rxjs";
+import {Curso} from "../../../../model/Curso";
+import {ProgramaState, ResetPrograma} from "../../../../state/states/programa.state";
 
 @Component({
   selector: 'app-crear-modificar-programa',
@@ -11,14 +16,16 @@ import {MessagesService} from '../../../../services/messages.service';
   styleUrls: ['./crear-modificar-programa.page.scss'],
 })
 export class CrearModificarProgramaPage implements OnInit {
+  @Select(ProgramaState.getCurso) programaState: Observable<Programa>;
   formulario: FormGroup;
-  programa: Programa;
-    titulo: string;
+  cardHeader: string;
+
   constructor(
       private router: Router,
       private formBuilder: FormBuilder,
       private porgramaService: ProgramaService,
-      private messagesService: MessagesService) { }
+      private messagesService: MessagesService,
+      private store: Store) { }
 
   ngOnInit() {
     this.formulario = this.formBuilder.group({
@@ -26,13 +33,15 @@ export class CrearModificarProgramaPage implements OnInit {
       nombre: [Validators.required],
       descripcion: [Validators.required],
     });
-  }
-
- async ionViewWillEnter() {
-    // this.programa = (await this.storage.get('programa')) || new Programa() && this.formulario.reset();
-    if (this.programa) {
-        this.formulario.patchValue(this.programa);
-    }
+      this.programaState.subscribe(programa => {
+          if (programa) {
+              this.formulario.patchValue(programa);
+          }
+          else {
+              this.formulario.reset();
+          }
+          this.cardHeader = this.formulario.value.idCurso ? 'Modificar programa' : 'Crear programa';
+      });
   }
 
     volver() {
@@ -42,7 +51,8 @@ export class CrearModificarProgramaPage implements OnInit {
   guardarPrograma() {
       if (this.formulario.valid) {
           this.porgramaService.guardarPrograma(this.formulario.value).subscribe(rta => {
-              this.messagesService.showMessage('Exito', 'Programa guardado correctamente', 5000);
+              const estado: string = this.formulario.value.idPrograma ? 'modificado' : 'creado';
+              this.messagesService.showMessage('Éxito', `Programa ${this.formulario.value.nombre} ${estado}`, 5000);
               this.router.navigate(['/administrar/programas'], {replaceUrl: true});
           }, error => {
               this.messagesService.showMessage('Atención', 'No se pudo guardar el programa', 5000);
@@ -54,6 +64,6 @@ export class CrearModificarProgramaPage implements OnInit {
 
     ionViewDidLeave() {
         this.formulario.reset();
-        // this.storage.remove('programa');
+        this.store.dispatch(new ResetPrograma());
     }
 }
