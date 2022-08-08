@@ -9,6 +9,7 @@ import {Select, Store} from '@ngxs/store';
 import {Observable} from 'rxjs';
 import {Usuario} from '../../model/Usuario';
 import {SetCursosInscriptos, SetCursosNoInscriptos, UsuarioLogueadoState} from '../../state/states/usuarioLogueado.state';
+import {SetCursoAction} from "../../state/states/curso.state";
 
 @Component({
   selector: 'app-tabla-cursos',
@@ -52,7 +53,7 @@ export class TablaCursosComponent implements OnInit {
   }
 
   modificar(curso: Curso) {
-    // this.storage.set('curso', curso);
+    this.store.dispatch(new SetCursoAction(curso));
     this.router.navigate(['administrar/cursos/crear-modificar-curso'], { replaceUrl: true });
   }
 
