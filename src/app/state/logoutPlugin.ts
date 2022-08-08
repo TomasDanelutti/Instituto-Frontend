@@ -1,8 +1,7 @@
 import {Injectable, Injector} from '@angular/core';
 import {getActionTypeFromInstance, NgxsNextPluginFn, NgxsPlugin, Store} from '@ngxs/store';
 import {accionesReseteables} from './Reseteable';
-import {ResetUsuario} from './usuarioLogueado.state';
-
+import {ResetUsuarioLogueado} from "./states/usuarioLogueado.state";
 
 @Injectable()
 export class LogoutPlugin implements NgxsPlugin {
@@ -13,7 +12,7 @@ export class LogoutPlugin implements NgxsPlugin {
     handle(state: any, action: any, next: NgxsNextPluginFn): any {
         const store = this.injector.get<Store>(Store);
 
-        if (getActionTypeFromInstance(action) === ResetUsuario.type) {
+        if (getActionTypeFromInstance(action) === ResetUsuarioLogueado.type) {
             store.dispatch(accionesReseteables);
         }
 

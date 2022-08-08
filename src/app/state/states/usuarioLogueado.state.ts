@@ -1,36 +1,36 @@
 import {Action, Selector, StateContext, State} from '@ngxs/store';
-import {Usuario} from '../model/Usuario';
-import {CursosService} from '../services/cursos.service';
+import {Usuario} from '../../model/Usuario';
+import {CursosService} from '../../services/cursos.service';
 import {Injectable} from '@angular/core';
-import {Curso} from '../model/Curso';
-import {Reseteable} from './Reseteable';
-import {Rol} from '../model/rol';
+import {Curso} from '../../model/Curso';
+import {Reseteable} from '../Reseteable';
+import {Rol} from '../../model/rol';
 import {tap} from "rxjs/operators";
 
-export class SetUsuarioAction {
-    static readonly type = '[Usuario] Definir usuario';
+export class SetUsuarioLogueadoAction {
+    static readonly type = '[UsuarioLogueado] Definir usuario';
 
     constructor(public usuario: Usuario) {
     }
 }
 
 export class SetCursosInscriptos {
-    static readonly type = '[Usuario] buscar cursos del usuario';
+    static readonly type = '[UsuarioLogueado] buscar cursos del usuario';
 
     constructor(public idUsuario: number) {
     }
 }
 
 export class SetCursosNoInscriptos {
-    static readonly type = '[Usuario] buscar cursos a los cual el usuario no esta inscripto';
+    static readonly type = '[UsuarioLogueado] buscar cursos a los cual el usuario no esta inscripto';
 
     constructor(public idUsuario: number) {
     }
 }
 
 @Reseteable
-export class ResetUsuario {
-    static readonly type = '[Usuario] Resetear usuario';
+export class ResetUsuarioLogueado {
+    static readonly type = '[UsuarioLogueado] Resetear usuario';
 
     constructor() {
     }
@@ -49,7 +49,7 @@ const usuarioLogueadoStateDefault: UsuarioLogueadoModel = {
 };
 
 @State<UsuarioLogueadoModel>({
-    name: 'Usuario',
+    name: 'UsuarioLogueado',
     defaults: usuarioLogueadoStateDefault
 })
 
@@ -61,7 +61,7 @@ export class UsuarioLogueadoState {
 
 
     @Selector()
-    static getUsuario(state: UsuarioLogueadoModel): Usuario {
+    static getUsuarioLogueado(state: UsuarioLogueadoModel): Usuario {
         return state.usuario;
     }
 
@@ -80,8 +80,8 @@ export class UsuarioLogueadoState {
         return state.usuario.rol;
     }
 
-    @Action(SetUsuarioAction)
-    setUsuario(ctx: StateContext<UsuarioLogueadoModel>, action: SetUsuarioAction) {
+    @Action(SetUsuarioLogueadoAction)
+    setUsuarioLogueado(ctx: StateContext<UsuarioLogueadoModel>, action: SetUsuarioLogueadoAction) {
         ctx.patchState({ usuario: action.usuario });
     }
 
@@ -99,8 +99,8 @@ export class UsuarioLogueadoState {
         }))
     }
 
-    @Action(ResetUsuario)
-    resetUsuario(ctx: StateContext<UsuarioLogueadoModel>, action: SetUsuarioAction) {
+    @Action(ResetUsuarioLogueado)
+    resetUsuarioLogueado(ctx: StateContext<UsuarioLogueadoModel>, action: ResetUsuarioLogueado) {
         ctx.setState(usuarioLogueadoStateDefault);
     }
 
