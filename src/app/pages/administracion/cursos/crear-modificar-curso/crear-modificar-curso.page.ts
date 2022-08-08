@@ -5,6 +5,9 @@ import {CursosService} from '../../../../services/cursos.service';
 import {MessagesService} from '../../../../services/messages.service';
 import {Curso} from '../../../../model/Curso';
 import {ImagenService} from '../../../../services/imagen.service';
+import {Select, Store} from "@ngxs/store";
+import {CursoState, ResetCurso} from "../../../../state/states/curso.state";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-crear-modificar-curso',
@@ -12,15 +15,17 @@ import {ImagenService} from '../../../../services/imagen.service';
   styleUrls: ['./crear-modificar-curso.page.scss'],
 })
 export class CrearModificarCursoPage implements OnInit {
+  @Select(CursoState.getCurso) cursoState: Observable<Curso>;
   archivos: any = [];
   formulario: FormGroup;
-  curso: Curso;
+  cardHeader: string;
   constructor(
       private router: Router,
       private formBuilder: FormBuilder,
       private cursoService: CursosService,
       private messagesService: MessagesService,
-      private imagenService: ImagenService) { }
+      private imagenService: ImagenService,
+      private store: Store) { }
 
   ngOnInit() {
     this.formulario = this.formBuilder.group({
@@ -33,24 +38,26 @@ export class CrearModificarCursoPage implements OnInit {
       profesor: [Validators.required],
       imagen: []
     });
+    this.cursoState.subscribe(curso => {
+      if (curso) {
+        this.formulario.patchValue(curso);
+      }
+      else {
+        this.formulario.reset();
+      }
+      this.cardHeader = this.formulario.value.idCurso ? 'Modificar curso' : 'Crear curso';
+    });
   }
 
-  async ionViewWillEnter() {
-    // this.curso = (await this.storage.get('curso')) || new Curso() && this.formulario.reset();
-    if (this.curso) {
-      this.formulario.patchValue(this.curso);
-    }
-  }
 
   volver() {
     this.router.navigate(['/administrar/cursos'], {replaceUrl: true});
-    console.log(this.formulario.value.turno.value)
   }
   guardarCurso() {
-    this.curso = this.formulario.value;
     if (this.formulario.valid) {
       this.cursoService.guardarCurso(this.formulario.value).subscribe(rta => {
-        this.messagesService.showMessage('Exito', 'Curso guardado correctamente', 5000);
+        const estado: string = this.formulario.value.idCurso ? 'modificado' : 'creado';
+        this.messagesService.showMessage('Éxito', `Curso ${this.formulario.value.nombre} ${estado}`, 5000);
         this.router.navigate(['/administrar/cursos'], {replaceUrl: true});
       }, error => {
         this.messagesService.showMessage('Atención', 'No se pudo guardar el curso', 5000);
@@ -62,7 +69,7 @@ export class CrearModificarCursoPage implements OnInit {
 
   ionViewDidLeave() {
     this.formulario.reset();
-    // this.storage.remove('curso');
+    this.store.dispatch(new ResetCurso());
   }
 
   capturarFoto($event): any {
