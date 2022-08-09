@@ -8,6 +8,12 @@ import {ImagenService} from '../../../../services/imagen.service';
 import {Select, Store} from "@ngxs/store";
 import {CursoState, ResetCurso} from "../../../../state/states/curso.state";
 import {Observable} from "rxjs";
+import {
+  SetCursosInscriptos,
+  SetCursosNoInscriptos,
+  UsuarioLogueadoState
+} from "../../../../state/states/usuarioLogueado.state";
+import {Usuario} from "../../../../model/Usuario";
 
 @Component({
   selector: 'app-crear-modificar-curso',
@@ -15,10 +21,12 @@ import {Observable} from "rxjs";
   styleUrls: ['./crear-modificar-curso.page.scss'],
 })
 export class CrearModificarCursoPage implements OnInit {
+  @Select(UsuarioLogueadoState) usuarioLogueadoState: Observable<Usuario>;
   @Select(CursoState.getCurso) cursoState: Observable<Curso>;
   archivos: any = [];
   formulario: FormGroup;
   cardHeader: string;
+  usuario: Usuario;
   constructor(
       private router: Router,
       private formBuilder: FormBuilder,
@@ -38,6 +46,7 @@ export class CrearModificarCursoPage implements OnInit {
       profesor: [Validators.required],
       imagen: []
     });
+    this.usuarioLogueadoState.subscribe(value => this.usuario = value);
     this.cursoState.subscribe(curso => {
       if (curso) {
         this.formulario.patchValue(curso);
@@ -57,6 +66,8 @@ export class CrearModificarCursoPage implements OnInit {
       this.cursoService.guardarCurso(this.formulario.value).subscribe(rta => {
         const estado: string = this.formulario.value.idCurso ? 'modificado' : 'creado';
         this.messagesService.showMessage('Éxito', `Curso ${this.formulario.value.nombre} ${estado}`, 5000);
+        this.store.dispatch(new SetCursosInscriptos(this.usuario.idUsuario));
+        this.store.dispatch(new SetCursosNoInscriptos(this.usuario.idUsuario));
         this.router.navigate(['/administrar/cursos'], {replaceUrl: true});
       }, error => {
         this.messagesService.showMessage('Atención', 'No se pudo guardar el curso', 5000);
