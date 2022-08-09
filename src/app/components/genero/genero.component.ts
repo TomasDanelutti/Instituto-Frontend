@@ -23,7 +23,7 @@ export class GeneroComponent implements OnInit, ControlValueAccessor{
   }
 
 
-  onChange = (area) => {
+  onChange = (genero) => {
   }
   onTouched = () => {
   }
