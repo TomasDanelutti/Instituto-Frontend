@@ -20,6 +20,10 @@ export class ProgramasPage implements OnInit {
       private store: Store) { }
 
   ngOnInit() {
+    this.buscarProgramas();
+  }
+
+  buscarProgramas() {
     this.programaService.getProgramas().subscribe(value => this.programas = value);
   }
 
@@ -36,6 +40,7 @@ export class ProgramasPage implements OnInit {
     this.messagesService.showAlert('Atención', `¿Desea eliminar el programa  ${programa.nombre}?`, () => {
       this.programaService.eliminarPrograma(programa).subscribe(value => {
           this.messagesService.showMessage('Éxito', 'Programa eliminado con exito', 5000);
+          this.buscarProgramas();
       }, error => {
         this.messagesService.showMessage('Atención', 'No se pudo eliminar el programa', 5000);
       });
