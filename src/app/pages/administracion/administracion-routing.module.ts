@@ -24,6 +24,10 @@ const routes: Routes = [
     path: '',
     component: AdministracionPage
   },
+  {
+    path: 'profesores',
+    loadChildren: () => import('./profesores/profesores.module').then( m => m.ProfesoresPageModule)
+  },
 
 ];
 
