@@ -24,6 +24,9 @@ export class CursosService {
     return this.httpClient.get<Curso[]>('/curso/findNoInscriptos/' + idUsuario);
   }
 
+  getCursoByNombre(nombre: string): Observable<Curso[]> {
+    return this.httpClient.get<Curso[]>('/curso/findByNombre/' + nombre);
+  }
 
   guardarCurso(curso: Curso): Observable<Respuesta<string>> {
     return this.httpClient.post<Respuesta<string>>('/curso/guardar', curso);
