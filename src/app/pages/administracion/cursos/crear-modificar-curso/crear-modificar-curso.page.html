@@ -46,7 +46,11 @@
             <ion-row>
 
                 <ion-col size-lg="12" size-md="12" size-sm="12" size-xs="12" style="margin-top: 15px">
-                    <input (change)="capturarFoto($event)" type="file" [style]="{'minWidth':'50%', 'width': '50%'}">
+                    <ion-button size="small" (click)="clickBtn()">
+                        <label>Subir Imagen</label>
+                        <ion-icon name="cloud-upload-outline"></ion-icon>
+                        <input #fileInput hidden type="file" (change)="capturarFoto($event)">
+                    </ion-button>
                 </ion-col>
             </ion-row>
           </form>

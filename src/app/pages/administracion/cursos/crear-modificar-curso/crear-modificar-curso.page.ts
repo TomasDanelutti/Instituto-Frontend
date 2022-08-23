@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {CursosService} from '../../../../services/cursos.service';
@@ -21,6 +21,8 @@ import {Usuario} from "../../../../model/Usuario";
   styleUrls: ['./crear-modificar-curso.page.scss'],
 })
 export class CrearModificarCursoPage implements OnInit {
+  @ViewChild('fileInput')
+  fileInput: ElementRef;
   @Select(UsuarioLogueadoState) usuarioLogueadoState: Observable<Usuario>;
   @Select(CursoState.getCurso) cursoState: Observable<Curso>;
   archivos: any = [];
@@ -75,6 +77,12 @@ export class CrearModificarCursoPage implements OnInit {
     } else {
       this.messagesService.showMessage('Atención', 'formulario invalido', 5000);
     }
+  }
+
+  clickBtn() {
+    // Efectúo programáticamente la acción de darle click a un elemento input con type="file"
+    // y así se abre una ventana para subir archivos
+    this.fileInput.nativeElement.click();
   }
 
   ionViewDidLeave() {

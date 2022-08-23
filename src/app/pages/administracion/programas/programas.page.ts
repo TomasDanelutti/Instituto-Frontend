@@ -13,6 +13,7 @@ import {SetProgramaAction} from "../../../state/states/programa.state";
 })
 export class ProgramasPage implements OnInit {
   programas: Programa[] = [];
+    buscador: any;
   constructor(
       private programaService: ProgramaService,
       private router: Router,
@@ -45,5 +46,14 @@ export class ProgramasPage implements OnInit {
         this.messagesService.showMessage('Atención', 'No se pudo eliminar el programa', 5000);
       });
     });
+  }
+
+  buscar(buscador: any) {
+    if (buscador) {
+      this.programaService.getProgramaByNombre(buscador).subscribe(value => this.programas = value);
+    }
+    else {
+      this.programaService.getProgramas().subscribe(value => this.programas = value);
+    }
   }
 }
