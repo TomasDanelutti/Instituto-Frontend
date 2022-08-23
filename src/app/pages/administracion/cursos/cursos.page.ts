@@ -11,6 +11,7 @@ import {Router} from '@angular/router';
 })
 export class CursosPage implements OnInit {
   cursos: Curso[] = [];
+  buscador: any;
   constructor(private cursoService: CursosService,
               private inscripcionService: InscripcionService,
               private router: Router) {}
@@ -24,5 +25,14 @@ export class CursosPage implements OnInit {
 
   crearCurso() {
     this.router.navigate(['administrar/cursos/crear-modificar-curso'], {replaceUrl: true});
+  }
+
+  buscar(buscador: any) {
+    if (buscador) {
+      this.cursoService.getCursoByNombre(buscador).subscribe(value => this.cursos = value);
+    }
+    else {
+      this.cursoService.getCursos().subscribe(value => this.cursos = value);
+    }
   }
 }

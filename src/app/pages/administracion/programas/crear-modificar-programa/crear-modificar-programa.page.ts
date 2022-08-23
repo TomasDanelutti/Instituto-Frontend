@@ -5,9 +5,7 @@ import {ProgramaService} from '../../../../services/programa.service';
 import {Programa} from '../../../../model/Programa';
 import {MessagesService} from '../../../../services/messages.service';
 import {Select, Store} from "@ngxs/store";
-import {CursoState} from "../../../../state/states/curso.state";
 import {Observable} from "rxjs";
-import {Curso} from "../../../../model/Curso";
 import {ProgramaState, ResetPrograma} from "../../../../state/states/programa.state";
 
 @Component({

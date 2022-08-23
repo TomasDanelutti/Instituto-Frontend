@@ -4,7 +4,13 @@
       <ion-col size-lg="9" size-md="9" size-sm="12" size-xs="12">
         <ion-row class="ion-align-items-center">
           <ion-col size-lg="10" size-md="10" size-sm="12" size-xs="12">
-            <ion-searchbar type="text" showCancelButton="focus" placeholder="Buscar profesionales"></ion-searchbar>
+                               <span class="p-input-icon-left" style="min-width: 100%; width:100%;">
+              <i class="pi pi-search"></i>
+              <input _ngcontent-wbv-c208="" type="text" name="Busqueda" placeholder="Buscar programa"
+                     (keydown.enter)="buscar(buscador)" [(ngModel)]="buscador" ng-reflect-name="Busqueda"
+                     ng-reflect-model="" class="ng-pristine ng-valid p-inputtext p-component ng-touched"
+                     style="min-width: 100%; width: 100%; margin-top: 4px;">
+            </span>
           </ion-col>
           <ion-col size-lg="2" size-md="2" size-sm="12" size-xs="12" class="ion-text-center">
             <ion-button color="primary" (click)="crearAdministrativo()">

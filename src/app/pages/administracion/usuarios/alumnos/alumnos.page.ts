@@ -10,6 +10,7 @@ import {Usuario} from '../../../../model/Usuario';
 })
 export class AlumnosPage implements OnInit {
   alumnos: Usuario[] = [];
+    buscador: any;
   constructor(private router: Router,
               private usuarioService: UsuarioService) { }
 
@@ -23,4 +24,13 @@ export class AlumnosPage implements OnInit {
   crearAdministrativo() {
       this.router.navigate(['administrar/alumnos/crear-modificar-alumno'], {replaceUrl: true});
     }
+
+  buscar(buscador: any) {
+    if (buscador) {
+      this.usuarioService.getAlumnosByNombre(buscador).subscribe(value => this.alumnos = value);
+    }
+    else {
+      this.usuarioService.getAlumnos().subscribe(value => this.alumnos = value);
+    }
+  }
 }

@@ -10,6 +10,7 @@ import {Usuario} from '../../../../model/Usuario';
 })
 export class AdministrativosPage implements OnInit {
   administrativos: Usuario[] = [];
+    buscador: any;
   constructor(private router: Router,
               private usuarioService: UsuarioService) { }
 
@@ -22,5 +23,14 @@ export class AdministrativosPage implements OnInit {
 
   crearAdministrativo() {
       this.router.navigate(['administrar/administrativos/crear-modificar-administrativo'], {replaceUrl: true});
+  }
+
+  buscar(buscador: any) {
+    if (buscador) {
+      this.usuarioService.getAdministrativoByNombre(buscador).subscribe(value => this.administrativos = value);
+    }
+    else {
+      this.usuarioService.getAdministrativos().subscribe(value => this.administrativos = value);
+    }
   }
 }
