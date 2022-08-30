@@ -26,7 +26,7 @@ export class MenuComponent implements OnInit {
                 this.rutasMenu = [
                     {label: 'Home', icon: 'pi pi-home', routerLink: '/home'},
                     {label: 'Mi perfil', icon: 'pi pi-book', routerLink: '/mi-perfil'},
-                    {label: 'Cursos', icon: 'pi pi-book', routerLink: '/cursos'},
+                    {label: 'Cursos disponibles', icon: 'pi pi-book', routerLink: '/lista-cursos'},
                     {label: 'Salir', icon: 'pi pi-sign-out', command: () => {
                             this.store.dispatch(new ResetUsuarioLogueado());
                             this.router.navigate(['/login'], {replaceUrl: true});
@@ -75,7 +75,7 @@ export class MenuComponent implements OnInit {
                 this.rutasMenu = [
                     {label: 'Home', icon: 'pi pi-home', routerLink: '/home'},
                     {label: 'Mi perfil', icon: 'pi pi-book', routerLink: '/mi-perfil'},
-                    {label: 'Cursos', icon: 'pi pi-book', routerLink: '/cursos'},
+                    {label: 'Cursos disponibles', icon: 'pi pi-book', routerLink: '/lista-cursos'},
                     {
                         label: 'Administrar',
                         icon: 'pi pi-cog',

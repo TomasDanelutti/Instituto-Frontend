@@ -13,7 +13,9 @@ import {TablaUsuariosComponent} from '../../components/tabla-usuarios/tabla-usua
 import {GeneroComponent} from '../../components/genero/genero.component';
 import {FechaComponent} from '../../components/fecha/fecha.component';
 import {ClaveInputComponent} from '../../components/clave-input/clave-input.component';
-import {VistaCursosComponent} from '../../components/vista-cursos/vista-cursos.component';
+import {
+    ListaCursosInscriptosComponent
+} from "../../components/lista-cursos-inscriptos/lista-cursos-inscriptos.component";
 
 ;
 @NgModule({
@@ -28,7 +30,7 @@ import {VistaCursosComponent} from '../../components/vista-cursos/vista-cursos.c
         GeneroComponent,
         FechaComponent,
         ClaveInputComponent,
-        VistaCursosComponent
+        ListaCursosInscriptosComponent
     ],
     imports: [
         CommonModule,
@@ -48,7 +50,7 @@ import {VistaCursosComponent} from '../../components/vista-cursos/vista-cursos.c
         GeneroComponent,
         FechaComponent,
         ClaveInputComponent,
-        VistaCursosComponent
+        ListaCursosInscriptosComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

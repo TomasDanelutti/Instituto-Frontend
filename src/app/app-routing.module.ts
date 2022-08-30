@@ -24,8 +24,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/mi-perfil/mi-perfil.module').then( m => m.MiPerfilPageModule)
   },
   {
-    path: 'cursos',
-    loadChildren: () => import('./pages/cursos/cursos.module').then( m => m.CursosPageModule)
+    path: 'lista-cursos',
+    loadChildren: () => import('./pages/lista-cursos/lista-cursos.module').then(m => m.ListaCursosPageModule)
   },
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: '**', redirectTo: 'login', pathMatch: 'full'},
