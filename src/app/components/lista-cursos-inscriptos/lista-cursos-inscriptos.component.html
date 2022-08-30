@@ -1,0 +1,57 @@
+<p-dataView #dv [value]="cursos" [paginator]="true" [rows]="2" filterBy="nombre" layout="grid">
+  <ng-template let-curso pTemplate="gridItem">
+    <div class="p-col-12 p-md-2">
+      <div class="product-grid-item card">
+        <ion-icon name="book-outline"></ion-icon>
+        <ion-row style="margin-top: -28px; margin-left: 30px" class="product-name">{{curso.nombre}}</ion-row>
+        <ion-item-divider style="margin-top: -25px"></ion-item-divider>
+        <br>
+        <img [src]="curso.imagen" style="height: 130px; width: 425px">
+        <div>
+              <ion-col size-lg="12" size-md="12" size-sm="12" size-xs="12">
+                <ion-row class="ion-align-self-auto">
+                  <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                    <label>Turno: <b>{{curso.turno}}</b></label>
+                  </ion-col>
+                  <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                    <label>Modalidad: {{curso.modalidad}}</label>
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center">
+                  <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                    <label>Aula: {{curso.aula}}</label>
+                  </ion-col>
+                  <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                    <label>Duracion: {{curso.duracion}}</label>
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center">
+                  <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                    <label>Fecha inicio: {{curso.aula}}</label>
+                  </ion-col>
+                  <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                    <label>Fecha fin: {{curso.duracion}}</label>
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-start">
+                  <ion-col size-lg="12" size-md="12" size-sm="12" size-xs="12">
+                    <label style="margin-right: 150px">Horario: {{curso.aula}}</label>
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center">
+                  <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12">
+                    <ion-button (click)="verAlumnos(curso)">Alumnos</ion-button>
+                  </ion-col>
+                  <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12">
+                    <ion-button (click)="verProfesor(curso)">Profesor</ion-button>
+                  </ion-col>
+                  <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12">
+                    <ion-button (click)="aulaVirtual(curso)">Aula virtual</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dataView>

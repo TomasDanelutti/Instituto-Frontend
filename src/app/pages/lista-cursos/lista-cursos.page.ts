@@ -7,11 +7,11 @@ import {Usuario} from '../../model/Usuario';
 import {UsuarioLogueadoState} from '../../state/states/usuarioLogueado.state';
 
 @Component({
-  selector: 'app-cursos',
-  templateUrl: './cursos.page.html',
-  styleUrls: ['./cursos.page.scss'],
+  selector: 'app-lista-cursos',
+  templateUrl: './lista-cursos.page.html',
+  styleUrls: ['./lista-cursos.page.scss'],
 })
-export class CursosPage implements OnInit {
+export class ListaCursosPage implements OnInit {
   @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioLogueado: Observable<Usuario>;
   @Select(UsuarioLogueadoState.getCursosInscriptos) cursosInscriptosState: Observable<Curso[]>;
   @Select(UsuarioLogueadoState.getCursosNoInscriptos) cursosNoInscriptosState: Observable<Curso[]>;

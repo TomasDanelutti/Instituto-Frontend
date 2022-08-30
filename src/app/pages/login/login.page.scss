@@ -1,20 +1,36 @@
-.vertical-align-content>* {
-  display: flex!important;
-  align-content: center!important;
-  align-items: center!important;
-  height: 95vh;
-}
+/* app/styles.css */
 
-ion-card {
-  --background: white;
+* {
+  box-sizing: border-box;
 }
-
-a {
-  color: #039be5;
-  padding-left: 0.2em;
-  text-decoration: none;
+html,
+body {
+  background: #ecf0f3;
 }
-
-.version {
+h1 {
+  margin: 0;
+  padding: 0;
+}
+.custom-form {
+  min-width: 200px;
+  max-width: 40%;
+  margin: 0px auto;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 2rem 3rem;
+  margin: auto;
+  border-radius: 2.5rem;
   color: black;
+  margin-top: 5rem;
+}
+.custom-form input {
+  display: block;
+  margin: 2rem 0;
+  width: 100%;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  border: none;
+  box-shadow: inset -5px -5px 15px rgba(255, 255, 255, 0.8), inset 5px 5px 10px
+  rgba(0, 0, 0, 0.1);
+  border: 0 none;
+  background: #ebf5fc;
 }
