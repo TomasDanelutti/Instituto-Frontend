@@ -1,4 +1,18 @@
-<button #btn class="colorBordo" type="button" pButton icon="pi pi-bars"
-        label="Menu" (click)="menu.toggle($event)"></button>
-<p-slideMenu #menu [model]="rutasMenu" [popup]="true" [viewportHeight]="225"
-             backLabel="Volver" easing="ease-in"></p-slideMenu>
+<ion-menu side="start" menuId="first" contentId="content">
+        <ion-header>
+            <ion-toolbar color="primary">
+                <ion-title>Menu</ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content color="light">
+            <ion-list *ngFor="let pages of navigate">
+                <ion-menu-toggle auto-hide="true">
+                    <ion-item [routerLink]="pages.url" routerDirection="forward">
+                        <ion-icon [name]="pages.icon" slot="start"></ion-icon>
+                        {{pages.title}}
+                    </ion-item>
+                </ion-menu-toggle>
+            </ion-list>
+        </ion-content>
+    </ion-menu>
+    <ion-router-outlet Id="content"></ion-router-outlet>
