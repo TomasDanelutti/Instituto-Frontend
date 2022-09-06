@@ -67,15 +67,15 @@ export class CrearModificarCursoPage implements OnInit {
     if (this.formulario.valid) {
       this.cursoService.guardarCurso(this.formulario.value).subscribe(rta => {
         const estado: string = this.formulario.value.idCurso ? 'modificado' : 'creado';
-        this.messagesService.showMessage('Éxito', `Curso ${this.formulario.value.nombre} ${estado}`, 5000);
+        this.messagesService.ventanaExitosa('Éxito', `Curso ${this.formulario.value.nombre} ${estado}`);
         this.store.dispatch(new SetCursosInscriptos(this.usuario.idUsuario));
         this.store.dispatch(new SetCursosNoInscriptos(this.usuario.idUsuario));
         this.router.navigate(['/administrar/cursos'], {replaceUrl: true});
       }, error => {
-        this.messagesService.showMessage('Atención', 'No se pudo guardar el curso', 5000);
+        this.messagesService.ventanaErrorConFooter('Atención', 'No se pudo guardar el curso');
       });
     } else {
-      this.messagesService.showMessage('Atención', 'formulario invalido', 5000);
+      this.messagesService.ventanaError('Atención', 'formulario invalido');
     }
   }
 

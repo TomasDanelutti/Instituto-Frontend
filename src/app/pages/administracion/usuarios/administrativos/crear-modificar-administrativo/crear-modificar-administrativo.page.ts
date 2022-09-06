@@ -58,13 +58,13 @@ export class CrearModificarAdministrativoPage implements OnInit {
     if (this.formulario.valid) {
       this.usuarioService.guardarAdministrativo(this.formulario.value).subscribe(rta => {
         const estado: string = this.formulario.value.idUsuario ? 'modificado' : 'creado';
-        this.messagesService.showMessage('Éxito', `Administrativo ${this.formulario.value.nombre} ${estado}`, 5000);
+        this.messagesService.ventanaExitosa('Éxito', `Administrativo ${this.formulario.value.nombre} ${estado}`);
         this.router.navigate(['administrar/administrativos'], {replaceUrl: true});
       }, error => {
-        this.messagesService.showMessage('Atención', 'No se pudo guardar el Administrativo', 5000);
+        this.messagesService.ventanaError('Atención', 'No se pudo guardar el Administrativo');
       });
     } else {
-      this.messagesService.showMessage('Atención', 'formulario invalido', 5000);
+      this.messagesService.ventanaError('Atención', 'formulario invalido');
     }
   }
 

@@ -7,6 +7,7 @@ import {MessagesService} from '../../../../services/messages.service';
 import {Select, Store} from "@ngxs/store";
 import {Observable} from "rxjs";
 import {ProgramaState, ResetPrograma} from "../../../../state/states/programa.state";
+import {SetCursosInscriptos, SetCursosNoInscriptos} from "../../../../state/states/usuarioLogueado.state";
 
 @Component({
   selector: 'app-crear-modificar-programa',
@@ -50,13 +51,13 @@ export class CrearModificarProgramaPage implements OnInit {
       if (this.formulario.valid) {
           this.porgramaService.guardarPrograma(this.formulario.value).subscribe(rta => {
               const estado: string = this.formulario.value.idPrograma ? 'modificado' : 'creado';
-              this.messagesService.showMessage('Éxito', `Programa ${this.formulario.value.nombre} ${estado}`, 5000);
+              this.messagesService.ventanaExitosa('Éxito', `Programa ${this.formulario.value.nombre} ${estado}`);
               this.router.navigate(['/administrar/programas'], {replaceUrl: true});
           }, error => {
-              this.messagesService.showMessage('Atención', 'No se pudo guardar el programa', 5000);
+              this.messagesService.ventanaErrorConFooter('Atención', 'No se pudo guardar el curso');
           });
       } else {
-          this.messagesService.showMessage('Atención', 'formulario invalido', 5000);
+          this.messagesService.ventanaError('Atención', 'formulario invalido');
       }
   }
 

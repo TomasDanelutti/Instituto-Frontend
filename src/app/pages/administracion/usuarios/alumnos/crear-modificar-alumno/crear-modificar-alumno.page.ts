@@ -60,13 +60,13 @@ export class CrearModificarAlumnoPage implements OnInit {
     if (this.formulario.valid) {
       this.usuarioService.guardarAlumno(this.formulario.value).subscribe(rta => {
         const estado: string = this.formulario.value.idUsuario ? 'modificado' : 'creado';
-        this.messagesService.showMessage('Éxito', `Alumno ${this.formulario.value.nombre} ${estado}`, 5000);
+        this.messagesService.ventanaConfirmar('Éxito', `Alumno ${this.formulario.value.nombre} ${estado}`);
         this.router.navigate(['administrar/alumnos'], {replaceUrl: true});
       }, error => {
-        this.messagesService.showMessage('Atención', 'No se pudo guardar el Alumno', 5000);
+        this.messagesService.ventanaError('Atención', 'No se pudo guardar el Alumno');
       });
     } else {
-      this.messagesService.showMessage('Atención', 'formulario invalido', 5000);
+      this.messagesService.ventanaError('Atención', 'formulario invalido');
     }
   }
 
