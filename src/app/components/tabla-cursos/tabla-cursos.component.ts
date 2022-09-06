@@ -10,6 +10,7 @@ import {Observable} from 'rxjs';
 import {Usuario} from '../../model/Usuario';
 import {SetCursosInscriptos, SetCursosNoInscriptos, UsuarioLogueadoState} from '../../state/states/usuarioLogueado.state';
 import {SetCursoAction} from "../../state/states/curso.state";
+import {SweetAlertResult} from "sweetalert2";
 
 @Component({
   selector: 'app-tabla-cursos',
@@ -41,13 +42,13 @@ export class TablaCursosComponent implements OnInit {
   inscribirse(curso: Curso) {
     this.inscripcion.controls.usuario.setValue(this.usuario);
     this.inscripcion.controls.curso.setValue(curso);
-    this.messagesService.showAlert('Atención', `¿Desea inscribirse al curso?`, () => {
+    this.messagesService.showtAlert('Atención', `¿Desea inscribirse al curso?`, () => {
       this.inscripcionService.inscribirse(this.inscripcion.value).subscribe(value => {
         this.store.dispatch(new SetCursosInscriptos(this.usuario.idUsuario));
         this.store.dispatch(new SetCursosNoInscriptos(this.usuario.idUsuario));
-        this.messagesService.showMessage('Éxito', 'Inscripcion realizada con exito', 5000);
+        this.messagesService.ventanaExitosa('Éxito', 'Inscripcion realizada con exito');
       }, error => {
-        this.messagesService.showMessage('Atención', 'No se pudo inscribir al curso', 5000);
+        this.messagesService.ventanaError('Atención', 'No se pudo inscribir al curso');
       });
     });
   }
@@ -58,12 +59,15 @@ export class TablaCursosComponent implements OnInit {
   }
 
   eliminar(curso: Curso) {
-    this.messagesService.showAlert('Atención', `¿Desea eliminar el curso  ${curso.nombre}?`, () => {
-      this.cursoService.eliminarCurso(curso).subscribe(value => {
-        this.messagesService.showMessage('Éxito', 'Curso eliminado con exito', 5000);
-      }, error => {
-        this.messagesService.showMessage('Atención', 'No se pudo eliminar el curso', 5000);
-      });
+    this.messagesService.ventanaConfirmar('Atención', `¿Desea eliminar el curso  ${curso.nombre}?`)
+        .then((result: SweetAlertResult) => {
+          if (result.isConfirmed) {
+            this.cursoService.eliminarCurso(curso).subscribe(value => {
+              this.messagesService.ventanaConfirmar('Éxito', 'Curso eliminado con exito');
+            }, error => {
+              this.messagesService.ventanaError('Atención', 'No se pudo eliminar el curso');
+            });
+          }
     });
   }
 }

@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {MessagesService} from '../../../services/messages.service';
 import {Store} from "@ngxs/store";
 import {SetProgramaAction} from "../../../state/states/programa.state";
+import {SweetAlertResult} from "sweetalert2";
 
 @Component({
   selector: 'app-programas',
@@ -38,14 +39,16 @@ export class ProgramasPage implements OnInit {
   }
 
   eliminar(programa: Programa) {
-    this.messagesService.showAlert('Atención', `¿Desea eliminar el programa  ${programa.nombre}?`, () => {
-      this.programaService.eliminarPrograma(programa).subscribe(value => {
-          this.messagesService.showMessage('Éxito', 'Programa eliminado con exito', 5000);
-          this.buscarProgramas();
-      }, error => {
-        this.messagesService.showMessage('Atención', 'No se pudo eliminar el programa', 5000);
-      });
-    });
+    this.messagesService.ventanaConfirmar('Atención', `¿Desea eliminar el programa  ${programa.nombre}?`)
+        .then((result: SweetAlertResult) => {
+          if (result.isConfirmed) {
+            this.programaService.eliminarPrograma(programa).subscribe(value => {
+              this.messagesService.ventanaExitosa('Éxito', 'Programa eliminado con exito');
+            }, error => {
+              this.messagesService.ventanaError('Atención', 'No se pudo eliminar el programa');
+            });
+          }
+        });
   }
 
   buscar(buscador: any) {
