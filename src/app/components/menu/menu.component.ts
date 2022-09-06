@@ -8,6 +8,7 @@ import {Rol} from '../../model/rol';
 import {Platform} from "@ionic/angular";
 import {StatusBar} from "@ionic-native/status-bar/ngx";
 import {SplashScreen} from "@ionic-native/splash-screen/ngx";
+import {Usuario} from "../../model/Usuario";
 
 @Component({
     selector: 'app-menu',
@@ -15,8 +16,9 @@ import {SplashScreen} from "@ionic-native/splash-screen/ngx";
     styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit, OnChanges {
-    @Select(UsuarioLogueadoState.getRol) rol: Observable<Rol>;
+    @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioState: Observable<Usuario>;
     rolSeleccionado: Rol;
+    usuario: Usuario;
     navigate: any;
 
     constructor(
@@ -36,8 +38,9 @@ export class MenuComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.rol.subscribe(value => {
-            this.rolSeleccionado = value;
+        this.usuarioState.subscribe(value => {
+            this.usuario = value
+            this.rolSeleccionado = value.rol;
             this.armarMenu();
         });
     }
@@ -59,7 +62,7 @@ export class MenuComponent implements OnInit, OnChanges {
                         },
                         {
                             title : 'Mis cursos',
-                            url   : '/lista-cursos',
+                            url   : '/mis-cursos',
                             icon  : 'book'
                         },
                         {
@@ -84,7 +87,7 @@ export class MenuComponent implements OnInit, OnChanges {
                         },
                         {
                             title : 'Mis cursos',
-                            url   : '/lista-cursos',
+                            url   : '/mis-cursos',
                             icon  : 'book'
                         },
                         {
@@ -124,7 +127,7 @@ export class MenuComponent implements OnInit, OnChanges {
                         },
                         {
                             title : 'Mis cursos',
-                            url   : '/lista-cursos',
+                            url   : '/mis-cursos',
                             icon  : 'book'
                         },
                         {
