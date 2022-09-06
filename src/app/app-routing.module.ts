@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'lista-cursos',
     loadChildren: () => import('./pages/lista-cursos/lista-cursos.module').then(m => m.ListaCursosPageModule)
   },
+  {
+    path: 'mis-cursos',
+    loadChildren: () => import('./pages/mis-cursos/mis-cursos.module').then( m => m.MisCursosPageModule)
+  },
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: '**', redirectTo: 'login', pathMatch: 'full'},
 
