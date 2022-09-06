@@ -11,4 +11,5 @@ export class Usuario {
   email: string;
   genero: string;
   rol: Rol;
+  imagen: string;
 }
