@@ -1,4 +1,4 @@
-<p-dataView #dv [value]="cursos" [paginator]="true" [rows]="2" filterBy="nombre" layout="grid">
+<p-dataView #dv [value]="cursos" [paginator]="false" [rows]="10" filterBy="nombre" layout="grid">
   <ng-template let-curso pTemplate="gridItem">
     <div class="p-col-12 p-md-2">
       <div class="product-grid-item card">
@@ -6,8 +6,10 @@
         <ion-row style="margin-top: -28px; margin-left: 30px" class="product-name">{{curso.nombre}}</ion-row>
         <ion-item-divider style="margin-top: -25px"></ion-item-divider>
         <br>
-        <img [src]="curso.imagen" style="height: 130px; width: 425px">
-        <div>
+        <img *ngIf="curso.imagen" [src]="curso.imagen" style="height: 130px; width: 425px">
+        <p-accordion>
+          <p-accordionTab header="Mas informacion">
+            <div>
               <ion-col size-lg="12" size-md="12" size-sm="12" size-xs="12">
                 <ion-row class="ion-align-self-auto">
                   <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
@@ -38,20 +40,25 @@
                     <label style="margin-right: 150px">Horario: {{curso.aula}}</label>
                   </ion-col>
                 </ion-row>
-                <ion-row class="ion-align-items-center">
-                  <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12">
-                    <ion-button (click)="verAlumnos(curso)">Alumnos</ion-button>
-                  </ion-col>
-                  <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12">
-                    <ion-button (click)="verProfesor(curso)">Profesor</ion-button>
-                  </ion-col>
-                  <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12">
-                    <ion-button (click)="aulaVirtual(curso)">Aula virtual</ion-button>
-                  </ion-col>
-                </ion-row>
               </ion-col>
-        </div>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+        <ion-row class="ion-align-items-center">
+          <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12">
+            <ion-button color="primary" shape="round" (click)="verAlumnos(curso)">Alumnos</ion-button>
+          </ion-col>
+          <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12">
+            <ion-button color="primary" shape="round" (click)="aulaVirtual(curso)">Aula virt</ion-button>
+          </ion-col>
+          <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12">
+            <ion-button color="primary" shape="round" (click)="verProfesor(curso)">Docente</ion-button>
+          </ion-col>
+        </ion-row>
       </div>
     </div>
   </ng-template>
 </p-dataView>
+<app-dialog-docente *ngIf="displayDialog"
+                                 (showDialogConsultaVistaPrevia)="switchDialogConsultaVistaPrevia($event)">
+</app-dialog-docente>

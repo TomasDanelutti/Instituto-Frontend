@@ -18,6 +18,7 @@ export class ListaCursosInscriptosComponent implements OnInit {
   @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioLogueado: Observable<Usuario>;
   @Input() cursos: Curso[];
   usuario: Usuario;
+  displayDialog = false;
 
   constructor(private router: Router) { }
 
@@ -30,10 +31,15 @@ export class ListaCursosInscriptosComponent implements OnInit {
   }
 
   verProfesor(curso: Curso) {
-
+    this.displayDialog = true;
   }
 
   aulaVirtual(curso: Curso) {
 
   }
+
+  switchDialogConsultaVistaPrevia(display:boolean){
+    this.displayDialog = display;
+  }
+
 }
