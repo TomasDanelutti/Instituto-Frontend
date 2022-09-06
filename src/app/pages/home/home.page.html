@@ -6,7 +6,11 @@
     <ion-row class="ion-justify-content-center">
     <p-card class="p-col-7">
     <div class="p-col-12">
-<!--      <app-vista-cursos [cursos]="cursos" [home]="true" [insc]="false"></app-vista-cursos>-->
+        <p-carousel [value]="cursos" [numVisible]="3" [autoplayInterval]="3000" [circular]="true" [numScroll]="3" [circular]="false">
+            <ng-template let-product pTemplate="item">
+                <img src="{{product.imagen}}" style="height: 130px; width: 200px" [alt]="product.nombre" class="product-image">
+            </ng-template>
+        </p-carousel>
       <br>
       <ion-row class="ion-justify-content-center">
         <ion-col style="margin-top: 10px">

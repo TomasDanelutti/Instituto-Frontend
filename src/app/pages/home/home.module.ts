@@ -14,7 +14,7 @@ import {PrimeNgModule} from '../../modules/primeng/primeng.module';
         IonicModule,
         HomePageRoutingModule,
         CustomComponentsModule,
-        PrimeNgModule
+        PrimeNgModule,
     ],
   declarations: [HomePage]
 })
