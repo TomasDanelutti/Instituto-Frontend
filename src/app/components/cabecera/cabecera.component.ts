@@ -26,4 +26,7 @@ export class CabeceraComponent implements OnInit {
     this.router.navigate(['home']);
   }
 
+  navegarMiPerfil() {
+    this.router.navigate(['mi-perfil']);
+  }
 }
