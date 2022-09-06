@@ -48,7 +48,7 @@ export class LoginPage implements OnInit {
             this.store.dispatch(new SetUsuarioLogueadoAction(usuario));
             this.store.dispatch(new SetCursosInscriptos(usuario.idUsuario));
             this.store.dispatch(new SetCursosNoInscriptos(usuario.idUsuario));
-          }, error => this.messages.showAlert('Error', 'usuario o clave incorrecto', 3));
+          }, error => this.messages.ventanaError('Error', 'usuario o clave incorrecto'));
     }
     else {
       this.messages.showMessage('Error', 'Usuario o contraseña incorrecto', 5000);
