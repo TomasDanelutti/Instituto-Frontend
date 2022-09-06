@@ -16,6 +16,10 @@ export class UsuarioService {
     return this.httpClient.get<Usuario[]>('/usuarios/alumnos');
   }
 
+  getAlumnosByCurso(idCurso: number): Observable<Usuario[]> {
+    return this.httpClient.get<Usuario[]>('/inscripcion/alumnos/' + idCurso);
+  }
+
   guardarAlumno(usuario: Usuario): Observable<Respuesta<string>> {
     return this.httpClient.post<Respuesta<string>>('/usuarios/alumnos/guardar', usuario);
   }
