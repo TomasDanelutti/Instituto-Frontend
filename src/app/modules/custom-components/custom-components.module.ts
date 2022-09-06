@@ -16,6 +16,9 @@ import {ClaveInputComponent} from '../../components/clave-input/clave-input.comp
 import {
     ListaCursosInscriptosComponent
 } from "../../components/lista-cursos-inscriptos/lista-cursos-inscriptos.component";
+import {DialogDocenteComponent} from "../../components/Dialogs/dialog-docente/dialog-docente.component";
+import {DialogModule} from "primeng/dialog";
+import {AvatarModule} from "primeng/avatar";
 
 ;
 @NgModule({
@@ -30,7 +33,8 @@ import {
         GeneroComponent,
         FechaComponent,
         ClaveInputComponent,
-        ListaCursosInscriptosComponent
+        ListaCursosInscriptosComponent,
+        DialogDocenteComponent
     ],
     imports: [
         CommonModule,
@@ -38,6 +42,8 @@ import {
         IonicModule,
         ReactiveFormsModule,
         PrimeNgModule,
+        DialogModule,
+        AvatarModule,
     ],
     exports: [
         TablaCursosComponent,
@@ -50,7 +56,8 @@ import {
         GeneroComponent,
         FechaComponent,
         ClaveInputComponent,
-        ListaCursosInscriptosComponent
+        ListaCursosInscriptosComponent,
+        DialogDocenteComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
