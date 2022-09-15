@@ -1,0 +1,12 @@
+td {
+  background-color: white !important;
+}
+
+::ng-deep .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background-color:#1262e0;
+  color: #ffffff;
+}
+
+.card {
+  border: 2px solid #d8dadc;
+}
