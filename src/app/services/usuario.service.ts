@@ -13,30 +13,30 @@ export class UsuarioService {
   constructor(private httpClient: HttpClient) { }
 
   getAlumnos(): Observable<Usuario[]> {
-    return this.httpClient.get<Usuario[]>('/usuarios/alumnos');
+    return this.httpClient.get<Usuario[]>('usuarios/alumnos');
   }
 
   getAlumnosByCurso(idCurso: number): Observable<Usuario[]> {
-    return this.httpClient.get<Usuario[]>('/inscripcion/alumnos/' + idCurso);
+    return this.httpClient.get<Usuario[]>('inscripcion/alumnos/' + idCurso);
   }
 
   guardarAlumno(usuario: Usuario): Observable<Respuesta<string>> {
-    return this.httpClient.post<Respuesta<string>>('/usuarios/alumnos/guardar', usuario);
+    return this.httpClient.post<Respuesta<string>>('usuarios/alumnos/guardar', usuario);
   }
 
   getAdministrativos(): Observable<Usuario[]> {
-    return this.httpClient.get<Usuario[]>('/usuarios/administrativos');
+    return this.httpClient.get<Usuario[]>('usuarios/administrativos');
   }
 
   getAlumnosByNombre(nombre: string): Observable<Usuario[]> {
-    return this.httpClient.get<Usuario[]>('/usuarios/alumnos/findByNombre/' + nombre);
+    return this.httpClient.get<Usuario[]>('usuarios/alumnos/findByNombre/' + nombre);
   }
 
   getAdministrativoByNombre(nombre: string): Observable<Usuario[]> {
-    return this.httpClient.get<Usuario[]>('/usuarios/administrativos/findByNombre/' + nombre);
+    return this.httpClient.get<Usuario[]>('usuarios/administrativos/findByNombre/' + nombre);
   }
 
   guardarAdministrativo(usuario: Usuario): Observable<Respuesta<string>> {
-    return this.httpClient.post<Respuesta<string>>('/usuarios/administrativos/guardar', usuario);
+    return this.httpClient.post<Respuesta<string>>('usuarios/administrativos/guardar', usuario);
   }
 }

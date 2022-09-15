@@ -14,15 +14,15 @@ export class InscripcionService {
   constructor(private httpClient: HttpClient) { }
 
   inscribirse(inscripcion: Inscripcion): Observable<Respuesta<string>> {
-    return this.httpClient.post<Respuesta<string>>('/inscripcion/insc/' , inscripcion);
+    return this.httpClient.post<Respuesta<string>>('inscripcion/insc/' , inscripcion);
   }
 
   login(dni: string, clave: string): Observable<Usuario> {
-    return this.httpClient.get<Usuario>('/login/' + dni + '/' + clave);
+    return this.httpClient.get<Usuario>('login/' + dni + '/' + clave);
   }
 
   getCursosInscriptosByUsuario(): Observable<Curso[]> {
-    return this.httpClient.get<Curso[]>('/inscripcion/');
+    return this.httpClient.get<Curso[]>('inscripcion/');
   }
 
   getCursosNoInscriptosByUsuario(): Observable<Curso[]> {

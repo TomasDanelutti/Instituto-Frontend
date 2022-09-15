@@ -13,6 +13,6 @@ export class LoginService {
   }
 
   login(dni: string, clave: string): Observable<Usuario> {
-    return this.httpClient.get<Usuario>('/login/' + dni + '/' + clave);
+    return this.httpClient.get<Usuario>('login/' + dni + '/' + clave);
   }
 }
