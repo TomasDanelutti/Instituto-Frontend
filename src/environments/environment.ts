@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   assets: 'assets',
-  url: 'http://localhost:8081',
+  url: 'http://localhost:8081/',
 };
 
 /*
