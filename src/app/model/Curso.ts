@@ -1,11 +1,10 @@
-
 import {Programa} from './Programa';
-import {Turno} from './turno';
+import {Turno} from "./turno";
 
 export class Curso {
     idCurso: number;
     nombre: string;
-    turno: string;
+    turno: Turno;
     programa: Programa;
     cupoMaximo: number;
     cupoMinimo: number;
