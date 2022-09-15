@@ -3,9 +3,6 @@ import {Curso} from '../../../model/Curso';
 import {CursosService} from '../../../services/cursos.service';
 import {InscripcionService} from '../../../services/inscripcion.service';
 import {Router} from '@angular/router';
-import {Programa} from "../../../model/Programa";
-import {SetProgramaAction} from "../../../state/states/programa.state";
-import {SweetAlertResult} from "sweetalert2";
 import {Store} from "@ngxs/store";
 import {MessagesService} from "../../../services/messages.service";
 import {SetCursoAction} from "../../../state/states/curso.state";
@@ -22,7 +19,6 @@ export class ColumnaTable {
 })
 export class CursosPage implements OnInit {
   cursos: Curso[] = [];
-  buscador: any;
   cols: ColumnaTable[];
   totalRegistrosBackend = 1;
   cursosTable: any[] = [];
