@@ -13,19 +13,23 @@ export class ProgramaService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getProgramas(): Observable<Programa[]> {
-    return this.httpClient.get<Programa[]>('/programa');
+  getProgramasPaginado(numeroPagina: number, cantSubareas: number): Observable<Programa[]>{
+    return this.httpClient.get<Programa[]>('programa/findBy/' + numeroPagina + '/' + cantSubareas);
+  }
+
+  contarProgramas(): Observable<number>{
+    return this.httpClient.get<number>('programa/count');
   }
 
   getProgramaByNombre(nombre: string): Observable<Programa[]> {
-    return this.httpClient.get<Programa[]>('/programa/findByNombre/' + nombre);
+    return this.httpClient.get<Programa[]>('programa/findByNombre/' + nombre);
   }
 
   guardarPrograma(programa: Programa): Observable<Respuesta<string>> {
-    return this.httpClient.post<Respuesta<string>>('/programa/guardar', programa);
+    return this.httpClient.post<Respuesta<string>>('programa/guardar', programa);
   }
 
-  eliminarPrograma(programa: Programa): Observable<Respuesta<string>> {
-    return this.httpClient.post<Respuesta<string>>('/programa/eliminar', programa);
+  eliminarPrograma(idPrograma: number): Observable<void> {
+    return this.httpClient.delete<void>('programa/' + idPrograma);
   }
 }
