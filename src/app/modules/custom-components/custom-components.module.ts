@@ -6,7 +6,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PrimeNgModule} from '../primeng/primeng.module';
 import {CabeceraComponent} from '../../components/cabecera/cabecera.component';
 import {MenuComponent} from '../../components/menu/menu.component';
-import {TablaCursosComponent} from '../../components/tabla-cursos/tabla-cursos.component';
 import {TurnoComponent} from '../../components/turno/turno.component';
 import {ProgramaComponent} from '../../components/programa/programa.component';
 import {TablaUsuariosComponent} from '../../components/tabla-usuarios/tabla-usuarios.component';
@@ -19,22 +18,24 @@ import {
 import {DialogDocenteComponent} from "../../components/Dialogs/dialog-docente/dialog-docente.component";
 import {DialogModule} from "primeng/dialog";
 import {AvatarModule} from "primeng/avatar";
+import {TablaAbmsComponent} from "../../components/tabla-abms/tabla-abms.component";
+import {TablaListaCursosComponent} from "../../components/tabla-lista-cursos/tabla-lista-cursos.component";
 
 ;
 @NgModule({
     declarations: [
-        TablaCursosComponent,
         CabeceraComponent,
         MenuComponent,
         TurnoComponent,
         ProgramaComponent,
-        TablaCursosComponent,
         TablaUsuariosComponent,
         GeneroComponent,
         FechaComponent,
         ClaveInputComponent,
         ListaCursosInscriptosComponent,
-        DialogDocenteComponent
+        DialogDocenteComponent,
+        TablaAbmsComponent,
+        TablaListaCursosComponent
     ],
     imports: [
         CommonModule,
@@ -46,18 +47,18 @@ import {AvatarModule} from "primeng/avatar";
         AvatarModule,
     ],
     exports: [
-        TablaCursosComponent,
         CabeceraComponent,
         MenuComponent,
         TurnoComponent,
         ProgramaComponent,
-        TablaCursosComponent,
         TablaUsuariosComponent,
         GeneroComponent,
         FechaComponent,
         ClaveInputComponent,
         ListaCursosInscriptosComponent,
-        DialogDocenteComponent
+        DialogDocenteComponent,
+        TablaAbmsComponent,
+        TablaListaCursosComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
