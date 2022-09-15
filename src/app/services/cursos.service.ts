@@ -12,8 +12,12 @@ export class CursosService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getCursos(): Observable<Curso[]> {
-    return this.httpClient.get<Curso[]>('/curso');
+  getCursosPaginado(numeroPagina: number, cantSubareas: number): Observable<Curso[]>{
+    return this.httpClient.get<Curso[]>('/curso/findBy/' + numeroPagina + '/' + cantSubareas);
+  }
+
+  contarCursos(): Observable<number>{
+    return this.httpClient.get<number>('/curso/count');
   }
 
   getCursoInscriptosByUsuario(idUsuario: number): Observable<Curso[]> {
@@ -32,8 +36,9 @@ export class CursosService {
     return this.httpClient.post<Respuesta<string>>('/curso/guardar', curso);
   }
 
-  eliminarCurso(curso: Curso): Observable<Respuesta<string>> {
-    return this.httpClient.post<Respuesta<string>>('/curso/eliminar', curso);
+  eliminarCurso(idCurso: number): Observable<void> {
+    return this.httpClient.delete<void>('/curso/eliminar/' + idCurso);
   }
+
 
 }
