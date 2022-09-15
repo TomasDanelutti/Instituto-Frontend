@@ -3,7 +3,7 @@ import {Programa} from './Programa';
 import {Turno} from './turno';
 
 export class Curso {
-    idUCurso: number;
+    idCurso: number;
     nombre: string;
     turno: string;
     programa: Programa;
