@@ -1,7 +1,7 @@
 <p-table [columns]="cols" [value]="dataBackend" [paginator]="paginator" [rows]="cantidadElementos"
          [totalRecords]="totalRegistrosBackend" [lazy]="true" (onLazyLoad)="loadData($event)">
   <ng-template pTemplate="header" let-columns>
-    <tr class="card">
+    <tr>
       <th *ngIf="imageButton">
         Foto
       </th>
@@ -27,7 +27,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-data let-columns="columns">
-    <tr class="card">
+    <tr>
       <td *ngIf="imageButton">
         <img width="50px" [src]="data.imagen">
       </td>

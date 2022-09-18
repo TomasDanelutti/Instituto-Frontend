@@ -49,8 +49,8 @@ export class ProgramaComponent implements OnInit, ControlValueAccessor, OnDestro
   }
 
   ngOnInit(): void {
-    this.subscriptions.push(this.programaService.getProgramas()
-        .subscribe(value => this.programas = value));
+    // this.subscriptions.push(this.programaService.getProgramas()
+    //     .subscribe(value => this.programas = value));
   }
 
   ngOnDestroy(): void {

@@ -15,7 +15,7 @@ export class HomePage implements OnInit{
   }
 
   ionViewDidEnter() {
-    this.cursoService.getCursos().subscribe(value => this.cursos = value);
+    // this.cursoService.getCursos().subscribe(value => this.cursos = value);
   }
 
 }

@@ -11,15 +11,14 @@ import {ProgramaComponent} from '../../components/programa/programa.component';
 import {TablaUsuariosComponent} from '../../components/tabla-usuarios/tabla-usuarios.component';
 import {GeneroComponent} from '../../components/genero/genero.component';
 import {FechaComponent} from '../../components/fecha/fecha.component';
-import {ClaveInputComponent} from '../../components/clave-input/clave-input.component';
-import {
-    ListaCursosInscriptosComponent
+import {ListaCursosInscriptosComponent
 } from "../../components/lista-cursos-inscriptos/lista-cursos-inscriptos.component";
 import {DialogDocenteComponent} from "../../components/Dialogs/dialog-docente/dialog-docente.component";
 import {DialogModule} from "primeng/dialog";
 import {AvatarModule} from "primeng/avatar";
 import {TablaAbmsComponent} from "../../components/tabla-abms/tabla-abms.component";
 import {TablaListaCursosComponent} from "../../components/tabla-lista-cursos/tabla-lista-cursos.component";
+import {LoadingComponent} from "../../components/loading/loading.component";
 
 ;
 @NgModule({
@@ -31,11 +30,11 @@ import {TablaListaCursosComponent} from "../../components/tabla-lista-cursos/tab
         TablaUsuariosComponent,
         GeneroComponent,
         FechaComponent,
-        ClaveInputComponent,
         ListaCursosInscriptosComponent,
         DialogDocenteComponent,
         TablaAbmsComponent,
-        TablaListaCursosComponent
+        TablaListaCursosComponent,
+        LoadingComponent
     ],
     imports: [
         CommonModule,
@@ -54,11 +53,11 @@ import {TablaListaCursosComponent} from "../../components/tabla-lista-cursos/tab
         TablaUsuariosComponent,
         GeneroComponent,
         FechaComponent,
-        ClaveInputComponent,
         ListaCursosInscriptosComponent,
         DialogDocenteComponent,
         TablaAbmsComponent,
-        TablaListaCursosComponent
+        TablaListaCursosComponent,
+        LoadingComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -25,7 +25,7 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-@import "~primeng/resources/themes/saga-blue/theme.css";
+@import "~primeng/resources/themes/rhea/theme.css";
 @import "~primeng/resources/primeng.min.css";
 @import "~primeicons/primeicons.css";
 @import "~primeflex/primeflex.css";
@@ -127,4 +127,18 @@ p-checkbox > div > div.p-checkbox-box.p-focus {
   .postulante-list-detail {
     flex: 1 1 0;
   }
+}
+
+p-card>div {
+  margin-bottom: 10px !important;
+}
+
+//Paginadores
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight{
+  /* background: #AFD3C8;
+  border-color: #AFD3C8;
+  color: #385048; */
+  background: #1262e0;
+  border-color: #1262e0;
+  color: #FFFFFF;
 }

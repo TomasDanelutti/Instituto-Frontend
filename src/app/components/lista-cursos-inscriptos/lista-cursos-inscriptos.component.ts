@@ -32,6 +32,7 @@ export class ListaCursosInscriptosComponent implements OnInit {
 
   verProfesor(curso: Curso) {
     this.displayDialog = true;
+    console.log(curso)
   }
 
   aulaVirtual(curso: Curso) {

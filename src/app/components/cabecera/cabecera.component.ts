@@ -19,7 +19,6 @@ export class CabeceraComponent implements OnInit {
 
   ngOnInit() {
     this.usuarioLogueado.subscribe(value => this.usuario = value);
-    console.log(this.usuario);
   }
 
   navegarHome() {

@@ -57,8 +57,8 @@
         </ion-row>
       </div>
     </div>
+    <app-dialog-docente *ngIf="displayDialog" [curso]="curso"
+                        (showDialogConsultaVistaPrevia)="switchDialogConsultaVistaPrevia($event)">
+    </app-dialog-docente>
   </ng-template>
 </p-dataView>
-<app-dialog-docente *ngIf="displayDialog"
-                                 (showDialogConsultaVistaPrevia)="switchDialogConsultaVistaPrevia($event)">
-</app-dialog-docente>
