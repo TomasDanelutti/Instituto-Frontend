@@ -1,0 +1,30 @@
+<p-table  [value]="cursos" [rows]="5" [paginator]="true" autoLayout="true">
+    <ng-template let-columns pTemplate="header">
+      <tr class="card">
+        <th style="text-align: center">Imagen</th>
+        <th style="text-align: center">Nombre</th>
+        <th style="text-align: center">Profesor</th>
+        <th style="text-align: center">Acción</th>
+      </tr>
+    </ng-template>
+    <ng-template let-curso let-i="rowIndex" pTemplate="body">
+      <tr [ngClass]="{'greenBackground': curso.inscripto}" class="card">
+        <td>
+          <img width="50px" style="margin-top: -5px; margin-bottom: -10px" [src]="curso.imagen">
+        </td>
+        <td>{{ curso.nombre }}</td>
+        <td>{{ curso.profesor }}</td>
+        <td>
+          <ion-button *ngIf="!curso.inscripto" color="secondary" size="small" pTooltip="Inscribirse"
+                      (click)="inscribirse(curso)">
+            <ion-icon name="add-outline"></ion-icon>
+          </ion-button>
+          <ion-button *ngIf="curso.inscripto" color="secondary" size="small" pTooltip="Desinscribirse"
+                      (click)="desinscribirse(curso)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+        </td>
+
+      </tr>
+    </ng-template>
+  </p-table>
