@@ -1,0 +1,92 @@
+import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
+import {Usuario} from '../../../../model/Usuario';
+import {ColumnaTable} from "../../cursos/cursos.page";
+import {EmpleadoService} from "../../../../services/Empleado.service";
+import {Alumno} from "../../../../model/Alumno";
+import {SetUsuarioAction} from "../../../../state/states/usuario.state";
+import {Store} from "@ngxs/store";
+import {Empleado} from "../../../../model/Empleado";
+
+@Component({
+  selector: 'app-administrativos',
+  templateUrl: './administrativos.page.html',
+  styleUrls: ['./administrativos.page.scss'],
+})
+export class AdministrativosPage implements OnInit {
+  empleados: Usuario[] = [];
+  cols: ColumnaTable[];
+  totalRegistrosBackend = 1;
+  empleadosTable: any[] = [];
+  page: number
+  paginador: boolean;
+
+  constructor(private router: Router,
+              private empleadoService: EmpleadoService,
+              private store: Store) { }
+
+  ngOnInit() {
+    this.cols = [{field: 'nombre', header: 'Nombre'},{field: 'apellido', header: 'Apellido'}];
+    this.paginador = true;
+  }
+
+  buscarAdministrativosPaginados(numPage: number, cant: number) {
+    this.contarAdministrativos();
+    this.empleadoService.getEmpleadosPaginados(numPage, cant).subscribe(value => {
+      this.empleados = value;
+      this.empleadosTable = [];
+      value.forEach((item: Empleado) => {
+        const auxObjeto = {
+          id: item.idUsuario,
+          imagen: item.imagen?.foto,
+          nombre: item.nombre,
+          apellido: item.apellido
+        };
+        this.empleadosTable.push(auxObjeto);
+      });
+    });
+  }
+
+  contarAdministrativos() {
+    this.empleadoService.contarEmpleados().subscribe(value => this.totalRegistrosBackend = value);
+  }
+
+  loadData($event: number) {
+    this.page = $event;
+    this.buscarAdministrativosPaginados($event,5)
+  }
+
+  editarAdministrativo(idUsuario: number) {
+    const alumnoSeleccionado = this.empleados.find(
+        (alumnoSelected: Alumno) => idUsuario === alumnoSelected.idUsuario);
+    this.store.dispatch(new SetUsuarioAction(alumnoSeleccionado));
+    this.router.navigate(['administrar/administrativos/crear-modificar-administrativo'], { replaceUrl: true });
+  }
+
+  crearAdministrativo() {
+      this.router.navigate(['administrar/administrativos/crear-modificar-administrativo'], {replaceUrl: true});
+  }
+
+  buscar(buscador: any) {
+    if (buscador) {
+      this.empleadoService.getEmpleadosByNombre(buscador).subscribe(value => {
+        this.paginador = false;
+        this.empleados = [];
+        this.empleados = value;
+        this.empleadosTable = [];
+        value.forEach((item: Empleado) => {
+          const auxObjeto = {
+            id: item.idUsuario,
+            imagen: item.imagen?.foto,
+            nombre: item.nombre,
+            apellido: item.apellido
+          };
+          this.empleadosTable.push(auxObjeto);
+        });
+      });
+    } else {
+      this.buscarAdministrativosPaginados(0, 5);
+      this.paginador = true;
+    }
+  }
+}
