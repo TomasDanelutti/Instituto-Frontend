@@ -1,4 +1,4 @@
-import {Action, Selector, StateContext, State} from '@ngxs/store';
+
 import {Usuario} from '../../model/Usuario';
 import {CursosService} from '../../services/cursos.service';
 import {Injectable} from '@angular/core';
@@ -6,6 +6,7 @@ import {Curso} from '../../model/Curso';
 import {Reseteable} from '../Reseteable';
 import {Rol} from '../../model/rol';
 import {tap} from "rxjs/operators";
+import {Action, Selector, State, StateContext} from "@ngxs/store";
 
 export class SetUsuarioLogueadoAction {
     static readonly type = '[UsuarioLogueado] Definir usuario';
