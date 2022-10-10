@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {SweetAlertResult} from "sweetalert2";
 import {LazyLoadEvent} from "primeng/api";
 import {Table} from "primeng/table";
-import {MessagesService} from "../../services/messages.service";
+import {MessagesService} from "../../../services/messages.service";
 
 @Component({
   selector: 'app-tabla-abms',

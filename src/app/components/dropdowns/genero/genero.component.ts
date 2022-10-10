@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {EnumService} from '../../services/enum.service';
+import {EnumService} from '../../../services/enum.service';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({

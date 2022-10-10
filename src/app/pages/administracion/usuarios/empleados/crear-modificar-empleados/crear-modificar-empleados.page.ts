@@ -6,20 +6,21 @@ import {MessagesService} from '../../../../../services/messages.service';
 import {Select, Store} from "@ngxs/store";
 import {ResetUsuario, UsuarioState} from "../../../../../state/states/usuario.state";
 import {Observable} from "rxjs";
-import {EmpleadoService} from "../../../../../services/Empleado.service";
+import {EmpleadoService} from "../../../../../services/empleado.service";
 import {ArchivoService} from "../../../../../services/Archivo.service";
 import {Archivo} from "../../../../../model/Archivo";
+import {Empleado} from "../../../../../model/Empleado";
 
 @Component({
-  selector: 'app-crear-modificar-administrativo',
-  templateUrl: './crear-modificar-administrativo.page.html',
-  styleUrls: ['./crear-modificar-administrativo.page.scss'],
+  selector: 'app-crear-modificar-empleados',
+  templateUrl: './crear-modificar-empleados.page.html',
+  styleUrls: ['./crear-modificar-empleados.page.scss'],
 })
-export class CrearModificarAdministrativoPage implements OnInit {
+export class CrearModificarEmpleadosPage implements OnInit {
   @Select(UsuarioState.getUsuario) usuarioState: Observable<Usuario>
   @ViewChild('fileInput')
   fileInput: ElementRef;
-  EmpleadoForm: FormGroup;
+  empleadoForm: FormGroup;
   cardHeader: string;
   imagen: Archivo = new Archivo();
   imagenHeader: string;
@@ -28,12 +29,12 @@ export class CrearModificarAdministrativoPage implements OnInit {
       private router: Router,
       private formBuilder: FormBuilder,
       private messagesService: MessagesService,
-      private administrativoService: EmpleadoService,
-      private imagenService: ArchivoService,
+      private empleadoService: EmpleadoService,
+      private archivoService: ArchivoService,
       private store: Store) { }
 
   ngOnInit() {
-    this.EmpleadoForm = this.formBuilder.group({
+    this.empleadoForm = this.formBuilder.group({
       idUsuario: [,Validators.required],
       dni: [,Validators.required],
       nombre: [, Validators.required],
@@ -49,30 +50,30 @@ export class CrearModificarAdministrativoPage implements OnInit {
 
     this.usuarioState.subscribe((usuario: Usuario) => {
       if (usuario) {
-        this.EmpleadoForm.patchValue(usuario);
+        this.empleadoForm.patchValue(usuario);
         this.imagen = usuario.imagen;
         this.imagenHeader = usuario?.imagen?.nombre;
-        this.EmpleadoForm.controls.confirmacionEmail.setValue(usuario.email);
+        this.empleadoForm.controls.confirmacionEmail.setValue(usuario.email);
       }
       else {
-        this.EmpleadoForm.reset();
+        this.empleadoForm.reset();
         this.imagenHeader = "Ningun archivo seleccionado"
       }
-      this.cardHeader = this.EmpleadoForm.value.idUsuario ? 'Modificar alumno' : 'Crear alumno';
+      this.cardHeader = this.empleadoForm.value.idUsuario ? 'Modificar alumno' : 'Crear alumno';
     });
   }
 
   validateEmail() {
-    if (this.EmpleadoForm.get('email').value !== this.EmpleadoForm.get('confirmacionEmail').value) {
-      this.EmpleadoForm.controls.confirmacionEmail.setErrors({incorrect: true});
+    if (this.empleadoForm.get('email').value !== this.empleadoForm.get('confirmacionEmail').value) {
+      this.empleadoForm.controls.confirmacionEmail.setErrors({incorrect: true});
     } else {
-      this.EmpleadoForm.controls.confirmacionEmail.setErrors(null);
+      this.empleadoForm.controls.confirmacionEmail.setErrors(null);
     }
   }
 
   setearFecha($event: string) {
     var fecha = $event.split('T');
-    this.EmpleadoForm.controls.fechaNacimiento.setValue(fecha[0]);
+    this.empleadoForm.controls.fechaNacimiento.setValue(fecha[0]);
   }
 
   clickBtn() {
@@ -85,7 +86,7 @@ export class CrearModificarAdministrativoPage implements OnInit {
     this.imagen.nombre = $event.target.files[0].name;
     this.imagenHeader = $event.target.files[0].name;
     const archivoCapturado = $event.target.files[0];
-    this.imagenService.extraerBase64(archivoCapturado).then((value: any) => {
+    this.archivoService.extraerBase64(archivoCapturado).then((value: any) => {
       this.imagen.foto = value.base;
     });
   }
@@ -96,13 +97,13 @@ export class CrearModificarAdministrativoPage implements OnInit {
   }
 
   guardarAdministrativo() {
-    if (this.EmpleadoForm.valid && this.imagen) {
-      let administrativo: Administrativo;
-      administrativo = this.EmpleadoForm.value;
-      administrativo.imagen = this.imagen;
-      this.administrativoService.guardarAdministrativo(administrativo).subscribe(rta => {
-        const estado: string = this.EmpleadoForm.value.idUsuario ? 'modificado' : 'creado';
-        this.messagesService.ventanaExitosa('Éxito', `Administrativo ${this.EmpleadoForm.value.nombre} ${estado}`);
+    if (this.empleadoForm.valid && this.imagen) {
+      let empleado: Empleado;
+      empleado = this.empleadoForm.value;
+      empleado.imagen = this.imagen;
+      this.empleadoService.guardarEmpleado(empleado).subscribe(rta => {
+        const estado: string = this.empleadoForm.value.idUsuario ? 'modificado' : 'creado';
+        this.messagesService.ventanaExitosa('Éxito', `Administrativo ${this.empleadoForm.value.nombre} ${estado}`);
         this.router.navigate(['administrar/administrativos'], {replaceUrl: true});
       }, error => {
         this.messagesService.ventanaError('Atención', 'No se pudo guardar el Administrativo');
@@ -113,7 +114,7 @@ export class CrearModificarAdministrativoPage implements OnInit {
   }
 
   ionViewDidLeave() {
-    this.EmpleadoForm.reset();
+    this.empleadoForm.reset();
     this.store.dispatch(new ResetUsuario());
   }
 

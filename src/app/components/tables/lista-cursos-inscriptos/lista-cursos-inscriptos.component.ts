@@ -1,12 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Curso} from '../../model/Curso';
-import {SetCursosInscriptos, SetCursosNoInscriptos, UsuarioLogueadoState} from '../../state/states/usuarioLogueado.state';
-import {MessagesService} from '../../services/messages.service';
-import {Select, Store} from '@ngxs/store';
-import {InscripcionService} from '../../services/inscripcion.service';
+import {Curso} from '../../../model/Curso';
+import {UsuarioLogueadoState} from '../../../state/states/usuarioLogueado.state';
+import {Select} from '@ngxs/store';
 import {Observable} from 'rxjs';
-import {Usuario} from '../../model/Usuario';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {Usuario} from '../../../model/Usuario';
 import {Router} from '@angular/router';
 
 @Component({

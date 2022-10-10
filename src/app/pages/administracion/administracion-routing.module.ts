@@ -9,12 +9,8 @@ const routes: Routes = [
     loadChildren: () => import('./cursos/cursos.module').then( m => m.CursosPageModule)
   },
   {
-    path: 'programas',
-    loadChildren: () => import('./programas/programas.module').then( m => m.ProgramasPageModule)
-  },
-  {
-    path: 'administrativos',
-    loadChildren: () => import('./usuarios/administrativos/administrativos.module').then( m => m.AdministrativosPageModule)
+    path: 'empleados',
+    loadChildren: () => import('./usuarios/empleados/empleados.module').then(m => m.EmpleadosPageModule)
   },
   {
     path: 'alumnos',

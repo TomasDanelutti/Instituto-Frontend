@@ -1,11 +1,10 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Router} from '@angular/router';
-import {MenuItem} from 'primeng/api';
+import {Router} from '@angular/router';;
 import {Select, Store} from '@ngxs/store';
 import {ResetUsuarioLogueado, UsuarioLogueadoState} from '../../state/states/usuarioLogueado.state';
 import {Observable} from 'rxjs';
 import {Rol} from '../../model/rol';
-import {Platform} from "@ionic/angular";
+import {MenuController, Platform} from "@ionic/angular";
 import {StatusBar} from "@ionic-native/status-bar/ngx";
 import {SplashScreen} from "@ionic-native/splash-screen/ngx";
 import {Usuario} from "../../model/Usuario";
@@ -26,7 +25,8 @@ export class MenuComponent implements OnInit, OnChanges {
         private splashScreen: SplashScreen,
         private statusBar: StatusBar,
         private router: Router,
-        private store: Store
+        private store: Store,
+        private menu: MenuController
     ) {
         this.initializeApp();
     }
@@ -43,6 +43,13 @@ export class MenuComponent implements OnInit, OnChanges {
             this.rolSeleccionado = value.rol;
             this.armarMenu();
         });
+    }
+
+    closeMenu() {
+        this.menu.close('menu');
+        // console.log(this.navigate.isActive())
+        this.navigate.closed();
+        this.navigate.close
     }
 
     armarMenu() {
@@ -68,7 +75,8 @@ export class MenuComponent implements OnInit, OnChanges {
                         {
                             title : 'Salir',
                             url   : '/login',
-                            icon  : 'exit'
+                            icon  : 'exit',
+
                         },
                     ];
                 break;
@@ -89,11 +97,6 @@ export class MenuComponent implements OnInit, OnChanges {
                             title : 'Mis cursos',
                             url   : '/mis-cursos',
                             icon  : 'book'
-                        },
-                        {
-                            title : 'Administrar programas',
-                            url   : '/administrar/programas',
-                            icon  : 'build'
                         },
                         {
                             title : 'Administrar cursos',
@@ -131,11 +134,6 @@ export class MenuComponent implements OnInit, OnChanges {
                             icon  : 'book'
                         },
                         {
-                            title : 'Administrar programas',
-                            url   : '/administrar/programas',
-                            icon  : 'build'
-                        },
-                        {
                             title : 'Administrar cursos',
                             url   : '/administrar/cursos',
                             icon  : 'build'
@@ -146,8 +144,8 @@ export class MenuComponent implements OnInit, OnChanges {
                             icon  : 'build'
                         },
                         {
-                            title : 'Administrar administrativos',
-                            url   : '/administrar/administrativos',
+                            title : 'Administrar empleados',
+                            url   : '/administrar/empleados',
                             icon  : 'build'
                         },
                         {
@@ -165,4 +163,12 @@ export class MenuComponent implements OnInit, OnChanges {
         });
     }
 
+
+
+    salir(title: string | HTMLTitleElement | SVGTitleElement) {
+        if (title === "Salir") {
+            this.store.dispatch(new ResetUsuarioLogueado());
+            this.router.navigate(['/login'], {replaceUrl: true});
+        }
+    }
 }

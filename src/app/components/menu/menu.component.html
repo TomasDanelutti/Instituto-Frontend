@@ -1,12 +1,19 @@
 <ion-menu side="start" menuId="first" contentId="content">
         <ion-header>
             <ion-toolbar color="primary">
+                <ion-buttons slot="end">
+                    <ion-menu-toggle>
+                        <ion-button>
+                            <ion-icon slot="icon-only" name="close"></ion-icon>
+                        </ion-button>
+                    </ion-menu-toggle>
+                </ion-buttons>
                 <ion-grid fullscreen>
                     <ion-row class="ion-justify-content-center">
                         <ion-col size-lg="12" size-md="12" size-sm="12" size-xs="12" style="margin-bottom: -13px">
                             <ion-row>
                                 <ion-col size-lg="5" size-md="5" size-sm="12" size-xs="12" style="margin-top: -8px">
-                                    <p-avatar image="{{usuario.imagen}}" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+                                    <p-avatar image="{{usuario?.imagen?.foto}}" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
                                 </ion-col>
                                 <ion-col size-lg="7" size-md="7" size-sm="12" size-xs="12" style="margin-left: -40px">
                                     <h4 style="margin-top: -5px">
@@ -25,7 +32,7 @@
         <ion-content color="light">
             <ion-list *ngFor="let pages of navigate">
                 <ion-menu-toggle auto-hide="true">
-                    <ion-item style="margin-top: -10px" [routerLink]="pages.url" routerDirection="forward">
+                    <ion-item style="margin-top: -10px" [routerLink]="pages.url" (click)="salir(pages.title)" routerDirection="forward">
                         <ion-icon [name]="pages.icon" slot="start"></ion-icon>
                         {{pages.title}}
                     </ion-item>

@@ -1,24 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
-import { AdministrativosPageRoutingModule } from './administrativos-routing.module';
-
-import { AdministrativosPage } from './administrativos.page';
+import { EmpleadosPage } from './empleados.page';
 import {PrimeNgModule} from '../../../../modules/primeng/primeng.module';
 import {CustomComponentsModule} from '../../../../modules/custom-components/custom-components.module';
+import {EmpleadosPageRoutingModule} from "./empleados-routing.module";
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        AdministrativosPageRoutingModule,
+        EmpleadosPageRoutingModule,
         PrimeNgModule,
         CustomComponentsModule
     ],
-  declarations: [AdministrativosPage]
+  declarations: [EmpleadosPage]
 })
-export class AdministrativosPageModule {}
+export class EmpleadosPageModule {}

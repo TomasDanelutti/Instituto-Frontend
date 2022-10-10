@@ -15,16 +15,16 @@ import {PrimeNgModule} from '../../modules/primeng/primeng.module';
 
 @NgModule({
     imports: [
+        LoginPageRoutingModule,
+        ToggleButtonModule,
+        CardModule,
+        InputTextModule,
+        ReactiveFormsModule,
         CommonModule,
         FormsModule,
         IonicModule,
-        PrimeNgModule,
         CustomComponentsModule,
-        LoginPageRoutingModule,
-        ReactiveFormsModule,
-        ToggleButtonModule,
-        CardModule,
-        InputTextModule
+        PrimeNgModule,
     ],
   declarations: [LoginPage]
 })

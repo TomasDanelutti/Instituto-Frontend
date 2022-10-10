@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AdministrativosPage } from './administrativos.page';
+import { EmpleadosPage } from './empleados.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: AdministrativosPage
+    component: EmpleadosPage
   },
   {
-    path: 'crear-modificar-administrativo',
-    loadChildren: () => import('./crear-modificar-administrativo/crear-modificar-administrativo.module').then( m => m.CrearModificarAdministrativoPageModule)
+    path: 'crear-modificar-empleado',
+    loadChildren: () => import('./crear-modificar-empleados/crear-modificar-empleados.module').then(m => m.CrearModificarEmpleadosPageModule)
   }
 ];
 
@@ -18,4 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AdministrativosPageRoutingModule {}
+export class EmpleadosPageRoutingModule {}

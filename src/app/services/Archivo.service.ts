@@ -4,7 +4,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 @Injectable({
   providedIn: 'root'
 })
-export class ImagenService {
+export class ArchivoService {
 
   constructor(private sanitizer: DomSanitizer) { }
 

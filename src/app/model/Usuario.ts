@@ -1,9 +1,9 @@
 import {Rol} from './rol';
+import {Archivo} from "./Archivo";
 
 export class Usuario {
   idUsuario: number;
   dni: number;
-  clave: string;
   nombre: string;
   apellido: string;
   domicilio: string;
@@ -11,5 +11,6 @@ export class Usuario {
   email: string;
   genero: string;
   rol: Rol;
-  imagen: string;
+  fechaNacimiento: Date;
+  imagen: Archivo;
 }

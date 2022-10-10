@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {Usuario} from '../../../../model/Usuario';
 import {ColumnaTable} from "../../cursos/cursos.page";
-import {EmpleadoService} from "../../../../services/Empleado.service";
 import {Alumno} from "../../../../model/Alumno";
 import {SetUsuarioAction} from "../../../../state/states/usuario.state";
 import {Store} from "@ngxs/store";
 import {Empleado} from "../../../../model/Empleado";
+import {EmpleadoService} from "../../../../services/empleado.service";
 
 @Component({
-  selector: 'app-administrativos',
-  templateUrl: './administrativos.page.html',
-  styleUrls: ['./administrativos.page.scss'],
+  selector: 'app-empleados',
+  templateUrl: './empleados.page.html',
+  styleUrls: ['./empleados.page.scss'],
 })
-export class AdministrativosPage implements OnInit {
+export class EmpleadosPage implements OnInit {
   empleados: Usuario[] = [];
   cols: ColumnaTable[];
   totalRegistrosBackend = 1;
@@ -60,11 +60,11 @@ export class AdministrativosPage implements OnInit {
     const alumnoSeleccionado = this.empleados.find(
         (alumnoSelected: Alumno) => idUsuario === alumnoSelected.idUsuario);
     this.store.dispatch(new SetUsuarioAction(alumnoSeleccionado));
-    this.router.navigate(['administrar/administrativos/crear-modificar-administrativo'], { replaceUrl: true });
+    this.router.navigate(['administrar/administrativos/crear-modificar-empleado']);
   }
 
   crearAdministrativo() {
-      this.router.navigate(['administrar/administrativos/crear-modificar-administrativo'], {replaceUrl: true});
+      this.router.navigate(['administrar/administrativos/crear-modificar-empleado']);
   }
 
   buscar(buscador: any) {

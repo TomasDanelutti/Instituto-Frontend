@@ -6,7 +6,7 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="8" size-md="8" size-sm="12" size-xs="12">
         <p-card header="Crear o modificar administrativo">
-          <form [formGroup]="administrativoForm">
+          <form [formGroup]="empleadoForm">
             <ion-row style="margin-bottom: 1em">
               <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12">
                <span class="p-float-label">
@@ -74,7 +74,7 @@
               </ion-col>
               <ion-col size-lg="3" size-md="3" size-sm="12" size-xs="12">
                 <ion-button size="small" (click)="clickBtn()">
-                  <label>Subir Imagen </label>
+                  <label>Subir Foto </label>
                   <ion-icon name="cloud-upload-outline"></ion-icon>
                   <input #fileInput hidden type="file" (change)="capturarFoto($event)">
                 </ion-button>
