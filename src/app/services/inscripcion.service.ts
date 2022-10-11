@@ -4,7 +4,7 @@ import {Curso} from '../model/Curso';
 import {HttpClient} from '@angular/common/http';
 import {Respuesta} from '../model/respuesta';
 import {Usuario} from '../model/Usuario';
-import {Inscripcion} from '../model/Inscripcion';
+import {InscripcionDTO} from "../model/InscripcionDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,8 @@ export class InscripcionService {
 
   constructor(private httpClient: HttpClient) { }
 
-  inscribirse(inscripcion: Inscripcion): Observable<Respuesta<string>> {
-    return this.httpClient.post<Respuesta<string>>('inscripcion/insc/' , inscripcion);
+  inscribirse(inscripcionDTO: InscripcionDTO): Observable<Respuesta<string>> {
+    return this.httpClient.post<Respuesta<string>>('inscripcion/insc/' , inscripcionDTO);
   }
 
   login(dni: string, clave: string): Observable<Usuario> {
