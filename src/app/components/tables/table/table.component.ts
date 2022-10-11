@@ -5,11 +5,11 @@ import {Table} from "primeng/table";
 import {MessagesService} from "../../../services/messages.service";
 
 @Component({
-  selector: 'app-tabla-abms',
-  templateUrl: './tabla-abms.component.html',
-  styleUrls: ['./tabla-abms.component.scss'],
+  selector: 'app-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.scss'],
 })
-export class TablaAbmsComponent {
+export class TableComponent {
   @ViewChild(Table)
   private table: Table;
 

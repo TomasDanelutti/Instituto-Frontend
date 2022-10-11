@@ -13,7 +13,7 @@
           <img width="50px" style="margin-top: -5px; margin-bottom: -10px" [src]="curso.imagen">
         </td>
         <td>{{ curso.nombre }}</td>
-        <td>{{ curso.profesor }}</td>
+        <td>{{ curso.profesor.nombre }}</td>
         <td>
           <ion-button *ngIf="!curso.inscripto" color="secondary" size="small" pTooltip="Inscribirse"
                       (click)="inscribirse(curso)">

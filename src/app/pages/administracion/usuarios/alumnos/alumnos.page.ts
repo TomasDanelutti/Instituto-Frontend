@@ -24,7 +24,7 @@ export class AlumnosPage implements OnInit {
               private store: Store) { }
 
   ngOnInit() {
-    this.cols = [{field: 'nombre', header: 'Nombre'},{field: 'apellido', header: 'Apellido'}];
+    this.cols = [{field: 'nombre', header: 'Nombre'},{field: 'apellido', header: 'Apellido'}, {field: 'dni', header: 'DNI'}];
     this.paginador = true;
   }
 
@@ -36,9 +36,10 @@ export class AlumnosPage implements OnInit {
       value.forEach((item: Alumno) => {
         const auxObjeto = {
           id: item.idUsuario,
-          imagen: item.imagen?.foto,
+          imagen: item.imagen.foto,
           nombre: item.nombre,
-          apellido: item.apellido
+          apellido: item.apellido,
+          dni: item.dni
         };
         this.alumnosTable.push(auxObjeto);
       });
@@ -75,15 +76,16 @@ export class AlumnosPage implements OnInit {
         value.forEach((item: Alumno) => {
           const auxObjeto = {
             id: item.idUsuario,
-            imagen: item.imagen?.foto,
+            imagen: item.imagen.foto,
             nombre: item.nombre,
-            apellido: item.apellido
+            apellido: item.apellido,
+            dni: item.dni
           };
           this.alumnosTable.push(auxObjeto);
         });
       });
     } else {
-      this.buscarAlumnosPaginados(0, 5);
+      this.buscarAlumnosPaginados(this.page, 5);
       this.paginador = true;
     }
   }

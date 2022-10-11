@@ -43,9 +43,9 @@ export class CursosPage implements OnInit {
         const auxObjeto = {
           id: item.idCurso,
           nombre: item.nombre,
-          profesor: item.profesor,
+          profesor: item.profesor.nombre,
           turno: item.turno,
-          imagen: item.imagen
+          imagen: item.imagen.foto
         };
         this.cursosTable.push(auxObjeto);
       });
@@ -94,9 +94,9 @@ export class CursosPage implements OnInit {
           const auxObjeto = {
             id: item.idCurso,
             nombre: item.nombre,
-            profesor: item.profesor,
+            profesor: item.profesor.nombre,
             turno: item.turno,
-            imagen: item.imagen
+            imagen: item.imagen.foto
           };
           this.cursosTable.push(auxObjeto);
           this.paginador = false;

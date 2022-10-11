@@ -8,6 +8,7 @@ import {UsuarioLogueadoState} from "../../../state/states/usuarioLogueado.state"
 import {Observable} from "rxjs";
 import {Usuario} from "../../../model/Usuario";
 import {MessagesService} from "../../../services/messages.service";
+import {InscripcionDTO} from "../../../model/InscripcionDTO";
 
 @Component({
   selector: 'app-tabla-lista-cursos',
@@ -30,10 +31,11 @@ export class TablaListaCursosComponent implements OnInit {
 
   inscribirse(curso: Curso) {
     console.log(curso)
-    let inscripcion: Inscripcion;
-    inscripcion.Curso = curso;
-    inscripcion.Usuario = this.usuario;
-    this.inscripcionService.inscribirse(inscripcion).subscribe(() => {
+    let inscripcionDTO: InscripcionDTO = new InscripcionDTO();
+    inscripcionDTO.idCurso = curso.idCurso;
+    inscripcionDTO.idUsuario = this.usuario.idUsuario;
+    console.log(inscripcionDTO)
+    this.inscripcionService.inscribirse(inscripcionDTO).subscribe(() => {
       this.messagesService.ventanaExitosa('Éxito', `Te has inscripto correctamente al curso ${curso.nombre}`);
     },error => this.messagesService.ventanaError('Atención', 'Ha ocurrido un error con tu inscripcion. Por favor contactate con  bedelia. Gracias'));
 

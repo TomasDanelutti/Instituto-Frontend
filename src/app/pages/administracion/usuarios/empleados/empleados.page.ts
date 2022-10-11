@@ -26,8 +26,12 @@ export class EmpleadosPage implements OnInit {
               private store: Store) { }
 
   ngOnInit() {
-    this.cols = [{field: 'nombre', header: 'Nombre'},{field: 'apellido', header: 'Apellido'}];
+    this.cols = [{field: 'nombre', header: 'Nombre'},{field: 'apellido', header: 'Apellido'},  {field: 'dni', header: 'DNI'} ,{field: 'puesto', header: 'Puesto'}];
     this.paginador = true;
+  }
+
+  ionViewWillEnter() {
+    this.buscarAdministrativosPaginados(this.page,5);
   }
 
   buscarAdministrativosPaginados(numPage: number, cant: number) {
@@ -40,7 +44,9 @@ export class EmpleadosPage implements OnInit {
           id: item.idUsuario,
           imagen: item.imagen?.foto,
           nombre: item.nombre,
-          apellido: item.apellido
+          apellido: item.apellido,
+          puesto: item.puesto,
+          dni: item.dni
         };
         this.empleadosTable.push(auxObjeto);
       });
@@ -60,11 +66,11 @@ export class EmpleadosPage implements OnInit {
     const alumnoSeleccionado = this.empleados.find(
         (alumnoSelected: Alumno) => idUsuario === alumnoSelected.idUsuario);
     this.store.dispatch(new SetUsuarioAction(alumnoSeleccionado));
-    this.router.navigate(['administrar/administrativos/crear-modificar-empleado']);
+    this.router.navigate(['administrar/empleados/crear-modificar-empleado']);
   }
 
   crearAdministrativo() {
-      this.router.navigate(['administrar/administrativos/crear-modificar-empleado']);
+      this.router.navigate(['administrar/empleados/crear-modificar-empleado']);
   }
 
   buscar(buscador: any) {
@@ -79,13 +85,15 @@ export class EmpleadosPage implements OnInit {
             id: item.idUsuario,
             imagen: item.imagen?.foto,
             nombre: item.nombre,
-            apellido: item.apellido
+            apellido: item.apellido,
+            puesto: item.puesto,
+            dni: item.dni
           };
           this.empleadosTable.push(auxObjeto);
         });
       });
     } else {
-      this.buscarAdministrativosPaginados(0, 5);
+      this.buscarAdministrativosPaginados(this.page, 5);
       this.paginador = true;
     }
   }
