@@ -35,7 +35,7 @@ export class CrearModificarEmpleadosPage implements OnInit {
 
   ngOnInit() {
     this.empleadoForm = this.formBuilder.group({
-      idUsuario: [,Validators.required],
+      idUsuario: [],
       dni: [,Validators.required],
       nombre: [, Validators.required],
       apellido: [, Validators.required],
@@ -46,6 +46,7 @@ export class CrearModificarEmpleadosPage implements OnInit {
       genero: [, Validators.required],
       domicilio: [, Validators.required],
       sueldo: [, Validators.required],
+      puesto: [, Validators.required]
     });
 
     this.usuarioState.subscribe((usuario: Usuario) => {
@@ -54,12 +55,17 @@ export class CrearModificarEmpleadosPage implements OnInit {
         this.imagen = usuario.imagen;
         this.imagenHeader = usuario?.imagen?.nombre;
         this.empleadoForm.controls.confirmacionEmail.setValue(usuario.email);
+        this.empleadoForm.controls.dni.disable();
+        this.empleadoForm.controls.nombre.disable();
+        this.empleadoForm.controls.apellido.disable();
+        this.empleadoForm.controls.fechaNacimiento.disable();
+        this.empleadoForm.controls.genero.disable();
       }
       else {
         this.empleadoForm.reset();
         this.imagenHeader = "Ningun archivo seleccionado"
       }
-      this.cardHeader = this.empleadoForm.value.idUsuario ? 'Modificar alumno' : 'Crear alumno';
+      this.cardHeader = this.empleadoForm.value.idUsuario ? 'Modificar empleado' : 'Crear empleado';
     });
   }
 
@@ -93,18 +99,18 @@ export class CrearModificarEmpleadosPage implements OnInit {
 
 
   volver() {
-    this.router.navigate(['administrar/administrativos'], {replaceUrl: true});
+    this.router.navigate(['administrar/empleados'], {replaceUrl: true});
   }
 
   guardarAdministrativo() {
-    if (this.empleadoForm.valid && this.imagen) {
+    if (this.empleadoForm.valid) {
       let empleado: Empleado;
       empleado = this.empleadoForm.value;
       empleado.imagen = this.imagen;
       this.empleadoService.guardarEmpleado(empleado).subscribe(rta => {
         const estado: string = this.empleadoForm.value.idUsuario ? 'modificado' : 'creado';
         this.messagesService.ventanaExitosa('Éxito', `Administrativo ${this.empleadoForm.value.nombre} ${estado}`);
-        this.router.navigate(['administrar/administrativos'], {replaceUrl: true});
+        this.router.navigate(['administrar/empleados'], {replaceUrl: true});
       }, error => {
         this.messagesService.ventanaError('Atención', 'No se pudo guardar el Administrativo');
       });
@@ -113,7 +119,7 @@ export class CrearModificarEmpleadosPage implements OnInit {
     }
   }
 
-  ionViewDidLeave() {
+  ionViewWillLeave() {
     this.empleadoForm.reset();
     this.store.dispatch(new ResetUsuario());
   }

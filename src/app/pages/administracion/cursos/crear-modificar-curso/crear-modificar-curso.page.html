@@ -6,7 +6,7 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="8" size-md="8" size-sm="12" size-xs="12">
         <p-card header="{{cardHeader}}">
-          <form [formGroup]="formulario">
+          <form [formGroup]="cursoForm">
             <ion-row>
               <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12" style="margin-top: 15px">
                   <span class="p-float-label">
@@ -22,40 +22,83 @@
 
               <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12" style="margin-top: 15px">
               <span class="p-float-label">
-                  <app-programa formControlName="programa"></app-programa>
+                  <app-profesor formControlName="profesor"></app-profesor>
               </span>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12" style="margin-top: 15px">
-                  <span class="p-float-label">
-                    <input type="number" formControlName="cupoMinimo" pInputText [style]="{'minWidth':'100%', 'width': '100%'}">
-                    <label>Cupo minimo *</label>
-                  </span>
+               <span class="p-float-label">
+                 <input formControlName="cupoMinimo" oninput="this.value=this.value.replace(/[^\d]/,'')" minlength="1" maxlength="2" type="text" pInputText [style]="{'minWidth':'100%', 'width': '100%'}">
+                 <label>Cupo minimo *</label>
+             </span>
               </ion-col>
               <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12" style="margin-top: 15px">
-                  <span class="p-float-label">
-                    <input type="number" formControlName="cupoMaximo" pInputText [style]="{'minWidth':'100%', 'width': '100%'}">
-                    <label>Cupo maximo *</label>
-                  </span>
+               <span class="p-float-label">
+                 <input formControlName="cupoMaximo" oninput="this.value=this.value.replace(/[^\d]/,'')" minlength="1" maxlength="2" type="text" pInputText [style]="{'minWidth':'100%', 'width': '100%'}">
+                 <label>Cupo maximo *</label>
+             </span>
               </ion-col>
               <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12" style="margin-top: 15px">
-                 <span class="p-float-label">
-                    <input type="text" pInputText formControlName="profesor" [style]="{'minWidth':'100%', 'width': '100%'}">
-                    <label>Docente *</label>
-                  </span>
+                  <app-fecha (fechaSeleccionada)="setearFechaInicio($event)" [fechaPadre]="cursoForm.controls.fechaInicio.value"  label="Fecha de Inicio *"></app-fecha>
               </ion-col>
             </ion-row>
-            <ion-row>
-
-                <ion-col size-lg="12" size-md="12" size-sm="12" size-xs="12" style="margin-top: 15px">
-                    <ion-button size="small" (click)="clickBtn()">
-                        <label>Subir Imagen</label>
-                        <ion-icon name="cloud-upload-outline"></ion-icon>
-                        <input #fileInput hidden type="file" (change)="capturarFoto($event)">
-                    </ion-button>
-                </ion-col>
-            </ion-row>
+              <ion-row>
+                  <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12" style="margin-top: 15px">
+                      <app-fecha (fechaSeleccionada)="setearFechaFinalizacion($event)" [fechaPadre]="cursoForm.controls.fechaFinalizacion.value" label="Fecha de Finalizacion *"></app-fecha>
+                  </ion-col>
+                  <ion-col size-lg="8" size-md="8" size-sm="12" size-xs="12" style="margin-top: 1em">
+                      <span class="p-float-label">
+                          <textarea pInputTextarea formControlName="horario" id="tareasARealizar" [rows]="1"
+                                    [style]="{'minWidth':'100%', 'width': '100%'}"></textarea>
+                          <label for="tareasARealizar">Horario *</label>
+                      </span>
+                  </ion-col>
+              </ion-row>
+              <ion-row>
+                  <ion-col size-lg="3" size-md="3" size-sm="12" size-xs="12" style="margin-top: 1em">
+                      <ion-button size="small" (click)="clickBtn()">
+                          <label>Subir Foto </label>
+                          <ion-icon name="cloud-upload-outline"></ion-icon>
+                          <input #fileInput hidden type="file" (change)="capturarPrograma($event)">
+                      </ion-button>
+                  </ion-col>
+                  <ion-col size-lg="5" size-md="5" size-sm="12" size-xs="12" style="margin-top: 1.5em">
+                      <label>{{imagenHeader}}</label>
+                  </ion-col>
+              </ion-row>
+              <br>
+              <p-accordion>
+                  <p-accordionTab header="Modalidad">
+                      <ion-row>
+                          <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12" style="margin-top: 15px">
+                              <app-modalidad formControlName="modalidad" (click)="cambiarModalidad($event.target.innerText)"></app-modalidad>
+                          </ion-col>
+                          <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12" style="margin-top: 15px">
+                              <span class="p-float-label">
+                                  <input type="text" formControlName="aula" pInputText [style]="{'minWidth':'100%', 'width': '100%'}">
+                                  <label>Aula *</label>
+                              </span>
+                          </ion-col>
+                      </ion-row>
+                  </p-accordionTab>
+              </p-accordion>
+              <p-accordion>
+                  <p-accordionTab header="Programa">
+                      <ion-row>
+                          <ion-col size-lg="4" size-md="4" size-sm="12" size-xs="12" style="margin-top: 1em">
+                              <ion-button size="small" (click)="clickBtn()">
+                                  <label>Subir Programa </label>
+                                  <ion-icon name="cloud-upload-outline"></ion-icon>
+                                  <input #fileInput hidden type="file" (change)="capturarPrograma($event)">
+                              </ion-button>
+                          </ion-col>
+                          <ion-col size-lg="5" size-md="5" size-sm="12" size-xs="12" style="margin-top: 1.5em">
+                              <label>{{programaHeader}}</label>
+                          </ion-col>
+                      </ion-row>
+                  </p-accordionTab>
+              </p-accordion>
           </form>
         </p-card>
         <div class="p-grid">

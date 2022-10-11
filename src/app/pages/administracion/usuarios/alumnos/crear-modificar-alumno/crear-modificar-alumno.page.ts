@@ -37,7 +37,7 @@ export class CrearModificarAlumnoPage implements OnInit {
 
   ngOnInit() {
     this.alumnoForm = this.formBuilder.group({
-      idUsuario: [,Validators.required],
+      idUsuario: [],
       dni: [,Validators.required],
       nombre: [, Validators.required],
       apellido: [, Validators.required],
@@ -80,7 +80,7 @@ export class CrearModificarAlumnoPage implements OnInit {
   }
 
   guardarAlumno() {
-    if (this.alumnoForm.valid && this.imagen) {
+    if (this.alumnoForm.valid) {
       let alumno: Alumno;
       alumno = this.alumnoForm.value;
       alumno.imagen = this.imagen;

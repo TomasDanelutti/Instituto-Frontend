@@ -20,10 +20,12 @@ export class CrearModificarCursoPage implements OnInit {
   fileInput: ElementRef;
   @Select(CursoState.getCurso) cursoState: Observable<Curso>;
   archivos: any = [];
-  formulario: FormGroup;
+  cursoForm: FormGroup;
   cardHeader: string;
   imagen: Archivo = new Archivo();
+  programa: Archivo = new Archivo();
   imagenHeader: string;
+  programaHeader: string;
   constructor(
       private router: Router,
       private formBuilder: FormBuilder,
@@ -33,48 +35,36 @@ export class CrearModificarCursoPage implements OnInit {
       private store: Store) { }
 
   ngOnInit() {
-    this.formulario = this.formBuilder.group({
+    this.cursoForm = this.formBuilder.group({
       idCurso: [],
       nombre: [Validators.required],
       turno: [Validators.required],
-      programa: [Validators.required],
+      profesor: [Validators.required],
       cupoMinimo: [Validators.required],
       cupoMaximo: [Validators.required],
-      profesor: [Validators.required],
-      imagen: []
+      fechaInicio: [Validators.required],
+      fechaFinalizacion: [Validators.required],
+      horario: [Validators.required],
+      modalidad: [Validators.required],
+      aula: []
     });
     this.cursoState.subscribe(curso => {
       if (curso) {
-        this.formulario.patchValue(curso);
+        this.cursoForm.patchValue(curso);
+        this.programa = curso.programa
+        this.programaHeader = curso?.programa?.nombre
         this.imagen = curso.imagen;
         this.imagenHeader = curso?.imagen?.nombre;
+        // this.cursoForm.controls.modalidad.value = "Virtual" ? this.cursoForm.controls.aula.enable() : this.cursoForm.controls.aula.disable();
       }
       else {
-        this.imagenHeader = "Ningun archivo seleccionado"
-        this.formulario.reset();
+        this.imagenHeader = "Ningun archivo seleccionado";
+        this.programaHeader = "Ningun archivo seleccionado";
+        this.cursoForm.reset();
       }
-      this.cardHeader = this.formulario.value.idCurso ? 'Modificar curso' : 'Crear curso';
+      this.cardHeader = this.cursoForm.value.idCurso ? 'Modificar curso' : 'Crear curso';
+      this.cursoForm.controls.aula.disable();
     });
-  }
-
-  volver() {
-    this.router.navigate(['/administrar/cursos'], {replaceUrl: true});
-  }
-  guardarCurso() {
-    if (this.formulario.valid || this.imagen) {
-      let curso: Curso;
-      curso = this.formulario.value;
-      curso.imagen = this.imagen
-      this.cursoService.guardarCurso(curso).subscribe(rta => {
-        const estado: string = this.formulario.value.idCurso ? 'modificado' : 'creado';
-        this.messagesService.ventanaExitosa('Éxito', `Curso ${this.formulario.value.nombre} ${estado}`);
-        this.router.navigate(['/administrar/cursos'], {replaceUrl: true});
-      }, error => {
-        this.messagesService.ventanaErrorConFooter('Atención', 'No se pudo guardar el curso');
-      });
-    } else {
-      this.messagesService.ventanaError('Atención', 'formulario invalido');
-    }
   }
 
   clickBtn() {
@@ -92,8 +82,59 @@ export class CrearModificarCursoPage implements OnInit {
     });
   }
 
+  capturarPrograma($event): any {
+    this.programa.nombre = $event.target.files[0].name;
+    this.programaHeader = $event.target.files[0].name;
+    const archivoCapturado = $event.target.files[0];
+    this.archivoService.extraerBase64(archivoCapturado).then((value: any) => {
+      this.programa.foto = value.base;
+    });
+  }
+
+  cambiarModalidad($event: Event) {
+    if ($event.toString() == "Presencial" || $event.toString() == "SemiPresencial") {
+      this.cursoForm.controls.aula.enable();
+      this.cursoForm.controls.aula.addValidators(Validators.required);
+    }
+    else {
+      this.cursoForm.controls.aula.disable();
+    }
+  }
+
+  setearFechaInicio($event: string) {
+    var fecha = $event.split('T');
+    this.cursoForm.controls.fechaInicio.setValue(fecha[0]);
+  }
+
+  setearFechaFinalizacion($event: string) {
+    var fecha = $event.split('T');
+    this.cursoForm.controls.fechaFinalizacion.setValue(fecha[0]);
+  }
+
+  volver() {
+    this.router.navigate(['/administrar/cursos'], {replaceUrl: true});
+  }
+
+  guardarCurso() {
+    if (this.cursoForm.valid && this.programa.foto) {
+      let curso: Curso;
+      curso = this.cursoForm.value;
+      curso.imagen = this.imagen;
+      curso.programa = this.programa;
+      this.cursoService.guardarCurso(curso).subscribe(rta => {
+        const estado: string = this.cursoForm.value.idCurso ? 'modificado' : 'creado';
+        this.messagesService.ventanaExitosa('Éxito', `Curso ${this.cursoForm.value.nombre} ${estado}`);
+        this.router.navigate(['/administrar/cursos'], {replaceUrl: true});
+      }, error => {
+        this.messagesService.ventanaErrorConFooter('Atención', 'No se pudo guardar el curso');
+      });
+    } else {
+      this.messagesService.ventanaError('Atención', 'Formulario invalido');
+    }
+  }
+
   ionViewDidLeave() {
-    this.formulario.reset();
+    this.cursoForm.reset();
     this.store.dispatch(new ResetCurso());
   }
 }
