@@ -6,7 +6,7 @@
         <ion-row style="margin-top: -28px; margin-left: 30px" class="product-name">{{curso.nombre}}</ion-row>
         <ion-item-divider style="margin-top: -25px"></ion-item-divider>
         <br>
-        <img *ngIf="curso.imagen" [src]="curso.imagen" style="height: 130px; width: 425px">
+        <img *ngIf="curso.imagen?.foto" [src]="curso.imagen" style="height: 130px; width: 425px">
         <p-accordion>
           <p-accordionTab header="Mas informacion">
             <div>
@@ -29,15 +29,15 @@
                 </ion-row>
                 <ion-row class="ion-align-items-center">
                   <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
-                    <label>Fecha inicio: {{curso.aula}}</label>
+                    <label>Fecha inicio: {{curso.fechaInicio}}</label>
                   </ion-col>
                   <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
-                    <label>Fecha fin: {{curso.duracion}}</label>
+                    <label>Fecha fin: {{curso.fechaFinalizacion}}</label>
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-align-items-start">
                   <ion-col size-lg="12" size-md="12" size-sm="12" size-xs="12">
-                    <label style="margin-right: 150px">Horario: {{curso.aula}}</label>
+                    <label style="margin-right: 150px">Horario: {{curso.horario}}</label>
                   </ion-col>
                 </ion-row>
               </ion-col>

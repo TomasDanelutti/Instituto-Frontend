@@ -1,5 +1,4 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-
 import {IonicModule} from '@ionic/angular';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -14,10 +13,14 @@ import {ListaCursosInscriptosComponent
 import {DialogDocenteComponent} from "../../components/Dialogs/dialog-docente/dialog-docente.component";
 import {DialogModule} from "primeng/dialog";
 import {AvatarModule} from "primeng/avatar";
-import {TablaAbmsComponent} from "../../components/tables/tabla-abms/tabla-abms.component";
 import {TablaListaCursosComponent} from "../../components/tables/tabla-lista-cursos/tabla-lista-cursos.component";
 import {LoadingComponent} from "../../components/loading/loading.component";
 import {InputNumberModule} from "primeng/inputnumber";
+import {PuestoComponent} from "../../components/dropdowns/puesto/puesto.component";
+import {TableComponent} from "../../components/tables/table/table.component";
+import {ProfesorComponent} from "../../components/dropdowns/profesor/profesor.component";
+import {AdministrativoComponent} from "../../components/dropdowns/administrativo/administrativo.component";
+import {ModalidadComponent} from "../../components/dropdowns/modalidad/modalidad.component";
 
 ;
 @NgModule({
@@ -29,9 +32,13 @@ import {InputNumberModule} from "primeng/inputnumber";
         FechaComponent,
         ListaCursosInscriptosComponent,
         DialogDocenteComponent,
-        TablaAbmsComponent,
+        TableComponent,
         TablaListaCursosComponent,
         LoadingComponent,
+        PuestoComponent,
+        ProfesorComponent,
+        AdministrativoComponent,
+        ModalidadComponent
     ],
     imports: [
         CommonModule,
@@ -51,9 +58,13 @@ import {InputNumberModule} from "primeng/inputnumber";
         FechaComponent,
         ListaCursosInscriptosComponent,
         DialogDocenteComponent,
-        TablaAbmsComponent,
+        TableComponent,
         TablaListaCursosComponent,
         LoadingComponent,
+        PuestoComponent,
+        ProfesorComponent,
+        AdministrativoComponent,
+        ModalidadComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
