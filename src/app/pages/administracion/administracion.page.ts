@@ -10,6 +10,7 @@ import {InscripcionService} from '../../services/inscripcion.service';
 })
 export class AdministracionPage implements OnInit {
   ngOnInit(): void {
+
   }
 
 
