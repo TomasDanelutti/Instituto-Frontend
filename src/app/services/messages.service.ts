@@ -199,4 +199,31 @@ export class MessagesService {
       allowEscapeKey: false
     });
   }
+
+  async ventanaVerificacionTelefono(){
+    const { value: text } = await Swal.fire({
+      icon: 'warning',
+      title: 'Atención',
+      text: 'Lamentamos que quieras desinscribirte del curso. Podrias indicarnos el motivo por favor',
+      input: 'text',
+      inputPlaceholder: 'Ingrese el motivo aqui.',
+      // (Debe ir sin el 0 y sin el 15. Ej: 1122334455)
+      inputAttributes: {
+      },
+      confirmButtonColor: '#1262e0',
+      denyButtonColor: '#90a4ae',
+      showCancelButton: true,
+      heightAuto: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Enviar solicitud',
+      inputValidator: (value) => {
+        if (value.length === 0) {
+          return 'El motivo es obligatorio'
+        }
+      }
+    })
+    return text;
+  }
 }

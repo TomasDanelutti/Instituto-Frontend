@@ -1,0 +1,11 @@
+<span class="p-input-icon-right p-float-label" style="width:100%">
+    <i class="{{passwordIcon}}" (click)="toggleMostrarPassword()"></i>
+    <input type="password"
+        [feedback]="mostrarFeedback" [id]="labelClave" [formControl]="password"
+        [showPassword]="mostrarPassword"
+        style="width:100%" minlength="6"
+        promptLabel="Escriba una contraseña. Mínimo seis carácteres."
+        weakLabel="Su contraseña no es segura"
+        mediumLabel="Su contraseña es poco segura" strongLabel="Su contraseña es segura" pPassword />
+    <label [for]="labelClave">{{labelClave}} *</label>
+</span>

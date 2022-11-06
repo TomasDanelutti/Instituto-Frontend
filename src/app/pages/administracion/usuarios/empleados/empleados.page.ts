@@ -26,7 +26,7 @@ export class EmpleadosPage implements OnInit {
               private store: Store) { }
 
   ngOnInit() {
-    this.cols = [{field: 'nombre', header: 'Nombre'},{field: 'apellido', header: 'Apellido'},  {field: 'dni', header: 'DNI'} ,{field: 'puesto', header: 'Puesto'}];
+    this.cols = [{field: 'nombre', header: 'Nombre'},{field: 'apellido', header: 'Apellido'},  {field: 'dni', header: 'DNI'} ,{field: 'puesto', header: 'Puesto'} ,{field: 'activo', header: 'Estado'}];
     this.paginador = true;
   }
 
@@ -46,7 +46,8 @@ export class EmpleadosPage implements OnInit {
           nombre: item.nombre,
           apellido: item.apellido,
           puesto: item.puesto,
-          dni: item.dni
+          dni: item.dni,
+          activo: item.activo ? "Activo" : "Inactivo"
         };
         this.empleadosTable.push(auxObjeto);
       });
@@ -87,7 +88,8 @@ export class EmpleadosPage implements OnInit {
             nombre: item.nombre,
             apellido: item.apellido,
             puesto: item.puesto,
-            dni: item.dni
+            dni: item.dni,
+            activo: item.activo ? "Activo" : "Inactivo"
           };
           this.empleadosTable.push(auxObjeto);
         });

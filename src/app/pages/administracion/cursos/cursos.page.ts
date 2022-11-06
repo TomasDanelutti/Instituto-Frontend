@@ -37,6 +37,7 @@ export class CursosPage implements OnInit {
 
   buscarCursosPaginados(numPage: number, cant: number) {
     this.cursoService.getCursosPaginado(numPage, cant).subscribe(cursos => {
+      console.log(cursos)
       this.cursos = cursos;
       this.cursosTable = [];
       cursos.forEach((item: Curso) => {

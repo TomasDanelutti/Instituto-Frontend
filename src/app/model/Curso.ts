@@ -16,5 +16,7 @@ export class Curso {
     cupoMinimo: number;
     profesor: Empleado;
     imagen: Archivo;
+    estado: string;
+    activo: boolean;
 
 }

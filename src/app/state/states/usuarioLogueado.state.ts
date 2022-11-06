@@ -15,20 +15,6 @@ export class SetUsuarioLogueadoAction {
     }
 }
 
-export class SetCursosInscriptos {
-    static readonly type = '[UsuarioLogueado] buscar cursos del usuario';
-
-    constructor(public idUsuario: number) {
-    }
-}
-
-export class SetCursosNoInscriptos {
-    static readonly type = '[UsuarioLogueado] buscar cursos a los cual el usuario no esta inscripto';
-
-    constructor(public idUsuario: number) {
-    }
-}
-
 @Reseteable
 export class ResetUsuarioLogueado {
     static readonly type = '[UsuarioLogueado] Resetear usuario';
@@ -39,14 +25,10 @@ export class ResetUsuarioLogueado {
 
 export class UsuarioLogueadoModel {
     public usuario: Usuario;
-    public cursosInscriptos: Curso[];
-    public cursosNoInscriptos: Curso[];
 }
 
 const usuarioLogueadoStateDefault: UsuarioLogueadoModel = {
     usuario: null,
-    cursosInscriptos: [],
-    cursosNoInscriptos: [],
 };
 
 @State<UsuarioLogueadoModel>({
@@ -67,16 +49,6 @@ export class UsuarioLogueadoState {
     }
 
     @Selector()
-    static getCursosInscriptos(state: UsuarioLogueadoModel): Curso[] {
-        return state.cursosInscriptos;
-    }
-
-    @Selector()
-    static getCursosNoInscriptos(state: UsuarioLogueadoModel): Curso[] {
-        return state.cursosNoInscriptos
-    }
-
-    @Selector()
     static getRol(state: UsuarioLogueadoModel): Rol {
         return state.usuario.rol;
     }
@@ -86,19 +58,6 @@ export class UsuarioLogueadoState {
         ctx.patchState({ usuario: action.usuario });
     }
 
-    @Action(SetCursosInscriptos)
-    setCursosInscriptos(ctx: StateContext<UsuarioLogueadoModel>, action: SetCursosInscriptos) {
-        return this.cursosService.getCursoInscriptosByUsuario(action.idUsuario).pipe(tap(value => {
-            ctx.patchState({ cursosInscriptos: value });
-        }))
-    }
-
-    @Action(SetCursosNoInscriptos)
-    setCursosNpInscriptos(ctx: StateContext<UsuarioLogueadoModel>, action: SetCursosInscriptos) {
-        return this.cursosService.getCursoNoInscriptosByUsuario(action.idUsuario).pipe(tap(value => {
-            ctx.patchState({ cursosNoInscriptos: value });
-        }))
-    }
 
     @Action(ResetUsuarioLogueado)
     resetUsuarioLogueado(ctx: StateContext<UsuarioLogueadoModel>, action: ResetUsuarioLogueado) {

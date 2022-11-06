@@ -10,6 +10,9 @@ import {AlumnoService} from "../../../../../services/alumno.service";
 import {ArchivoService} from "../../../../../services/Archivo.service";
 import {Alumno} from "../../../../../model/Alumno";
 import {Archivo} from "../../../../../model/Archivo";
+import {CursosService} from "../../../../../services/cursos.service";
+import {Curso} from "../../../../../model/Curso";
+import {ColumnaTable} from "../../../cursos/cursos.page";
 
 @Component({
   selector: 'app-crear-modificar-alumno',
@@ -21,9 +24,13 @@ export class CrearModificarAlumnoPage implements OnInit {
   @ViewChild('fileInput')
   fileInput: ElementRef;
   alumnoForm: FormGroup;
-  cardHeader: string;
   imagen: Archivo = new Archivo();
+  disableInputs: boolean;
   imagenHeader: string;
+  cursosTable: any[] = [];
+  cols: ColumnaTable[];
+  totalRegistrosBackend = 1;
+  usuario: Usuario = new Usuario();
 
   constructor(
       private router: Router,
@@ -32,6 +39,7 @@ export class CrearModificarAlumnoPage implements OnInit {
       private alumnoService: AlumnoService,
       private store: Store,
       private archivoService: ArchivoService,
+      private cursosServce: CursosService
   ) {
   }
 
@@ -41,38 +49,46 @@ export class CrearModificarAlumnoPage implements OnInit {
       dni: [,Validators.required],
       nombre: [, Validators.required],
       apellido: [, Validators.required],
-      telefono: [, Validators.required],
-      email: [, Validators.required],
-      confirmacionEmail: [, Validators.required,],
       fechaNacimiento: [, Validators.required],
       genero: [, Validators.required],
+      telefono: [, Validators.required],
+      estadoCivil: [, Validators.required],
+      nivelEducativo: [, Validators.required],
       domicilio: [, Validators.required],
-      numLegajo: [, Validators.required],
+      email: [, Validators.required],
     });
 
     this.usuarioState.subscribe((usuario: Usuario) => {
       if (usuario) {
-        console.log(usuario)
+        this.usuario = usuario;
         this.alumnoForm.patchValue(usuario);
         this.imagen = usuario.imagen;
         this.imagenHeader = usuario?.imagen?.nombre;
-        this.alumnoForm.controls.confirmacionEmail.setValue(usuario.email);
+        this.disableInputs = true;
+        this.cols = [{field: 'nombre', header: 'Nombre'},{field: 'profesor', header: 'Profesor'},{field: 'turno', header: 'Turno'}];
+        this.armarTabla();
       }
-      else {
-        this.alumnoForm.reset();
-        this.imagenHeader = "Ningun archivo seleccionado"
-      }
-      this.cardHeader = this.alumnoForm.value.idUsuario ? 'Modificar alumno' : 'Crear alumno';
     });
   }
 
+  armarTabla() {
+    this.cursosServce.getCursoInscriptosByUsuario(this.usuario.idUsuario)
+        .subscribe(cursos => {
+          cursos.forEach((item: Curso) => {
+            const auxObjeto = {
+              id: item.idCurso,
+              imagen: item.imagen.foto,
+              nombre: item.nombre,
+              turno: item.turno,
+              profesor: item.profesor.nombre,
+              inscripto: true
+            };
+            this.cursosTable.push(auxObjeto);
+          });
+        });
+  }
 
-  validateEmail() {
-    if (this.alumnoForm.get('email').value !== this.alumnoForm.get('confirmacionEmail').value) {
-      this.alumnoForm.controls.confirmacionEmail.setErrors({incorrect: true});
-    } else {
-      this.alumnoForm.controls.confirmacionEmail.setErrors(null);
-    }
+  desinscribirse(idCurso: number) {
   }
 
   volver() {

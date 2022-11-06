@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MessagesService} from '../../services/messages.service';
-import {LoginService} from '../../services/login.service';
 import {Store} from '@ngxs/store';
-import {SetCursosInscriptos, SetCursosNoInscriptos, SetUsuarioLogueadoAction} from '../../state/states/usuarioLogueado.state';
+import {SetUsuarioLogueadoAction} from "../../../state/states/usuarioLogueado.state";
+import {LoginService} from "../../../services/login.service";
+import {MessagesService} from "../../../services/messages.service";
 
 @Component({
   selector: 'app-login',
@@ -44,10 +44,9 @@ export class LoginPage implements OnInit {
     if (this.loginForm.valid){
       this.loginService.login(this.loginForm.controls.dni.value, this.loginForm.controls.clave.value)
           .subscribe(usuario => {
-            this.router.navigate(['/home'], {replaceUrl: true});
+            this.router.navigate(['/home']);
+            console.log(usuario);
             this.store.dispatch(new SetUsuarioLogueadoAction(usuario));
-            this.store.dispatch(new SetCursosInscriptos(usuario.idUsuario));
-            this.store.dispatch(new SetCursosNoInscriptos(usuario.idUsuario));
           }, error => this.messages.ventanaError('Error', 'usuario o clave incorrecto'));
     }
     else {
@@ -59,4 +58,11 @@ export class LoginPage implements OnInit {
     this.loginForm.reset();
   }
 
+  registrarse() {
+    this.router.navigate(['/registrar-alumno']);
+  }
+
+  recuperarClave() {
+    this.router.navigate(['/olvideMiClave']);
+  }
 }

@@ -1,30 +1,53 @@
-<p-table  [value]="cursos" [rows]="5" [paginator]="true" autoLayout="true">
+<p-table [columns]="cols"  [value]="dataBackend" [rows]="cantidadElementos" [paginator]="paginator"
+         autoLayout="true" [totalRecords]="totalRegistrosBackend" [lazy]="true" (onLazyLoad)="loadData($event)">
     <ng-template let-columns pTemplate="header">
       <tr class="card">
-        <th style="text-align: center">Imagen</th>
-        <th style="text-align: center">Nombre</th>
-        <th style="text-align: center">Profesor</th>
-        <th style="text-align: center">Acción</th>
+        <th *ngIf="imageButton">
+          Foto
+        </th>
+        <ng-container *ngFor="let col of columns">
+          <th class="ion-text-center" style="width:20%">
+            {{col.header}}
+          </th>
+          <ng-template #elseBlock>
+            <th class="ion-text-center">
+              {{col.header}}
+            </th>
+          </ng-template>
+        </ng-container>
+        <th class="ion-text-center" style="width:22%" *ngIf="accionButton">
+          Acción
+        </th>
+        <th class="ion-text-center" style="width:22%" *ngIf="inspectButton">
+          Ver
+        </th>
       </tr>
     </ng-template>
-    <ng-template let-curso let-i="rowIndex" pTemplate="body">
+    <ng-template pTemplate="body" let-curso let-columns="columns">
       <tr [ngClass]="{'greenBackground': curso.inscripto}" class="card">
-        <td>
-          <img width="50px" style="margin-top: -5px; margin-bottom: -10px" [src]="curso.imagen">
+
+        <td *ngIf="imageButton">
+          <img width="50px" [src]="curso.imagen">
         </td>
-        <td>{{ curso.nombre }}</td>
-        <td>{{ curso.profesor.nombre }}</td>
+        <td class="ion-text-center" *ngFor="let col of columns">
+          {{curso[col.field]}}
+        </td>
         <td>
-          <ion-button *ngIf="!curso.inscripto" color="secondary" size="small" pTooltip="Inscribirse"
-                      (click)="inscribirse(curso)">
+          <ion-button *ngIf="!curso.inscripto && accionButton" color="secondary" size="small" pTooltip="Inscribirse"
+                      (click)="emitirParaInscribirse(curso.id)">
             <ion-icon name="add-outline"></ion-icon>
           </ion-button>
-          <ion-button *ngIf="curso.inscripto" color="secondary" size="small" pTooltip="Desinscribirse"
-                      (click)="desinscribirse(curso)">
+          <ion-button *ngIf="curso.inscripto && accionButton" color="secondary" size="small" pTooltip="Desinscribirse"
+                      (click)="emitirParaDesinscribirse(curso.id)">
             <ion-icon name="trash-outline"></ion-icon>
           </ion-button>
         </td>
-
+        <td style="text-align: center" *ngIf="inspectButton">
+          <ion-button color="secondary" size="small" *ngIf="inspectButton" pTooltip="Inspeccionar"
+                      (click)="emitirIdParaInspeccionar(curso.id)">
+            <ion-icon name="eye"></ion-icon>
+          </ion-button>
+        </td>
       </tr>
     </ng-template>
   </p-table>

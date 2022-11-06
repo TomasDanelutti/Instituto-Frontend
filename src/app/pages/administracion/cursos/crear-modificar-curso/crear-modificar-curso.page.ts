@@ -16,10 +16,11 @@ import {Archivo} from "../../../../model/Archivo";
   styleUrls: ['./crear-modificar-curso.page.scss'],
 })
 export class CrearModificarCursoPage implements OnInit {
-  @ViewChild('fileInput')
-  fileInput: ElementRef;
+  @ViewChild('imagenInput')
+  imagenInput: ElementRef;
+  @ViewChild('archivoInput')
+  archivoInput: ElementRef;
   @Select(CursoState.getCurso) cursoState: Observable<Curso>;
-  archivos: any = [];
   cursoForm: FormGroup;
   cardHeader: string;
   imagen: Archivo = new Archivo();
@@ -70,7 +71,13 @@ export class CrearModificarCursoPage implements OnInit {
   clickBtn() {
     // Efectúo programáticamente la acción de darle click a un elemento input con type="file"
     // y así se abre una ventana para subir archivos
-    this.fileInput.nativeElement.click();
+    this.imagenInput.nativeElement.click();
+  }
+
+  clickBtn1() {
+    // Efectúo programáticamente la acción de darle click a un elemento input con type="file"
+    // y así se abre una ventana para subir archivos
+    this.archivoInput.nativeElement.click();
   }
 
   capturarFoto($event): any {

@@ -24,6 +24,7 @@ export class CrearModificarEmpleadosPage implements OnInit {
   cardHeader: string;
   imagen: Archivo = new Archivo();
   imagenHeader: string;
+  disableInputs: boolean;
 
   constructor(
       private router: Router,
@@ -39,12 +40,14 @@ export class CrearModificarEmpleadosPage implements OnInit {
       dni: [,Validators.required],
       nombre: [, Validators.required],
       apellido: [, Validators.required],
-      telefono: [, Validators.required],
-      email: [, Validators.required],
-      confirmacionEmail: [, Validators.required,],
       fechaNacimiento: [, Validators.required],
       genero: [, Validators.required],
+      telefono: [, Validators.required],
+      estadoCivil: [, Validators.required],
+      nivelEducativo: [, Validators.required],
       domicilio: [, Validators.required],
+      email: [, Validators.required],
+      confirmacionEmail: [, Validators.required,],
       sueldo: [, Validators.required],
       puesto: [, Validators.required]
     });
@@ -55,11 +58,8 @@ export class CrearModificarEmpleadosPage implements OnInit {
         this.imagen = usuario.imagen;
         this.imagenHeader = usuario?.imagen?.nombre;
         this.empleadoForm.controls.confirmacionEmail.setValue(usuario.email);
-        this.empleadoForm.controls.dni.disable();
-        this.empleadoForm.controls.nombre.disable();
-        this.empleadoForm.controls.apellido.disable();
-        this.empleadoForm.controls.fechaNacimiento.disable();
-        this.empleadoForm.controls.genero.disable();
+        this.empleadoForm.controls.puesto.disable();
+        this.disableInputs = true;
       }
       else {
         this.empleadoForm.reset();

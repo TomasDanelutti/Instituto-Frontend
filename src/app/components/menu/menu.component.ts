@@ -39,9 +39,11 @@ export class MenuComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         this.usuarioState.subscribe(value => {
-            this.usuario = value
-            this.rolSeleccionado = value.rol;
-            this.armarMenu();
+            if (value) {
+                this.usuario = value
+                this.rolSeleccionado = value.rol;
+                this.armarMenu();
+            }
         });
     }
 

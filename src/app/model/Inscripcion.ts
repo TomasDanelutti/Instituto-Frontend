@@ -5,4 +5,6 @@ export class Inscripcion {
     idInscripcion: number;
     Usuario: Usuario
     Curso: Curso;
+    estado: string;
+    activo: boolean;
 }

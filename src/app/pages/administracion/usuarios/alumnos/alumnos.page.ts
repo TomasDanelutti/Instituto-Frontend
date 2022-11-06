@@ -62,10 +62,6 @@ export class AlumnosPage implements OnInit {
     this.router.navigate(['administrar/alumnos/crear-modificar-alumno'], { replaceUrl: true });
   }
 
-  crearAdministrativo() {
-      this.router.navigate(['administrar/alumnos/crear-modificar-alumno'], {replaceUrl: true});
-    }
-
   buscar(buscador: any) {
     if (buscador) {
       this.alumnoService.getAlumnoByNombre(buscador).subscribe(value => {

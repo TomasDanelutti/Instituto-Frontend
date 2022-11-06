@@ -32,8 +32,8 @@ export class CursosService {
     return this.httpClient.get<Curso[]>('curso/findByNombre/' + nombre);
   }
 
-  guardarCurso(curso: Curso): Observable<Respuesta<string>> {
-    return this.httpClient.post<Respuesta<string>>('curso/guardar', curso);
+  guardarCurso(curso: Curso): Observable<Respuesta> {
+    return this.httpClient.post<Respuesta>('curso/guardar', curso);
   }
 
   eliminarCurso(idCurso: number): Observable<void> {

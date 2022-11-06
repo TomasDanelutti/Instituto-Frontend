@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, OnChanges, EventEmitter, SimpleChanges} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-fecha',
@@ -20,9 +20,7 @@ export class FechaComponent implements OnInit, OnChanges {
 
   es: any;
 
-  constructor() {
-  }
-
+  constructor() { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.fechaPadre?.currentValue) {
@@ -31,23 +29,18 @@ export class FechaComponent implements OnInit, OnChanges {
       if (changes.label?.currentValue === 'Fecha *') {
         this.fecha = new Date();
         this.emitirFecha(this.fecha);
-      } else {
-        if (!(changes.fechaSeleccionada?.currentValue)) {
-          this.fecha = null;
-        }
       }
     }
   }
 
-
   ngOnInit() {
     this.es = {
       firstDayOfWeek: 1,
-      dayNames: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
-      dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
-      dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-      monthNames: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
-      monthNamesShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+      dayNames: [ 'domingo','lunes','martes','miércoles','jueves','viernes','sábado' ],
+      dayNamesShort: [ 'dom','lun','mar','mié','jue','vie','sáb' ],
+      dayNamesMin: [ 'D','L','M','X','J','V','S' ],
+      monthNames: [ 'enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre' ],
+      monthNamesShort: [ 'ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic' ],
       today: 'Hoy',
       clear: 'Borrar'
     };
@@ -66,12 +59,12 @@ export class FechaComponent implements OnInit, OnChanges {
     timeZoneOffset = Math.abs(timeZoneOffset);
 
     return date.getFullYear() + '-'
-        + this.localTimeZone(date.getMonth() + 1) + '-' +
-        this.localTimeZone(date.getUTCDate()) + 'T' +
-        this.localTimeZone(date.getHours()) + ':' +
-        this.localTimeZone(date.getMinutes()) + ':' +
-        this.localTimeZone(date.getSeconds()) +
-        sign + this.localTimeZone(timeZoneOffset / 60 | 0) + ':' + this.localTimeZone(timeZoneOffset % 60);
+      + this.localTimeZone(date.getMonth() + 1) + '-' +
+      this.localTimeZone(date.getUTCDate()) + 'T' +
+      this.localTimeZone(date.getHours()) + ':' +
+      this.localTimeZone(date.getMinutes()) + ':' +
+      this.localTimeZone(date.getSeconds()) +
+      sign + this.localTimeZone(timeZoneOffset / 60 | 0) + ':' + this.localTimeZone(timeZoneOffset % 60);
   }
 
   localTimeZone(n: number): string {

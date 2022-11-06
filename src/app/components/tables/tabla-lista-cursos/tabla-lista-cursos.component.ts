@@ -1,48 +1,42 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Datos} from "../../../pages/lista-cursos/lista-cursos.page";
-import {Curso} from "../../../model/Curso";
-import {InscripcionService} from "../../../services/inscripcion.service";
-import {Inscripcion} from "../../../model/Inscripcion";
-import {Select} from "@ngxs/store";
-import {UsuarioLogueadoState} from "../../../state/states/usuarioLogueado.state";
-import {Observable} from "rxjs";
-import {Usuario} from "../../../model/Usuario";
-import {MessagesService} from "../../../services/messages.service";
-import {InscripcionDTO} from "../../../model/InscripcionDTO";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {LazyLoadEvent} from "primeng/api";
 
 @Component({
   selector: 'app-tabla-lista-cursos',
   templateUrl: './tabla-lista-cursos.component.html',
   styleUrls: ['./tabla-lista-cursos.component.scss'],
 })
-export class TablaListaCursosComponent implements OnInit {
-  @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioLogueado: Observable<Usuario>;
-  @Input() cursos: Datos[] = []
-  usuario: Usuario = new Usuario();
+export class TablaListaCursosComponent {
+  @Input() accionButton: boolean;
+  @Input() inspectButton: boolean;
+  @Input() imageButton: boolean;
+  @Input() dataBackend: object[];         // Recibe los datos ya formateados para mostrarlos en la tabla
+  @Input() cols: object[];                // Recibe en numero de objetos a mostrar por pagina
+  @Input() totalRegistrosBackend: number; // Lo necesita para poder paginar
+  @Input() cantidadElementos: number;     // Cantidad elementos a mostrar en cada página de la table
+  @Input() paginator: boolean;            // Activa o desactiva el paginador
 
-  constructor(
-      private inscripcionService: InscripcionService,
-      private messagesService: MessagesService
-  ) { }
+  @Output() inscribirseItem = new EventEmitter<number>();
+  @Output() desinscribirseItem = new EventEmitter<number>();
+  @Output() inspeccionarItem = new EventEmitter<number>();
+  @Output() cargarData = new EventEmitter<number>();
 
-  ngOnInit() {
-    this.usuarioLogueado.subscribe(usuario => this.usuario = usuario);
+  constructor() { }
+
+
+  emitirParaInscribirse(idObject: any) {
+    this.inscribirseItem.emit(idObject);
   }
 
-  inscribirse(curso: Curso) {
-    console.log(curso)
-    let inscripcionDTO: InscripcionDTO = new InscripcionDTO();
-    inscripcionDTO.idCurso = curso.idCurso;
-    inscripcionDTO.idUsuario = this.usuario.idUsuario;
-    console.log(inscripcionDTO)
-    this.inscripcionService.inscribirse(inscripcionDTO).subscribe(() => {
-      this.messagesService.ventanaExitosa('Éxito', `Te has inscripto correctamente al curso ${curso.nombre}`);
-    },error => this.messagesService.ventanaError('Atención', 'Ha ocurrido un error con tu inscripcion. Por favor contactate con  bedelia. Gracias'));
-
+  emitirParaDesinscribirse(idObject: any) {
+    this.desinscribirseItem.emit(idObject);
   }
 
-  desinscribirse(curso: Curso) {
-    this.messagesService.ventanaError('Atención', 'Para desinscribirte de un curso debes contactarte con bedelia. Gracias')
+  emitirIdParaInspeccionar(idObject: any) {
+    this.inspeccionarItem.emit(idObject);
+  }
 
+  loadData({first}: LazyLoadEvent) {
+    // this.cargarData.emit(first / this.cantidadElementos); // Emito la pagina que debo cargar
   }
 }
