@@ -13,4 +13,6 @@ export class Usuario {
   rol: Rol;
   fechaNacimiento: Date;
   imagen: Archivo;
+  estado: string;
+  activo: boolean;
 }
