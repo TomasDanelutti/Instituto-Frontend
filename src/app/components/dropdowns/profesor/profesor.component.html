@@ -1,0 +1,8 @@
+<span class="p-float-label">
+<p-dropdown placeholder="Profesor *" (onChange)="onChangeProfesor($event)"
+            optionLabel="nombre"
+            [options]="profesores" showClear="true" [disabled]="disabled"
+            [(ngModel)]="profesorSeleccionado" [style]="{'minWidth':'100%', 'width': '100%'}">
+</p-dropdown>
+    <label>Profesor *</label>
+</span>
