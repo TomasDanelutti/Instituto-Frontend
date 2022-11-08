@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {NotificacionDesinscripcionService} from "../../../services/notificacion-desinscripcion.service";
-import {NotificacionDesinscripcion} from "../../../model/NotificacionDesinscripcion";
+import {Desinscripcion} from "../../../model/Desinscripcion";
 import {Router} from "@angular/router";
 import {Store} from "@ngxs/store";
 import {SetUsuarioAction} from "../../../state/states/usuario.state";
@@ -13,7 +13,7 @@ import {SetUsuarioAction} from "../../../state/states/usuario.state";
 export class DialogSolicitudesDesinscripcionComponent implements OnInit {
   @Output() showDialogConsultaSolicitudesDsinscripcion = new EventEmitter<boolean>();
   display: boolean = false;
-  notificaciones: NotificacionDesinscripcion[];
+  notificaciones: Desinscripcion[];
   constructor(
       private notificacionDesinscripcionService: NotificacionDesinscripcionService,
       private router: Router,
@@ -28,7 +28,7 @@ export class DialogSolicitudesDesinscripcionComponent implements OnInit {
     this.showDialogConsultaSolicitudesDsinscripcion.emit(false);
   }
 
-  navegarDesinscribir(notificacion: NotificacionDesinscripcion) {
+  navegarDesinscribir(notificacion: Desinscripcion) {
     this.store.dispatch(new SetUsuarioAction(notificacion.alumno));
     this.showDialogConsultaSolicitudesDsinscripcion.emit(false);
     this.router.navigate(['administrar/alumnos/crear-modificar-alumno']);

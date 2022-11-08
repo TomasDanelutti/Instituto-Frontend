@@ -4,11 +4,14 @@
         Aqui encontraras el listado de solicitudes de desinscripcion que los alumnos has solicitado
     </h5>
     <p-table [columns]="cols"  [value]="notificaciones" [rows]="cantidadElementos" [paginator]="paginator"
-             autoLayout="true" [totalRecords]="totalRegistrosBackend" [lazy]="true" (onLazyLoad)="loadData($event)">
+             autoLayout="true" [totalRecords]="totalRegistrosBackend" [lazy]="true" >
         <ng-template let-columns pTemplate="header">
             <tr class="card">
                 <th>
                     Solicitudes
+                </th>
+                <th>
+                    Fecha de creación
                 </th>
                 <th class="ion-text-center" style="width:22%" >
                     Acción
@@ -20,6 +23,9 @@
                 <td>
                     <label> El alumno/a {{notificacion.alumno.nombre}} {{ notificacion.alumno.apellido}}
                         ha solicitado la desinscripción al curso {{notificacion.curso.nombre}}</label>
+                </td>
+                <td>
+                    {{notificacion.fechaCreacionNotificacion}}
                 </td>
                 <td style="text-align: center">
                     <ion-button color="secondary" size="small" pTooltip="Proceder a la desinscripción"

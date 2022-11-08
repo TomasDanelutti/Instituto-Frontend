@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {Usuario} from '../../model/Usuario';
 import {UsuarioLogueadoState} from '../../state/states/usuarioLogueado.state';
 import {NotificacionDesinscripcionService} from "../../services/notificacion-desinscripcion.service";
-import {NotificacionDesinscripcion} from "../../model/NotificacionDesinscripcion";
+import {Desinscripcion} from "../../model/Desinscripcion";
 import {Rol} from "../../model/rol";
 import {SlideMenu} from "primeng/slidemenu";
 import {MenuItem} from "primeng/api";
@@ -20,7 +20,7 @@ export class CabeceraComponent implements OnInit {
   @Select(UsuarioLogueadoState.getRol) rolState: Observable<Rol>;
   usuario: Usuario;
   rol: Rol;
-  notificaciones: NotificacionDesinscripcion[] = [];
+  notificaciones: Desinscripcion[] = [];
   dialogSolicitudesDesinscripcion = false;
   constructor(
       private router: Router,) { }

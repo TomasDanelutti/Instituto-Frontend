@@ -103,7 +103,6 @@ export class CrearModificarEmpleadosPage implements OnInit {
   }
 
   guardarAdministrativo() {
-    if (this.empleadoForm.valid) {
       let empleado: Empleado;
       empleado = this.empleadoForm.value;
       empleado.imagen = this.imagen;
@@ -114,9 +113,6 @@ export class CrearModificarEmpleadosPage implements OnInit {
       }, error => {
         this.messagesService.ventanaError('Atención', 'No se pudo guardar el Administrativo');
       });
-    } else {
-      this.messagesService.ventanaError('Atención', 'formulario invalido');
-    }
   }
 
   ionViewWillLeave() {

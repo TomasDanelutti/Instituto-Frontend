@@ -36,7 +36,7 @@ export class AlumnosPage implements OnInit {
       value.forEach((item: Alumno) => {
         const auxObjeto = {
           id: item.idUsuario,
-          imagen: item.imagen.foto,
+          imagen: item.imagen?.foto,
           nombre: item.nombre,
           apellido: item.apellido,
           dni: item.dni

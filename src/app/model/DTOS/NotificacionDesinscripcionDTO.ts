@@ -4,4 +4,5 @@ export class NotificacionDesinscripcionDTO {
     idEmpleado: number;
     motivo: string;
     estado: boolean;
+    token: string;
 }

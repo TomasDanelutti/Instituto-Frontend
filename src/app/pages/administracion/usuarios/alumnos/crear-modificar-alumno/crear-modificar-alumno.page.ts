@@ -96,7 +96,6 @@ export class CrearModificarAlumnoPage implements OnInit {
   }
 
   guardarAlumno() {
-    if (this.alumnoForm.valid) {
       let alumno: Alumno;
       alumno = this.alumnoForm.value;
       alumno.imagen = this.imagen;
@@ -107,9 +106,6 @@ export class CrearModificarAlumnoPage implements OnInit {
       }, error => {
         this.messagesService.ventanaError('Atención', 'No se pudo guardar el Alumno');
       });
-    } else {
-      this.messagesService.ventanaError('Atención', 'formulario invalido');
-    }
   }
 
   setearFecha($event: string) {

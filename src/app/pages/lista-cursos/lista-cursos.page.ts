@@ -95,12 +95,15 @@ export class ListaCursosPage implements OnInit {
   }
 
   desinscribirse(idCurso: number) {
-  this.messagesService.ventanaVerificacionTelefono().then((motivo) => {
+  this.messagesService.ventanaVerificacionMotivo().then((motivo) => {
     if (motivo) {
       let notificacionDesinscripcion: NotificacionDesinscripcionDTO = new NotificacionDesinscripcionDTO();
       notificacionDesinscripcion.idCurso = idCurso;
       notificacionDesinscripcion.idAlumno = this.usuario.idUsuario;
       notificacionDesinscripcion.motivo = motivo;
+      this.notificacionDesinscripcion.getToken(notificacionDesinscripcion).subscribe(respuesta => {
+
+      })
       this.notificacionDesinscripcion.guardarNtificacionDsinscripcion(notificacionDesinscripcion).subscribe(respuesta => {
         this.messagesService.ventanaExitosa("Exitó", respuesta.mensaje);
       }, error => this.messagesService.ventanaError("Atención", error.error));

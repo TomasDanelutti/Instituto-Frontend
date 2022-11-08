@@ -200,7 +200,7 @@ export class MessagesService {
     });
   }
 
-  async ventanaVerificacionTelefono(){
+  async ventanaVerificacionMotivo(){
     const { value: text } = await Swal.fire({
       icon: 'warning',
       title: 'Atención',
@@ -217,10 +217,37 @@ export class MessagesService {
       allowOutsideClick: false,
       allowEscapeKey: false,
       cancelButtonText: 'Cancelar',
-      confirmButtonText: 'Enviar solicitud',
+      confirmButtonText: 'Continuar',
       inputValidator: (value) => {
         if (value.length === 0) {
           return 'El motivo es obligatorio'
+        }
+      }
+    })
+    return text;
+  }
+
+  async ventanaVerificacionToken(){
+    const { value: text } = await Swal.fire({
+      icon: 'warning',
+      title: 'Atención',
+      text: 'Hemos enviado un mail con un codigo para finalizar su solicitud. Por favor ingreselo',
+      input: 'text',
+      inputPlaceholder: 'Ingrese el codigo aqui.',
+      // (Debe ir sin el 0 y sin el 15. Ej: 1122334455)
+      inputAttributes: {
+      },
+      confirmButtonColor: '#1262e0',
+      denyButtonColor: '#90a4ae',
+      showCancelButton: true,
+      heightAuto: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Enviar solicitud',
+      inputValidator: (value) => {
+        if (value.length === 0) {
+          return 'El codigo es obligatorio'
         }
       }
     })
