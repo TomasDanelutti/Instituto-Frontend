@@ -4,11 +4,9 @@ import {Select} from '@ngxs/store';
 import {Observable} from 'rxjs';
 import {Usuario} from '../../model/Usuario';
 import {UsuarioLogueadoState} from '../../state/states/usuarioLogueado.state';
-import {NotificacionDesinscripcionService} from "../../services/notificacion-desinscripcion.service";
-import {Desinscripcion} from "../../model/Desinscripcion";
 import {Rol} from "../../model/rol";
-import {SlideMenu} from "primeng/slidemenu";
-import {MenuItem} from "primeng/api";
+import {DesinscripcionState} from "../../state/states/desinscripcion.state";
+import {MessagesService} from "../../services/messages.service";
 
 @Component({
   selector: 'app-cabecera',
@@ -18,19 +16,19 @@ import {MenuItem} from "primeng/api";
 export class CabeceraComponent implements OnInit {
   @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioLogueado: Observable<Usuario>;
   @Select(UsuarioLogueadoState.getRol) rolState: Observable<Rol>;
+  @Select(DesinscripcionState.getCantDesinscripciones) cantDesinscripcionesState: Observable<number>;
   usuario: Usuario;
   rol: Rol;
-  notificaciones: Desinscripcion[] = [];
+  cantDesinscripciones: number;
   dialogSolicitudesDesinscripcion = false;
   constructor(
-      private router: Router,) { }
+      private router: Router,
+      private messagesService: MessagesService) { }
 
   ngOnInit() {
-
-
-
     this.rolState.subscribe(rolState => this.rol = rolState);
     this.usuarioLogueado.subscribe(value => this.usuario = value);
+    this.cantDesinscripcionesState.subscribe(value => this.cantDesinscripciones = value);
   }
 
   navegarHome() {
@@ -42,7 +40,12 @@ export class CabeceraComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialogSolicitudesDesinscripcion = true;
+    if (this.cantDesinscripciones > 0) {
+      this.dialogSolicitudesDesinscripcion = true;
+    }
+    else {
+      this.messagesService.ventanaInfo("Atención", "En este momento no hay ninguna solicitud de desinscripcion");
+    }
   }
 
   switchDialogSolicitudesDesinscripcion(display:boolean){

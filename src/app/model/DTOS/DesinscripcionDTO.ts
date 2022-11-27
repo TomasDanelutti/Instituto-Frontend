@@ -1,4 +1,4 @@
-export class NotificacionDesinscripcionDTO {
+export class DesinscripcionDTO {
     idAlumno: number;
     idCurso: number;
     idEmpleado: number;

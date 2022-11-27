@@ -5,9 +5,9 @@ import {Empleado} from "./Empleado";
 export class Desinscripcion {
     idNotificacionDesinscripcion: number;
     alumno: Alumno;
-    Curso: Curso;
+    curso: Curso;
     empleado: Empleado;
-    fechaCreacionNotificacion: Date;
+    fechaCreacionDesinscripcion: Date;
     motivo: string;
     estado: boolean;
 }

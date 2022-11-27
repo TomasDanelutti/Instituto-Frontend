@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Respuesta} from "../model/respuesta";
 import {Alumno} from "../model/Alumno";
+import {UsuarioLoginExt} from "../model/DTOS/UsuarioLoginExt";
 
 @Injectable({
   providedIn: 'root'

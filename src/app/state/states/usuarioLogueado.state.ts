@@ -2,11 +2,11 @@
 import {Usuario} from '../../model/Usuario';
 import {CursosService} from '../../services/cursos.service';
 import {Injectable} from '@angular/core';
-import {Curso} from '../../model/Curso';
+
 import {Reseteable} from '../Reseteable';
 import {Rol} from '../../model/rol';
-import {tap} from "rxjs/operators";
 import {Action, Selector, State, StateContext} from "@ngxs/store";
+import {SetCantDesinscripcionesAction} from "./desinscripcion.state";
 
 export class SetUsuarioLogueadoAction {
     static readonly type = '[UsuarioLogueado] Definir usuario';
@@ -56,6 +56,7 @@ export class UsuarioLogueadoState {
     @Action(SetUsuarioLogueadoAction)
     setUsuarioLogueado(ctx: StateContext<UsuarioLogueadoModel>, action: SetUsuarioLogueadoAction) {
         ctx.patchState({ usuario: action.usuario });
+        ctx.dispatch(new SetCantDesinscripcionesAction());
     }
 
 

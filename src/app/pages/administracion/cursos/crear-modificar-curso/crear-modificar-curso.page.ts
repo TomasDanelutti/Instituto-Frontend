@@ -38,15 +38,15 @@ export class CrearModificarCursoPage implements OnInit {
   ngOnInit() {
     this.cursoForm = this.formBuilder.group({
       idCurso: [],
-      nombre: [Validators.required],
-      turno: [Validators.required],
-      profesor: [Validators.required],
-      cupoMinimo: [Validators.required],
-      cupoMaximo: [Validators.required],
-      fechaInicio: [Validators.required],
-      fechaFinalizacion: [Validators.required],
-      horario: [Validators.required],
-      modalidad: [Validators.required],
+      nombre: ["", Validators.required],
+      turno: ["", Validators.required],
+      profesor: ["", Validators.required],
+      cupoMinimo: ["", Validators.required],
+      cupoMaximo: ["", Validators.required],
+      fechaInicio: ["", Validators.required],
+      fechaFinalizacion: ["", Validators.required],
+      horario: ["", Validators.required],
+      modalidad: ["", Validators.required],
       aula: []
     });
     this.cursoState.subscribe(curso => {
@@ -123,7 +123,7 @@ export class CrearModificarCursoPage implements OnInit {
   }
 
   guardarCurso() {
-    if (this.cursoForm.valid && this.programa.foto) {
+    if (this.programa.foto) {
       let curso: Curso;
       curso = this.cursoForm.value;
       curso.imagen = this.imagen;

@@ -13,6 +13,7 @@ import {Archivo} from "../../../../../model/Archivo";
 import {CursosService} from "../../../../../services/cursos.service";
 import {Curso} from "../../../../../model/Curso";
 import {ColumnaTable} from "../../../cursos/cursos.page";
+import {SetCantDesinscripcionesAction} from "../../../../../state/states/desinscripcion.state";
 
 @Component({
   selector: 'app-crear-modificar-alumno',
@@ -89,6 +90,7 @@ export class CrearModificarAlumnoPage implements OnInit {
   }
 
   desinscribirse(idCurso: number) {
+    this.store.dispatch(new SetCantDesinscripcionesAction());
   }
 
   volver() {

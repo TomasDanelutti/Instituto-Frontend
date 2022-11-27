@@ -66,7 +66,7 @@ export class EmpleadosPage implements OnInit {
   editarAdministrativo(idUsuario: number) {
     const alumnoSeleccionado = this.empleados.find(
         (alumnoSelected: Alumno) => idUsuario === alumnoSelected.idUsuario);
-    this.store.dispatch(new SetUsuarioAction(alumnoSeleccionado));
+    this.store.dispatch(new SetUsuarioAction(alumnoSeleccionado as Empleado));
     this.router.navigate(['administrar/empleados/crear-modificar-empleado']);
   }
 

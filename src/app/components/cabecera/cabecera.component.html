@@ -13,7 +13,7 @@
     <ion-col *ngIf="rol.idRol === 2" style="margin-top: 15px" size-lg="1" size-md="1" size-sm="12" size-xs="12">
       <span class="p-overlay-badge" pTooltip="Notificaciones">
         <i class="pi pi-bell" style="font-size: 1.5em; color: white;" (click)="openDialog()" ></i>
-        <span class="p-badge">{{2}}</span>
+        <span class="p-badge">{{cantDesinscripcionesState|async}}</span>
       </span>
       <app-dialog-solicitudes-desinscripcion *ngIf="dialogSolicitudesDesinscripcion" (showDialogConsultaSolicitudesDsinscripcion)="switchDialogSolicitudesDesinscripcion($event)"></app-dialog-solicitudes-desinscripcion>
     </ion-col>

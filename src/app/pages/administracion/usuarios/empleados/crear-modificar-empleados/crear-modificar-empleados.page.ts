@@ -37,19 +37,19 @@ export class CrearModificarEmpleadosPage implements OnInit {
   ngOnInit() {
     this.empleadoForm = this.formBuilder.group({
       idUsuario: [],
-      dni: [,Validators.required],
-      nombre: [, Validators.required],
-      apellido: [, Validators.required],
-      fechaNacimiento: [, Validators.required],
-      genero: [, Validators.required],
-      telefono: [, Validators.required],
-      estadoCivil: [, Validators.required],
-      nivelEducativo: [, Validators.required],
-      domicilio: [, Validators.required],
-      email: [, Validators.required],
-      confirmacionEmail: [, Validators.required,],
-      sueldo: [, Validators.required],
-      puesto: [, Validators.required]
+      dni: ["",Validators.required],
+      nombre: ["", Validators.required],
+      apellido: ["", Validators.required],
+      fechaNacimiento: ["", Validators.required],
+      genero: ["", Validators.required],
+      telefono: ["", Validators.required],
+      estadoCivil: ["", Validators.required],
+      nivelEducativo: ["", Validators.required],
+      domicilio: ["", Validators.required],
+      email: ["", Validators.required],
+      confirmacionEmail: ["", Validators.required],
+      sueldo: ["", Validators.required],
+      puesto: ["", Validators.required]
     });
 
     this.usuarioState.subscribe((usuario: Usuario) => {
@@ -65,6 +65,7 @@ export class CrearModificarEmpleadosPage implements OnInit {
         this.empleadoForm.reset();
         this.imagenHeader = "Ningun archivo seleccionado"
       }
+      console.log(this.empleadoForm.value)
       this.cardHeader = this.empleadoForm.value.idUsuario ? 'Modificar empleado' : 'Crear empleado';
     });
   }
@@ -104,8 +105,10 @@ export class CrearModificarEmpleadosPage implements OnInit {
 
   guardarAdministrativo() {
       let empleado: Empleado;
+      this.empleadoForm.controls.puesto.enable();
       empleado = this.empleadoForm.value;
       empleado.imagen = this.imagen;
+      console.log(empleado)
       this.empleadoService.guardarEmpleado(empleado).subscribe(rta => {
         const estado: string = this.empleadoForm.value.idUsuario ? 'modificado' : 'creado';
         this.messagesService.ventanaExitosa('Éxito', `Administrativo ${this.empleadoForm.value.nombre} ${estado}`);

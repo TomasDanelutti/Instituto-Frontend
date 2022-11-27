@@ -8,29 +8,43 @@
         <ng-template let-columns pTemplate="header">
             <tr class="card">
                 <th>
-                    Solicitudes
+                    Solicitante
+                </th>
+                <th>
+                    Motivo
                 </th>
                 <th>
                     Fecha de creación
                 </th>
                 <th class="ion-text-center" style="width:22%" >
-                    Acción
+                    Desinscribir
+                </th>
+                <th>
+                    Cancelar
                 </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-notificacion>
             <tr>
                 <td>
-                    <label> El alumno/a {{notificacion.alumno.nombre}} {{ notificacion.alumno.apellido}}
-                        ha solicitado la desinscripción al curso {{notificacion.curso.nombre}}</label>
+                    {{notificacion.alumno.nombre}} {{ notificacion.alumno.apellido}}
                 </td>
                 <td>
-                    {{notificacion.fechaCreacionNotificacion}}
+                    {{notificacion.motivo}}
+                </td>
+                <td>
+                    {{notificacion.fechaCreacionDesinscripcion.toString().substring(0,10)}}
                 </td>
                 <td style="text-align: center">
                     <ion-button color="secondary" size="small" pTooltip="Proceder a la desinscripción"
                                 (click)="navegarDesinscribir(notificacion)">
                         <ion-icon name="arrow-forward"></ion-icon>
+                    </ion-button>
+                </td>
+                <td style="text-align: center">
+                    <ion-button color="secondary" size="small" pTooltip="Cancelar desinscripción"
+                                (click)="cancelarDesinscripcion(notificacion)">
+                        <ion-icon name="trash-outline"></ion-icon>
                     </ion-button>
                 </td>
             </tr>

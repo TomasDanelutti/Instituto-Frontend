@@ -65,6 +65,11 @@ export class MenuComponent implements OnInit, OnChanges {
                             icon  : 'home'
                         },
                         {
+                            title : 'Mi Perfil',
+                            url   : '/mi-perfil',
+                            icon  : 'logo-snapchat'
+                        },
+                        {
                             title: 'Cursos disponibles',
                             url: '/lista-cursos',
                             icon: 'book',
@@ -91,14 +96,9 @@ export class MenuComponent implements OnInit, OnChanges {
                             icon  : 'home'
                         },
                         {
-                            title: 'Cursos disponibles',
-                            url: '/lista-cursos',
-                            icon: 'book',
-                        },
-                        {
-                            title : 'Mis cursos',
-                            url   : '/mis-cursos',
-                            icon  : 'book'
+                            title : 'Mi Perfil',
+                            url   : '/mi-perfil',
+                            icon  : 'logo-snapchat'
                         },
                         {
                             title : 'Administrar cursos',
@@ -108,6 +108,11 @@ export class MenuComponent implements OnInit, OnChanges {
                         {
                             title : 'Administrar alumnos',
                             url   : '/administrar/alumnos',
+                            icon  : 'build'
+                        },
+                        {
+                            title : 'Administrar empleados',
+                            url   : '/administrar/empleados',
                             icon  : 'build'
                         },
                         {
@@ -124,6 +129,11 @@ export class MenuComponent implements OnInit, OnChanges {
                             title : 'Home',
                             url   : '/home',
                             icon  : 'home'
+                        },
+                        {
+                            title : 'Mi Perfil',
+                            url   : '/mi-perfil',
+                            icon  : 'logo-snapchat'
                         },
                         {
                             title: 'Cursos disponibles',

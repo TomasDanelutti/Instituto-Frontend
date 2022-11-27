@@ -58,7 +58,7 @@ export class AlumnosPage implements OnInit {
   editarAlumno(idUsuario: number) {
     const alumnoSeleccionado = this.alumnos.find(
         (alumnoSelected: Alumno) => idUsuario === alumnoSelected.idUsuario);
-    this.store.dispatch(new SetUsuarioAction(alumnoSeleccionado));
+    this.store.dispatch(new SetUsuarioAction(alumnoSeleccionado as Alumno));
     this.router.navigate(['administrar/alumnos/crear-modificar-alumno'], { replaceUrl: true });
   }
 

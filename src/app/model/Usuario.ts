@@ -8,6 +8,8 @@ export class Usuario {
   apellido: string;
   domicilio: string;
   telefono: string;
+  estadoCivil: string;
+  nivelEducativo: string;
   email: string;
   genero: string;
   rol: Rol;
