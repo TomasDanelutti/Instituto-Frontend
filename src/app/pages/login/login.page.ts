@@ -55,8 +55,14 @@ export class LoginPage implements OnInit {
     }
     }
 
+  registrarse() {
+    this.router.navigate(['/registrar-alumno'], {replaceUrl: true});
+  }
+
+  RecuperarClave() {
+    this.router.navigate(['/registrar-alumno'], {replaceUrl: true});
+  }
   ionViewDidLeave() {
     this.loginForm.reset();
   }
-
 }
