@@ -13,6 +13,9 @@ import {CustomComponentsModule} from "./modules/custom-components/custom-compone
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { AppHttpInterceptor } from './app.httpInterceptor';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -28,7 +31,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     HttpClientModule],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true},
-      { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+      { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    StatusBar,
+    SplashScreen,
   ],
   bootstrap: [AppComponent],
 })

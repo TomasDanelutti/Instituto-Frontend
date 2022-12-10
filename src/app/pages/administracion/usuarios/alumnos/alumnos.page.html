@@ -1,22 +1,14 @@
+<ion-header>
+  <app-cabecera></app-cabecera>
+</ion-header>
 <ion-content>
   <ion-grid fullscreen>
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="9" size-md="9" size-sm="12" size-xs="12">
         <ion-row class="ion-align-items-center">
-          <ion-col size-lg="10" size-md="10" size-sm="12" size-xs="12">
-                               <span class="p-input-icon-left" style="min-width: 100%; width:100%;">
-              <i class="pi pi-search"></i>
-              <input _ngcontent-wbv-c208="" type="text" name="Busqueda" placeholder="Buscar programa"
-                     (keydown.enter)="buscar(buscador)" [(ngModel)]="buscador" ng-reflect-name="Busqueda"
-                     ng-reflect-model="" class="ng-pristine ng-valid p-inputtext p-component ng-touched"
-                     style="min-width: 100%; width: 100%; margin-top: 4px;">
-            </span>
-          </ion-col>
-          <ion-col size-lg="2" size-md="2" size-sm="12" size-xs="12" class="ion-text-center">
-            <ion-button color="primary" (click)="crearAdministrativo()">
-              Crear
-              <ion-icon class="padding-left-icono" name="add"></ion-icon>
-            </ion-button>
+          <ion-col size-lg="12" size-md="12" size-sm="12" size-xs="12">
+            <ion-searchbar type="text" showCancelButton="focus" placeholder="Buscar alumnos"
+                           (ionChange)="buscar($event.detail.value)"></ion-searchbar>
           </ion-col>
         </ion-row>
       </ion-col>
@@ -24,7 +16,9 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="9" size-md="9" size-sm="12" size-xs="12">
         <p-card header="Lista de alumnos">
-          <app-tabla-usuarios tipo="alumno" [usuarios]="alumnos"></app-tabla-usuarios>
+          <app-table [cantidadElementos]="5" [cols]="cols" [totalRegistrosBackend]="totalRegistrosBackend"
+                     [dataBackend]="alumnosTable" [imageButton]="true" [editButton]="true" (cargarData)="loadData($event)"
+                     (editarItem)="editarAlumno($event)" inspectButton="true" [paginator]="paginador"></app-table>
         </p-card>
       </ion-col>
     </ion-row>

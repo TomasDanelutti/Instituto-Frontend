@@ -1,0 +1,55 @@
+<p-dialog header="Lista de solicitudes" [modal]="true" [(visible)]="display" [style]="{ width: '60vw' }" [baseZIndex]="10000"
+          [draggable]="false" (onHide)="hideDialogSolicitudesDesinscripcion()">
+    <h5>
+        Aqui encontraras el listado de solicitudes de desinscripcion que los alumnos has solicitado
+    </h5>
+    <p-table [columns]="cols"  [value]="notificaciones" [rows]="cantidadElementos" [paginator]="paginator"
+             autoLayout="true" [totalRecords]="totalRegistrosBackend" [lazy]="true" >
+        <ng-template let-columns pTemplate="header">
+            <tr class="card">
+                <th>
+                    Solicitante
+                </th>
+                <th>
+                    Motivo
+                </th>
+                <th>
+                    Fecha de creación
+                </th>
+                <th class="ion-text-center" style="width:22%" >
+                    Desinscribir
+                </th>
+                <th>
+                    Cancelar
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-notificacion>
+            <tr>
+                <td>
+                    {{notificacion.alumno.nombre}} {{ notificacion.alumno.apellido}}
+                </td>
+                <td>
+                    {{notificacion.motivo}}
+                </td>
+                <td>
+                    {{notificacion.fechaCreacionDesinscripcion.toString().substring(0,10)}}
+                </td>
+                <td style="text-align: center">
+                    <ion-button color="secondary" size="small" pTooltip="Proceder a la desinscripción"
+                                (click)="navegarDesinscribir(notificacion)">
+                        <ion-icon name="arrow-forward"></ion-icon>
+                    </ion-button>
+                </td>
+                <td style="text-align: center">
+                    <ion-button color="secondary" size="small" pTooltip="Cancelar desinscripción"
+                                (click)="cancelarDesinscripcion(notificacion)">
+                        <ion-icon name="trash-outline"></ion-icon>
+                    </ion-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+
+</p-dialog>

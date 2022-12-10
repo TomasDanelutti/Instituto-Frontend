@@ -1,5 +1,4 @@
-export class Respuesta<T> {
+export class Respuesta {
   estado:string;
   mensaje:string;
-  entidad: T;
 }

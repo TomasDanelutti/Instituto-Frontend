@@ -19,6 +19,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { CalendarModule } from 'primeng/calendar';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import {CarouselModule} from "primeng/carousel";
 
 @NgModule({
   declarations: [],
@@ -42,7 +43,8 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
     InputMaskModule,
     ToggleButtonModule,
     CalendarModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    CarouselModule
   ],
   exports: [
     AccordionModule,
@@ -63,7 +65,8 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
     InputMaskModule,
     ToggleButtonModule,
     CalendarModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    CarouselModule
   ]
 })
 export class PrimeNgModule { }

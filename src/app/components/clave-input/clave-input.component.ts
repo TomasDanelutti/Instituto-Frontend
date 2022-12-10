@@ -1,7 +1,7 @@
-import { Component, forwardRef, OnInit, Input } from '@angular/core';
-import { FormControl, ControlValueAccessor, Validators, NG_VALUE_ACCESSOR, NG_VALIDATORS } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { MessagesService } from '../../services/messages.service';
+import {Component, forwardRef, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {FormControl, ControlValueAccessor, Validators, NG_VALUE_ACCESSOR, NG_VALIDATORS} from '@angular/forms';
+import {Observable, Subscription} from 'rxjs';
+import {MessagesService} from '../../services/messages.service';
 
 @Component({
   selector: 'app-clave-input',
@@ -21,10 +21,10 @@ import { MessagesService } from '../../services/messages.service';
   ]
 })
 
-export class ClaveInputComponent implements OnInit, ControlValueAccessor {
+export class ClaveInputComponent implements OnInit, ControlValueAccessor, OnChanges {
 
   @Input()
-  disableClave: Observable<boolean>;
+  disabledInput: boolean;
 
   @Input()
   updateOn: string;
@@ -32,54 +32,44 @@ export class ClaveInputComponent implements OnInit, ControlValueAccessor {
   @Input()
   labelClave: string;
 
-  @Input() mostrarPassword: boolean;
+  @Input()
   mostrarFeedback: boolean;
 
+  mostrarPassword: boolean;
   passwordIcon: string;
 
-  disableClaveSubscription: Subscription;
 
-  onChange: any = () => { };
-  onTouched: any = () => { };
+  onChange: any = () => {
+  };
+  onTouched: any = () => {
+  };
 
-  password: FormControl;
+  password: FormControl = new FormControl();
 
-  constructor(private _MessagesService: MessagesService) { }
+  constructor(private _MessagesService: MessagesService) {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.disabledInput) {
+      if (this.disabledInput) {
+        this.password.disable();
+      } else {
+        this.password.enable();
+      }
+    }
+  }
 
   ngOnInit() {
+    this.password = new FormControl('', { validators: [
+        Validators.required,
+        Validators.minLength(6)]});
 
-    this.setFormControls(this.updateOn);
     this.passwordIcon = 'pi pi-eye';
 
     this.password.valueChanges.subscribe(value => {
       this.onChange(value);
       this.onTouched();
     });
-
-    if (this.disableClave) {
-      // El componente padre avisa al input si debe habilitarse o no.
-      this.disableClaveSubscription = this.disableClave.subscribe((deshabilitar: boolean) => {
-        if (deshabilitar) {
-          // Deshabilito input
-          this.passwordIcon = 'pi pi-eye';
-          this.mostrarPassword = false;
-          this.password.disable();
-        } else {
-          // Habilito input
-          this.password.enable();
-        }
-      });
-    }
-  }
-
-  setFormControls(updateOn: string) {
-    if (updateOn === "blur") {
-      this.password = new FormControl('',
-        { validators: [Validators.required, Validators.minLength(6)], updateOn: "blur" });
-    } else {
-      this.password = new FormControl('',
-        { validators: [Validators.required, Validators.minLength(6)], updateOn: "change" });
-    }
   }
 
   // trae el valor puesto en un ReactiveForm

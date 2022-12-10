@@ -1,0 +1,31 @@
+<ion-content>
+  <ion-grid fullscreen class="vertical-align-content">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="12" size-md="12" size-sm="12" size-xs="12">
+        <ion-row class="ion-justify-content-center" style="margin-top: 10em">
+          <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
+            <p-card header="Olvide mi clave">
+              <ion-col size-lg="12" size-md="12" size-sm="12" size-xs="12">
+                <ion-row style="margin-top: 0.5em">
+                  <ion-col size-lg="12" size-md="12" size-sm="12" size-xs="12" style="margin-top: -2em; margin-bottom: -1em">
+                    <app-dni [formControl]="dni"></app-dni>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </p-card>
+            <div class="p-grid" style="margin-bottom: -3em">
+              <div class="p-col-6">
+                <app-volver></app-volver>
+              </div>
+              <div class="p-col-6 ion-text-end " style="margin-top: 10px;">
+                <ion-button (click)="olvideMiClave()" [disabled]="!dni.valid ||disableBtnAceptar" style="margin-top: -90px">
+                  {{btnAceptarTxt}}
+                </ion-button>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -11,6 +11,6 @@ export class TurnoService {
   constructor(private httpClient: HttpClient) { }
 
   getTurno(): Observable<Turno[]> {
-    return this.httpClient.get<Turno[]>('/turno');
+    return this.httpClient.get<Turno[]>('turno');
   }
 }

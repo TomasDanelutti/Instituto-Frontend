@@ -1,15 +1,22 @@
-
-import {Programa} from './Programa';
-import {Turno} from './turno';
+import {Turno} from "./turno";
+import {Archivo} from "./Archivo";
+import {Empleado} from "./Empleado";
 
 export class Curso {
-    idUCurso: number;
+    idCurso: number;
     nombre: string;
-    turno: string;
-    programa: Programa;
+    turno: Turno;
+    programa: Archivo;
+    modalidad: string;
+    aula: string;
+    fechaInicio: Date;
+    fechaFinalizacion: Date;
+    horario: String
     cupoMaximo: number;
     cupoMinimo: number;
-    profesor: string;
-    imagen: string;
+    profesor: Empleado;
+    imagen: Archivo;
+    estado: string;
+    activo: boolean;
 
 }

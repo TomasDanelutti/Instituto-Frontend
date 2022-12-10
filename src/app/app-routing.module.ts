@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/auth/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'administrar',
@@ -27,9 +27,21 @@ const routes: Routes = [
     path: 'lista-cursos',
     loadChildren: () => import('./pages/lista-cursos/lista-cursos.module').then(m => m.ListaCursosPageModule)
   },
+  {
+    path: 'mis-cursos',
+    loadChildren: () => import('./pages/mis-cursos/mis-cursos.module').then( m => m.MisCursosPageModule)
+  },
+  {
+    path: 'olvideMiClave',
+    loadChildren: () => import('./pages/auth/olvide-mi-clave/olvide-mi-clave.module').then( m => m.OlvideMiClavePageModule)
+  },
+  {
+    path: 'generarClave/:uuid',
+    loadChildren: () => import('./pages/auth/generar-clave/generar-clave.module').then( m => m.GenerarClavePageModule)
+  },
+
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: '**', redirectTo: 'login', pathMatch: 'full'},
-
 ];
 
 @NgModule({

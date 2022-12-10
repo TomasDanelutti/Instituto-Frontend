@@ -7,10 +7,52 @@ a.saraza {
   cursor: pointer;
 }
 
-.test {
-  position: absolute;
-  width: 1440px;
-  height: 137px;
-  left: 0px;
-  top: 0px;
+span:hover {
+  cursor: pointer;
+}
+
+.marginButton {
+  margin-top: 0mm;
+  margin-bottom: 2.5mm;
+  --box-shadow:none;
+}
+
+:host ::ng-deep .p-slidemenu{
+  width: 30rem;
+}
+
+:host ::ng-deep .p-dialog{
+  width: 50vw;
+}
+
+
+@media (max-width: 576px) {
+  .hidden-sm {
+    display: none !important;
+  }
+
+  :host ::ng-deep .p-dialog{
+    width: 90vw;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .hidden-md {
+    display: none !important;
+  }
+
+  :host ::ng-deep .p-dialog{
+    width: 90vw;
+  }
+}
+
+@media (min-width: 769px) {
+  .hidden-lg {
+    display: none !important;
+  }
+}
+
+.p-button.colorBordo {
+  background-color: #e91e63!important;
+  border: 2px solid #cd1a57 !important;
 }

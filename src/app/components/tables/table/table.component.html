@@ -1,0 +1,57 @@
+<p-table [columns]="cols" [value]="dataBackend" [paginator]="paginator" [rows]="cantidadElementos"
+         [totalRecords]="totalRegistrosBackend" [lazy]="true" (onLazyLoad)="loadData($event)" autoLayout="true">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngIf="imageButton">
+        Foto
+      </th>
+      <ng-container *ngFor="let col of columns">
+        <th class="ion-text-center" style="width:20%">
+          {{col.header}}
+        </th>
+        <ng-template #elseBlock>
+          <th class="ion-text-center">
+            {{col.header}}
+          </th>
+        </ng-template>
+      </ng-container>
+      <th class="ion-text-center" style="width:22%" *ngIf="editButton">
+        Editar
+      </th>
+      <th class="ion-text-center" style="width:22%" *ngIf="deleteButton">
+        Eliminar
+      </th>
+      <th class="ion-text-center" style="width:22%" *ngIf="inspectButton">
+        Ver
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-data let-columns="columns">
+    <tr>
+      <td *ngIf="imageButton">
+        <img width="50px" [src]="data.imagen">
+      </td>
+      <td class="ion-text-center" *ngFor="let col of columns">
+        {{data[col.field]}}
+      </td>
+      <td style="text-align: center" *ngIf="editButton">
+        <ion-button color="secondary" size="small" *ngIf="editButton" pTooltip="Editar"
+                    (click)="emitirIdParaEditar(data.id)">
+          <ion-icon name="create"></ion-icon>
+        </ion-button>
+      </td>
+      <td style="text-align: center" *ngIf="deleteButton">
+        <ion-button color="secondary" size="small" *ngIf="deleteButton" pTooltip="Eliminar"
+                    (click)="emitirIdParaBorrar(data.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </td>
+      <td style="text-align: center" *ngIf="inspectButton">
+        <ion-button color="secondary" size="small" *ngIf="inspectButton" pTooltip="Inspeccionar"
+                    (click)="emitirIdParaInspeccionar(data.id)">
+          <ion-icon name="eye"></ion-icon>
+        </ion-button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
