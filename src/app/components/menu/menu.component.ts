@@ -5,8 +5,6 @@ import {ResetUsuarioLogueado, UsuarioLogueadoState} from '../../state/states/usu
 import {Observable} from 'rxjs';
 import {Rol} from '../../model/rol';
 import {MenuController, Platform} from "@ionic/angular";
-import {StatusBar} from "@ionic-native/status-bar/ngx";
-import {SplashScreen} from "@ionic-native/splash-screen/ngx";
 import {Usuario} from "../../model/Usuario";
 
 @Component({
@@ -22,8 +20,6 @@ export class MenuComponent implements OnInit, OnChanges {
 
     constructor(
         private platform: Platform,
-        private splashScreen: SplashScreen,
-        private statusBar: StatusBar,
         private router: Router,
         private store: Store,
         private menu: MenuController
