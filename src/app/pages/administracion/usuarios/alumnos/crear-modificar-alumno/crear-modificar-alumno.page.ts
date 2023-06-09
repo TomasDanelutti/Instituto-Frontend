@@ -14,6 +14,10 @@ import {CursosService} from "../../../../../services/cursos.service";
 import {Curso} from "../../../../../model/Curso";
 import {ColumnaTable} from "../../../cursos/cursos.page";
 import {SetCantDesinscripcionesAction} from "../../../../../state/states/desinscripcion.state";
+import {AlumnoExt} from "../../../../../model/EXTS/AlumnoExt";
+import {InscripcionService} from "../../../../../services/inscripcion.service";
+import {InscripcionDTO} from "../../../../../model/DTOS/InscripcionDTO";
+import {SweetAlertResult} from "sweetalert2";
 
 @Component({
   selector: 'app-crear-modificar-alumno',
@@ -40,13 +44,14 @@ export class CrearModificarAlumnoPage implements OnInit {
       private alumnoService: AlumnoService,
       private store: Store,
       private archivoService: ArchivoService,
-      private cursosServce: CursosService
+      private cursosServce: CursosService,
+      private inscripcionService: InscripcionService
   ) {
   }
 
   ngOnInit() {
     this.alumnoForm = this.formBuilder.group({
-      idUsuario: [],
+      idPersona: [],
       dni: [,Validators.required],
       nombre: [, Validators.required],
       apellido: [, Validators.required],
@@ -73,7 +78,7 @@ export class CrearModificarAlumnoPage implements OnInit {
   }
 
   armarTabla() {
-    this.cursosServce.getCursoInscriptosByUsuario(this.usuario.idUsuario)
+    this.cursosServce.getCursoInscriptosByUsuario(this.usuario.idPersona)
         .subscribe(cursos => {
           cursos.forEach((item: Curso) => {
             const auxObjeto = {
@@ -90,7 +95,19 @@ export class CrearModificarAlumnoPage implements OnInit {
   }
 
   desinscribirse(idCurso: number) {
-    this.store.dispatch(new SetCantDesinscripcionesAction());
+    console.log(idCurso)
+    console.log(this.alumnoForm.controls.idPersona.value)
+      this.messagesService.ventanaConfirmar("Atencion", "Estas seguro que deseas desinscribir al curso al alumno?").then((result: SweetAlertResult) => {
+        if (result.isConfirmed) {
+          const inscripcionDto = new InscripcionDTO();
+          inscripcionDto.idCurso = idCurso;
+          inscripcionDto.idPersona = this.alumnoForm.controls.idPersona.value;
+          this.inscripcionService.desinscribirse(inscripcionDto).subscribe(respuesta => {
+            this.store.dispatch(new SetCantDesinscripcionesAction());
+            this.messagesService.ventanaExitosa("Exitò", respuesta.mensaje);
+          }, error => this.messagesService.ventanaError("Atenciòn", error.error));
+        }
+      });
   }
 
   volver() {
@@ -98,9 +115,9 @@ export class CrearModificarAlumnoPage implements OnInit {
   }
 
   guardarAlumno() {
-      let alumno: Alumno;
-      alumno = this.alumnoForm.value;
-      alumno.imagen = this.imagen;
+      let alumno: AlumnoExt;
+      alumno.alumno = this.alumnoForm.value;
+      alumno.alumno.imagen = this.imagen;
       this.alumnoService.guardarAlumno(alumno).subscribe(rta => {
         const estado: string = this.alumnoForm.value.idUsuario ? 'modificado' : 'creado';
         this.messagesService.ventanaExitosa('Éxito', `Alumno ${this.alumnoForm.value.nombre} ${estado}`);

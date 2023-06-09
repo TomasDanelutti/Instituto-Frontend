@@ -58,7 +58,7 @@
                              </span>
                           </ion-col>
                           <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
-                              <app-fecha (fechaSeleccionada)="setearFecha($event)" label="Fecha de Nacimiento *"></app-fecha>
+                              <app-fecha (fechaSeleccionada)="setearFecha($event)" [fechaPadre]="usuarioForm.controls.fechaNacimiento.value" label="Fecha de Nacimiento *"></app-fecha>
                           </ion-col>
                       </ion-row>
                       <ion-row style="margin-bottom: 1em">

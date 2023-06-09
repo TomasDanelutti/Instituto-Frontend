@@ -9,6 +9,7 @@ import {AlumnoService} from "../../../services/alumno.service";
 import {ArchivoService} from "../../../services/Archivo.service";
 import {Alumno} from "../../../model/Alumno";
 import {UsuarioService} from "../../../services/usuario.service";
+import {AlumnoExt} from "../../../model/EXTS/AlumnoExt";
 
 @Component({
   selector: 'app-registrar-alumno',
@@ -38,7 +39,7 @@ export class RegistrarAlumnoPage implements OnInit {
 
   ngOnInit() {
     this.alumnoForm = this.formBuilder.group({
-      idUsuario: [],
+      idPersona: [],
       dni: [,Validators.required],
       nombre: [, Validators.required],
       apellido: [, Validators.required],
@@ -84,10 +85,10 @@ export class RegistrarAlumnoPage implements OnInit {
   }
 
   guardarAlumno() {
-    if (this.alumnoForm.valid) {
-      let alumno: Alumno;
-      alumno = this.alumnoForm.value;
-      alumno.imagen = this.imagen;
+      let alumno: AlumnoExt = new AlumnoExt();
+      alumno.alumno = this.alumnoForm.value;
+      alumno.alumno.imagen = this.imagen;
+      alumno.clave = this.alumnoForm.controls.clave.value;
       this.alumnoService.guardarAlumno(alumno).subscribe(rta => {
         const estado: string = this.alumnoForm.value.idUsuario ? 'modificado' : 'creado';
         this.messagesService.ventanaExitosa('Éxito', `Alumno ${this.alumnoForm.value.nombre} ${estado}`);
@@ -95,9 +96,6 @@ export class RegistrarAlumnoPage implements OnInit {
       }, error => {
         this.messagesService.ventanaError('Atención', 'No se pudo guardar el Alumno');
       });
-    } else {
-      this.messagesService.ventanaError('Atención', 'formulario invalido');
-    }
   }
 
   setearFecha($event: string) {

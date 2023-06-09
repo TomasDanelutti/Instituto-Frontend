@@ -46,7 +46,7 @@ export class ListaCursosPage implements OnInit {
   }
 
   buscarIdCursosInscriptos(numPage: number, cant: number) {
-    this.cursosService.getCursoInscriptosByUsuario(this.usuario.idUsuario)
+    this.cursosService.getCursoInscriptosByUsuario(this.usuario.idPersona)
         .subscribe(cursos => {
           this.idCursosInscriptos = [];
           this.cursos = cursos;
@@ -121,7 +121,7 @@ export class ListaCursosPage implements OnInit {
       if (result.isConfirmed) {
         let inscripcionDTO: InscripcionDTO = new InscripcionDTO();
         inscripcionDTO.idCurso = idCurso;
-        inscripcionDTO.idUsuario = this.usuario.idUsuario;
+        inscripcionDTO.idPersona = this.usuario.idPersona;
         this.inscripcionService.inscribirse(inscripcionDTO).subscribe(respuesta => {
           this.messagesService.ventanaExitosa('Éxito', respuesta.mensaje);
           this.buscarIdCursosInscriptos(this.page,5);
@@ -134,7 +134,7 @@ export class ListaCursosPage implements OnInit {
     if (motivo) {
       let desinscripcion: DesinscripcionDTO = new DesinscripcionDTO();
       desinscripcion.idCurso = idCurso;
-      desinscripcion.idAlumno = this.usuario.idUsuario;
+      desinscripcion.idAlumno = this.usuario.idPersona;
       desinscripcion.motivo = motivo;
       this.crearToken(desinscripcion);
     }

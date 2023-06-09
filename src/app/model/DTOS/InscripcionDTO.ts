@@ -1,5 +1,5 @@
 export class InscripcionDTO {
     idCurso: number;
-    idUsuario: number;
+    idPersona: number;
     motivo: string;
 }

@@ -2,7 +2,7 @@ import {Rol} from './rol';
 import {Archivo} from "./Archivo";
 
 export class Usuario {
-  idUsuario: number;
+  idPersona: number;
   dni: number;
   nombre: string;
   apellido: string;

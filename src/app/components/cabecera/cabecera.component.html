@@ -10,7 +10,7 @@
         Instituto T&L S.A
       </a>
     </ion-col>
-    <ion-col *ngIf="rol.idRol === 2" style="margin-top: 15px" size-lg="1" size-md="1" size-sm="12" size-xs="12">
+    <ion-col *ngIf="rol.idRol === 1 || rol.idRol === 2" style="margin-top: 15px" size-lg="1" size-md="1" size-sm="12" size-xs="12">
       <span class="p-overlay-badge" pTooltip="Notificaciones">
         <i class="pi pi-bell" style="font-size: 1.5em; color: white;" (click)="openDialog()" ></i>
         <span class="p-badge">{{cantDesinscripcionesState|async}}</span>

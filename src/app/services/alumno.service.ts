@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Respuesta} from "../model/respuesta";
 import {Alumno} from "../model/Alumno";
+import {AlumnoExt} from "../model/EXTS/AlumnoExt";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class AlumnoService {
     return this.httpClient.get<Alumno[]>('alumno/findByNombre/' + nombre);
   }
 
-  guardarAlumno(alumno: Alumno): Observable<Respuesta> {
+  guardarAlumno(alumno: AlumnoExt): Observable<Respuesta> {
     return this.httpClient.post<Respuesta>('alumno/guardar', alumno);
   }
 }

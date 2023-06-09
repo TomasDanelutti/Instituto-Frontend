@@ -18,7 +18,7 @@ export class MisCursosPage implements OnInit {
 
   ngOnInit() {
     this.usuarioLogueadoState.subscribe(usuarioState => {
-      this.cursosService.getCursoInscriptosByUsuario(usuarioState.idUsuario)
+      this.cursosService.getCursoInscriptosByUsuario(usuarioState.idPersona)
           .subscribe(cursos => this.cursosInscriptos = cursos);
     })
   }

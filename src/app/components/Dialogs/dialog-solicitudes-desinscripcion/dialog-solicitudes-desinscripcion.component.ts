@@ -49,9 +49,9 @@ export class DialogSolicitudesDesinscripcionComponent implements OnInit {
       const desinscripcionDTO = new DesinscripcionDTO();
       if (motivo) {
         desinscripcionDTO.motivo = motivo;
-        desinscripcionDTO.idAlumno = desinscricion.alumno.idUsuario;
+        desinscripcionDTO.idAlumno = desinscricion.alumno.idPersona;
         desinscripcionDTO.idCurso = desinscricion.curso.idCurso;
-        desinscripcionDTO.idEmpleado = this.usuario.idUsuario;
+        desinscripcionDTO.idEmpleado = this.usuario.idPersona;
         this.desinscripcionService.cancelarDesinscripcion(desinscripcionDTO).subscribe(respuesta => {
           this.messageService.ventanaExitosa("Exitó", respuesta.mensaje);
           this.store.dispatch(new SetCantDesinscripcionesAction());

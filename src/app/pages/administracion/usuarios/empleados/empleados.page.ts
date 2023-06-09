@@ -41,7 +41,7 @@ export class EmpleadosPage implements OnInit {
       this.empleadosTable = [];
       value.forEach((item: Empleado) => {
         const auxObjeto = {
-          id: item.idUsuario,
+          id: item.idPersona,
           imagen: item.imagen?.foto,
           nombre: item.nombre,
           apellido: item.apellido,
@@ -65,7 +65,7 @@ export class EmpleadosPage implements OnInit {
 
   editarAdministrativo(idUsuario: number) {
     const alumnoSeleccionado = this.empleados.find(
-        (alumnoSelected: Alumno) => idUsuario === alumnoSelected.idUsuario);
+        (alumnoSelected: Alumno) => idUsuario === alumnoSelected.idPersona);
     this.store.dispatch(new SetUsuarioAction(alumnoSeleccionado as Empleado));
     this.router.navigate(['administrar/empleados/crear-modificar-empleado']);
   }
@@ -83,7 +83,7 @@ export class EmpleadosPage implements OnInit {
         this.empleadosTable = [];
         value.forEach((item: Empleado) => {
           const auxObjeto = {
-            id: item.idUsuario,
+            id: item.idPersona,
             imagen: item.imagen?.foto,
             nombre: item.nombre,
             apellido: item.apellido,

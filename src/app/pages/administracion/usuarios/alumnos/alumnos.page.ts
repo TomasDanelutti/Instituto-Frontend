@@ -35,7 +35,7 @@ export class AlumnosPage implements OnInit {
       this.alumnosTable= [];
       value.forEach((item: Alumno) => {
         const auxObjeto = {
-          id: item.idUsuario,
+          id: item.idPersona,
           imagen: item.imagen?.foto,
           nombre: item.nombre,
           apellido: item.apellido,
@@ -57,7 +57,7 @@ export class AlumnosPage implements OnInit {
 
   editarAlumno(idUsuario: number) {
     const alumnoSeleccionado = this.alumnos.find(
-        (alumnoSelected: Alumno) => idUsuario === alumnoSelected.idUsuario);
+        (alumnoSelected: Alumno) => idUsuario === alumnoSelected.idPersona);
     this.store.dispatch(new SetUsuarioAction(alumnoSeleccionado as Alumno));
     this.router.navigate(['administrar/alumnos/crear-modificar-alumno'], { replaceUrl: true });
   }
@@ -71,7 +71,7 @@ export class AlumnosPage implements OnInit {
         this.alumnosTable = [];
         value.forEach((item: Alumno) => {
           const auxObjeto = {
-            id: item.idUsuario,
+            id: item.idPersona,
             imagen: item.imagen.foto,
             nombre: item.nombre,
             apellido: item.apellido,
