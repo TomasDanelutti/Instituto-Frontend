@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Curso} from '../../../model/Curso';
 import {CursosService} from '../../../services/cursos.service';
 import {InscripcionService} from '../../../services/inscripcion.service';
@@ -6,6 +6,9 @@ import {Router} from '@angular/router';
 import {Store} from "@ngxs/store";
 import {MessagesService} from "../../../services/messages.service";
 import {SetCursoAction} from "../../../state/states/curso.state";
+import {Subscription} from "rxjs";
+import {FormControl} from "@angular/forms";
+import {map, mergeMap} from "rxjs/operators";
 
 
 export class ColumnaTable {
@@ -17,13 +20,15 @@ export class ColumnaTable {
   templateUrl: './cursos.page.html',
   styleUrls: ['./cursos.page.scss'],
 })
-export class CursosPage implements OnInit {
+export class CursosPage implements OnInit, OnDestroy {
+  private subscriptions: Subscription[] = [];
   cursos: Curso[] = [];
   cols: ColumnaTable[];
   totalRegistrosBackend = 1;
   cursosTable: any[] = [];
   page: number
   paginador: boolean;
+  buscador: FormControl
   constructor(private cursoService: CursosService,
               private inscripcionService: InscripcionService,
               private router: Router,
@@ -31,37 +36,34 @@ export class CursosPage implements OnInit {
               private messagesService: MessagesService) {}
 
   ngOnInit(): void {
+    this.buscador = new FormControl();
     this.paginador = true;
     this.cols = [{field: 'nombre', header: 'Nombre'},{field: 'profesor', header: 'Profesor'},{field: 'turno', header: 'Turno'}];
   }
 
-  buscarCursosPaginados(numPage: number, cant: number) {
-    this.cursoService.getCursosPaginado(numPage, cant).subscribe(cursos => {
-      console.log(cursos)
-      this.cursos = cursos;
-      this.cursosTable = [];
-      cursos.forEach((item: Curso) => {
-        const auxObjeto = {
-          id: item.idCurso,
-          nombre: item.nombre,
-          profesor: item.profesor.nombre,
-          turno: item.turno,
-          imagen: item.imagen.foto
-        };
-        this.cursosTable.push(auxObjeto);
-      });
-    });
-  }
-
-  contarCursos() {
-    this.cursoService.contarCursos().subscribe(
-        value => this.totalRegistrosBackend = value);
+  buscarCursosPaginados(numPage: number) {
+    this.cursoService.contarCursos(this.buscador.value)
+        .pipe(mergeMap(cantidadElementos => this.cursoService
+            .getCursosPaginado(numPage, 5, this.buscador.value)
+            .pipe(map(cursos => {
+              this.paginador = cantidadElementos > 5;
+              this.totalRegistrosBackend = cantidadElementos;
+              this.cursos = cursos;
+              this.cursosTable = cursos.map((curso: Curso) => {
+                return {
+                  id: curso.idCurso,
+                  nombre: curso.nombre,
+                  profesor: curso.profesor.nombre,
+                  turno: curso.turno,
+                  imagen: curso.imagen.foto
+                }
+              })
+            })))).subscribe();
   }
 
   loadData($event: number) {
     this.page = $event;
-    this.buscarCursosPaginados($event,5)
-    this.contarCursos();
+    this.buscarCursosPaginados($event)
   }
 
 
@@ -79,35 +81,22 @@ export class CursosPage implements OnInit {
   eliminar(idCurso: number) {
     this.cursoService.eliminarCurso(idCurso).subscribe(() => {
       this.messagesService.ventanaExitosa('Éxito', 'Curso eliminado con exito');
-      this.buscarCursosPaginados(this.page, 5);
+      this.buscarCursosPaginados(this.page);
     }, error => {
       this.messagesService.ventanaError('Atención', 'No se pudo eliminar el curso');
     });
   }
 
   buscar(buscador: any) {
-    if (buscador) {
-      this.cursoService.getCursoByNombre(buscador).subscribe(value => {
-        this.cursos = [];
-        this.cursosTable = [];
-        this.cursos = value;
-        value.forEach((item: Curso) => {
-          const auxObjeto = {
-            id: item.idCurso,
-            nombre: item.nombre,
-            profesor: item.profesor.nombre,
-            turno: item.turno,
-            imagen: item.imagen.foto
-          };
-          this.cursosTable.push(auxObjeto);
-          this.paginador = false;
-        });
-      });
+    if (buscador.length > 3 ) {
+      this.buscarCursosPaginados(0);
     }
-    else {
-      this.buscarCursosPaginados(0,5);
-      this.paginador = true;
+    else if (buscador.length === 0) {
+      this.buscarCursosPaginados(0);
     }
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(value => value.unsubscribe());
   }
 
 }

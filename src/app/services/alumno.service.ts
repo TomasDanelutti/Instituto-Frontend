@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Respuesta} from "../model/respuesta";
 import {Alumno} from "../model/Alumno";
@@ -12,11 +12,21 @@ export class AlumnoService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAlumnosPaginados(numeroPagina: number, cantSubareas: number): Observable<Alumno[]>{
-    return this.httpClient.get<Alumno[]>('alumno/findBy/' + numeroPagina + '/' + cantSubareas);
+  getAlumnosPaginados(pageNo: number, pageSize: number, nombre?: string): Observable<Alumno[]>{
+    let queryParams = new HttpParams()
+        .set('pageNo', pageNo.toString())
+        .set('pageSize', pageSize.toString());
+    if (typeof nombre !== 'undefined' && nombre !== null) {
+      queryParams = queryParams.set('nombre', nombre);
+    }
+    return this.httpClient.get<Alumno[]>('alumno/getAlumnosPaginado', {params: queryParams});
   }
 
-  contarAlumnos(): Observable<number>{
+  contarAlumnos(nombre?: string): Observable<number>{
+    let queryParams = new HttpParams()
+    if (typeof nombre !== 'undefined' && nombre !== null) {
+      queryParams = queryParams.set('nombre', nombre);
+    }
     return this.httpClient.get<number>('alumno/count');
   }
 

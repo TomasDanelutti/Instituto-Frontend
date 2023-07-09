@@ -7,8 +7,8 @@
       <ion-col size-lg="9" size-md="9" size-sm="12" size-xs="12">
         <ion-row class="ion-align-items-center">
           <ion-col size-lg="10" size-md="10" size-sm="12" size-xs="12">
-            <ion-searchbar type="text" showCancelButton="focus" placeholder="Buscar profesionales"
-                           (ionChange)="buscar($event.detail.value)"></ion-searchbar>
+            <ion-searchbar style="color: #2dd36f; background-color: #2dd36f" type="text" showCancelButton="focus" placeholder="Buscar profesionales"
+                           (ionChange)="buscar($event.detail.value)" [formControl]="buscador"></ion-searchbar>
           </ion-col>
           <ion-col size-lg="2" size-md="2" size-sm="12" size-xs="12" class="ion-text-center">
             <ion-button color="primary" (click)="crearCurso()">

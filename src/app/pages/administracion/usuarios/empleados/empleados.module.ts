@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { EmpleadosPage } from './empleados.page';
 import {PrimeNgModule} from '../../../../modules/primeng/primeng.module';
@@ -14,7 +14,8 @@ import {EmpleadosPageRoutingModule} from "./empleados-routing.module";
         IonicModule,
         EmpleadosPageRoutingModule,
         PrimeNgModule,
-        CustomComponentsModule
+        CustomComponentsModule,
+        ReactiveFormsModule
     ],
   declarations: [EmpleadosPage]
 })

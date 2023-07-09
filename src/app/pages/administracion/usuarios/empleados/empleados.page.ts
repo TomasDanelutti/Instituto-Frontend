@@ -7,6 +7,8 @@ import {SetUsuarioAction} from "../../../../state/states/usuario.state";
 import {Store} from "@ngxs/store";
 import {Empleado} from "../../../../model/Empleado";
 import {EmpleadoService} from "../../../../services/empleado.service";
+import {map, mergeMap} from "rxjs/operators";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-empleados',
@@ -20,6 +22,7 @@ export class EmpleadosPage implements OnInit {
   empleadosTable: any[] = [];
   page: number
   paginador: boolean;
+  buscador: FormControl;
 
   constructor(private router: Router,
               private empleadoService: EmpleadoService,
@@ -27,40 +30,34 @@ export class EmpleadosPage implements OnInit {
 
   ngOnInit() {
     this.cols = [{field: 'nombre', header: 'Nombre'},{field: 'apellido', header: 'Apellido'},  {field: 'dni', header: 'DNI'} ,{field: 'puesto', header: 'Puesto'} ,{field: 'activo', header: 'Estado'}];
-    this.paginador = true;
+    this.buscador = new FormControl();
   }
 
-  ionViewWillEnter() {
-    this.buscarAdministrativosPaginados(this.page,5);
-  }
-
-  buscarAdministrativosPaginados(numPage: number, cant: number) {
-    this.contarAdministrativos();
-    this.empleadoService.getEmpleadosPaginados(numPage, cant).subscribe(value => {
-      this.empleados = value;
-      this.empleadosTable = [];
-      value.forEach((item: Empleado) => {
-        const auxObjeto = {
-          id: item.idPersona,
-          imagen: item.imagen?.foto,
-          nombre: item.nombre,
-          apellido: item.apellido,
-          puesto: item.puesto,
-          dni: item.dni,
-          activo: item.activo ? "Activo" : "Inactivo"
-        };
-        this.empleadosTable.push(auxObjeto);
-      });
-    });
-  }
-
-  contarAdministrativos() {
-    this.empleadoService.contarEmpleados().subscribe(value => this.totalRegistrosBackend = value);
+  buscarAdministrativosPaginados(numPage: number) {
+    this.empleadoService.contarEmpleados(this.buscador.value)
+        .pipe(mergeMap(cantidadElementos => this.empleadoService
+            .getEmpleadosPaginados(numPage, 5, this.buscador.value)
+            .pipe(map(empleados => {
+              this.paginador = cantidadElementos > 5;
+              this.totalRegistrosBackend = cantidadElementos;
+              this.empleados = empleados;
+              this.empleadosTable = empleados.map((empleado: Empleado) => {
+                return {
+                  id: empleado.idPersona,
+                  imagen: empleado.imagen?.foto,
+                  nombre: empleado.nombre,
+                  apellido: empleado.apellido,
+                  puesto: empleado.puesto,
+                  dni: empleado.dni,
+                  activo: empleado.activo ? "Activo" : "Inactivo"
+                }
+              })
+            })))).subscribe();
   }
 
   loadData($event: number) {
     this.page = $event;
-    this.buscarAdministrativosPaginados($event,5)
+    this.buscarAdministrativosPaginados($event)
   }
 
   editarAdministrativo(idUsuario: number) {
@@ -75,28 +72,10 @@ export class EmpleadosPage implements OnInit {
   }
 
   buscar(buscador: any) {
-    if (buscador) {
-      this.empleadoService.getEmpleadosByNombre(buscador).subscribe(value => {
-        this.paginador = false;
-        this.empleados = [];
-        this.empleados = value;
-        this.empleadosTable = [];
-        value.forEach((item: Empleado) => {
-          const auxObjeto = {
-            id: item.idPersona,
-            imagen: item.imagen?.foto,
-            nombre: item.nombre,
-            apellido: item.apellido,
-            puesto: item.puesto,
-            dni: item.dni,
-            activo: item.activo ? "Activo" : "Inactivo"
-          };
-          this.empleadosTable.push(auxObjeto);
-        });
-      });
-    } else {
-      this.buscarAdministrativosPaginados(this.page, 5);
-      this.paginador = true;
+    if (buscador.length > 3) {
+      this.buscarAdministrativosPaginados(this.page)
+    } else if (buscador.length === 0){
+      this.buscarAdministrativosPaginados(this.page);
     }
   }
 }

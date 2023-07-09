@@ -8,7 +8,7 @@
         <ion-row class="ion-align-items-center">
           <ion-col size-lg="12" size-md="12" size-sm="12" size-xs="12">
             <ion-searchbar type="text" showCancelButton="focus" placeholder="Buscar alumnos"
-                           (ionChange)="buscar($event.detail.value)"></ion-searchbar>
+                           (ionChange)="buscar($event.detail.value)" [formControl]="buscador"></ion-searchbar>
           </ion-col>
         </ion-row>
       </ion-col>

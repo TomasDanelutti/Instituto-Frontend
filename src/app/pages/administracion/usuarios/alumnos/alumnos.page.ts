@@ -6,6 +6,10 @@ import {AlumnoService} from "../../../../services/alumno.service";
 import {Alumno} from "../../../../model/Alumno";
 import {SetUsuarioAction} from "../../../../state/states/usuario.state";
 import {Store} from "@ngxs/store";
+import {map, mergeMap} from "rxjs/operators";
+import {Curso} from "../../../../model/Curso";
+import {FormControl} from "@angular/forms";
+import {of} from "rxjs";
 
 @Component({
   selector: 'app-alumnos',
@@ -19,40 +23,40 @@ export class AlumnosPage implements OnInit {
   alumnosTable: any[] = [];
   page: number
   paginador: boolean;
+  buscador: FormControl
   constructor(private router: Router,
               private alumnoService: AlumnoService,
               private store: Store) { }
 
   ngOnInit() {
+    this.buscador = new FormControl();
     this.cols = [{field: 'nombre', header: 'Nombre'},{field: 'apellido', header: 'Apellido'}, {field: 'dni', header: 'DNI'}];
     this.paginador = true;
   }
 
-  buscarAlumnosPaginados(numPage: number, cant: number) {
-    this.contarAlumnos();
-    this.alumnoService.getAlumnosPaginados(numPage, cant).subscribe(value => {
-      this.alumnos = value;
-      this.alumnosTable= [];
-      value.forEach((item: Alumno) => {
-        const auxObjeto = {
-          id: item.idPersona,
-          imagen: item.imagen?.foto,
-          nombre: item.nombre,
-          apellido: item.apellido,
-          dni: item.dni
-        };
-        this.alumnosTable.push(auxObjeto);
-      });
-    });
-  }
-
-  contarAlumnos() {
-    this.alumnoService.contarAlumnos().subscribe(value => this.totalRegistrosBackend = value);
+  buscarAlumnosPaginados(numPage: number) {
+    this.alumnoService.contarAlumnos(this.buscador.value)
+        .pipe(mergeMap(cantidadElementos => this.alumnoService
+            .getAlumnosPaginados(numPage, 5, this.buscador.value)
+            .pipe(map(alumnos => {
+              this.paginador = cantidadElementos > 5;
+              this.totalRegistrosBackend = cantidadElementos;
+              this.alumnos = alumnos;
+              this.alumnosTable = alumnos.map((alumno: Alumno) => {
+                return {
+                  id: alumno.idPersona,
+                  imagen: alumno.imagen.foto,
+                  nombre: alumno.nombre,
+                  apellido: alumno.apellido,
+                  dni: alumno.dni
+                }
+              })
+            })))).subscribe();
   }
 
   loadData($event: number) {
     this.page = $event;
-    this.buscarAlumnosPaginados($event,5)
+    this.buscarAlumnosPaginados($event)
   }
 
   editarAlumno(idUsuario: number) {
@@ -63,26 +67,10 @@ export class AlumnosPage implements OnInit {
   }
 
   buscar(buscador: any) {
-    if (buscador) {
-      this.alumnoService.getAlumnoByNombre(buscador).subscribe(value => {
-        this.paginador = false;
-        this.alumnos = [];
-        this.alumnos = value;
-        this.alumnosTable = [];
-        value.forEach((item: Alumno) => {
-          const auxObjeto = {
-            id: item.idPersona,
-            imagen: item.imagen.foto,
-            nombre: item.nombre,
-            apellido: item.apellido,
-            dni: item.dni
-          };
-          this.alumnosTable.push(auxObjeto);
-        });
-      });
-    } else {
-      this.buscarAlumnosPaginados(this.page, 5);
-      this.paginador = true;
+    if (buscador.length > 3) {
+      this.buscarAlumnosPaginados(0);
+    } else  if (buscador.length === 0){
+      this.buscarAlumnosPaginados(0);
     }
   }
 }

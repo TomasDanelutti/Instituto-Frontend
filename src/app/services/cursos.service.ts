@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Usuario} from '../model/Usuario';
 import {Curso} from '../model/Curso';
@@ -12,12 +12,22 @@ export class CursosService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getCursosPaginado(numeroPagina: number, cantSubareas: number): Observable<Curso[]>{
-    return this.httpClient.get<Curso[]>('curso/findBy/' + numeroPagina + '/' + cantSubareas);
+  getCursosPaginado(pageNo: number, pageSize: number, nombre?: string): Observable<Curso[]>{
+    let queryParams = new HttpParams()
+        .set('pageNo', pageNo.toString())
+        .set('pageSize', pageSize.toString());
+    if (typeof nombre !== 'undefined' && nombre !== null) {
+      queryParams = queryParams.set('nombre', nombre);
+    }
+    return this.httpClient.get<Curso[]>('curso/getCursosPaginado/', {params: queryParams});
   }
 
-  contarCursos(): Observable<number>{
-    return this.httpClient.get<number>('curso/count');
+  contarCursos(nombre?: string): Observable<number>{
+    let queryParams = new HttpParams()
+    if (typeof nombre !== 'undefined' && nombre !== null) {
+      queryParams = queryParams.set('nombre', nombre);
+    }
+    return this.httpClient.get<number>('curso/count', {params:queryParams});
   }
 
   getCursoInscriptosByUsuario(idUsuario: number): Observable<Curso[]> {
@@ -26,10 +36,6 @@ export class CursosService {
 
   getCursoNoInscriptosByUsuario(idUsuario: number): Observable<Curso[]> {
     return this.httpClient.get<Curso[]>('curso/findNoInscriptos/' + idUsuario);
-  }
-
-  getCursoByNombre(nombre: string): Observable<Curso[]> {
-    return this.httpClient.get<Curso[]>('curso/findByNombre/' + nombre);
   }
 
   guardarCurso(curso: Curso): Observable<Respuesta> {
