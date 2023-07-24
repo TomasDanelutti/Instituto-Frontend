@@ -33,17 +33,17 @@
           {{curso[col.field]}}
         </td>
         <td>
-          <ion-button *ngIf="!curso.inscripto && accionButton" color="secondary" size="small" pTooltip="Inscribirse"
+          <ion-button size="small" color="light" class="secondary-button" *ngIf="!curso.inscripto && accionButton" pTooltip="Inscribirse"
                       (click)="emitirParaInscribirse(curso.id)">
             <ion-icon name="add-outline"></ion-icon>
           </ion-button>
-          <ion-button *ngIf="curso.inscripto && accionButton" color="secondary" size="small" pTooltip="Desinscribirse"
+          <ion-button size="small" color="light" class="secondary-button" *ngIf="curso.inscripto && accionButton" pTooltip="Desinscribirse"
                       (click)="emitirParaDesinscribirse(curso.id)">
             <ion-icon name="trash-outline"></ion-icon>
           </ion-button>
         </td>
         <td style="text-align: center" *ngIf="inspectButton">
-          <ion-button color="secondary" size="small" *ngIf="inspectButton" pTooltip="Inspeccionar"
+          <ion-button size="small" color="light" class="secondary-button" *ngIf="inspectButton" pTooltip="Inspeccionar"
                       (click)="emitirIdParaInspeccionar(curso.id)">
             <ion-icon name="eye"></ion-icon>
           </ion-button>

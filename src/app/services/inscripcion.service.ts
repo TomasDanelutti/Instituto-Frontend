@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Respuesta} from '../model/respuesta';
-import {Usuario} from '../model/Usuario';
 import {InscripcionDTO} from "../model/DTOS/InscripcionDTO";
 
 @Injectable({

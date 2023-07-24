@@ -8,10 +8,6 @@ const routes: Routes = [
     path: '',
     component: EmpleadosPage
   },
-  {
-    path: 'crear-modificar-empleado',
-    loadChildren: () => import('./crear-modificar-empleados/crear-modificar-empleados.module').then(m => m.CrearModificarEmpleadosPageModule)
-  }
 ];
 
 @NgModule({

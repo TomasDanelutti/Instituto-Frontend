@@ -2,11 +2,11 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import {Select} from '@ngxs/store';
 import {Observable} from 'rxjs';
-import {Usuario} from '../../model/Usuario';
 import {UsuarioLogueadoState} from '../../state/states/usuarioLogueado.state';
 import {Rol} from "../../model/rol";
 import {DesinscripcionState} from "../../state/states/desinscripcion.state";
 import {MessagesService} from "../../services/messages.service";
+import {Persona} from "../../model/Persona";
 
 @Component({
   selector: 'app-cabecera',
@@ -14,10 +14,10 @@ import {MessagesService} from "../../services/messages.service";
   styleUrls: ['./cabecera.component.scss'],
 })
 export class CabeceraComponent implements OnInit {
-  @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioLogueado: Observable<Usuario>;
+  @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioLogueado: Observable<Persona>;
   @Select(UsuarioLogueadoState.getRol) rolState: Observable<Rol>;
   @Select(DesinscripcionState.getCantDesinscripciones) cantDesinscripcionesState: Observable<number>;
-  usuario: Usuario;
+  persona: Persona;
   rol: Rol;
   cantDesinscripciones: number;
   dialogSolicitudesDesinscripcion = false;
@@ -27,7 +27,7 @@ export class CabeceraComponent implements OnInit {
 
   ngOnInit() {
     this.rolState.subscribe(rolState => this.rol = rolState);
-    this.usuarioLogueado.subscribe(value => this.usuario = value);
+    this.usuarioLogueado.subscribe(value => this.persona = value);
     this.cantDesinscripcionesState.subscribe(value => this.cantDesinscripciones = value);
   }
 

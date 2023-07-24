@@ -1,9 +1,9 @@
-import {Usuario} from './Usuario';
 import {Curso} from './Curso';
+import {Persona} from "./Persona";
 
 export class Inscripcion {
     idInscripcion: number;
-    Usuario: Usuario
+    persona: Persona
     Curso: Curso;
     estado: string;
     activo: boolean;

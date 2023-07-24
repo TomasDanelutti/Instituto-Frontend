@@ -8,8 +8,8 @@ import {DesinscripcionDTO} from "../../../model/DTOS/DesinscripcionDTO";
 import {MessagesService} from "../../../services/messages.service";
 import {UsuarioLogueadoState} from "../../../state/states/usuarioLogueado.state";
 import {Observable} from "rxjs";
-import {Usuario} from "../../../model/Usuario";
 import {SetCantDesinscripcionesAction} from "../../../state/states/desinscripcion.state";
+import {Persona} from "../../../model/Persona";
 
 @Component({
   selector: 'app-dialog-solicitudes-desinscripcion',
@@ -17,11 +17,11 @@ import {SetCantDesinscripcionesAction} from "../../../state/states/desinscripcio
   styleUrls: ['./dialog-solicitudes-desinscripcion.component.scss'],
 })
 export class DialogSolicitudesDesinscripcionComponent implements OnInit {
-  @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioState: Observable<Usuario>;
+  @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioState: Observable<Persona>;
   @Output() showDialogConsultaSolicitudesDsinscripcion = new EventEmitter<boolean>();
   display: boolean = false;
   notificaciones: Desinscripcion[];
-  usuario: Usuario = new Usuario();
+  usuario: Persona = new Persona();
   constructor(
       private desinscripcionService: DesinscripcionService,
       private router: Router,

@@ -20,10 +20,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/auth/registrar-alumno/registrar-alumno.module').then( m => m.RegistrarAlumnoPageModule)
   },
   {
-    path: 'mi-perfil',
-    loadChildren: () => import('./pages/mi-perfil/mi-perfil.module').then( m => m.MiPerfilPageModule)
-  },
-  {
     path: 'lista-cursos',
     loadChildren: () => import('./pages/lista-cursos/lista-cursos.module').then(m => m.ListaCursosPageModule)
   },
@@ -39,9 +35,13 @@ const routes: Routes = [
     path: 'generarClave/:uuid',
     loadChildren: () => import('./pages/auth/generar-clave/generar-clave.module').then( m => m.GenerarClavePageModule)
   },
-
+  {
+    path: 'datosPersonales',
+    loadChildren: () => import('./pages/datos-personales/datos-personales.module').then( m => m.DatosPersonalesPageModule)
+  },
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: '**', redirectTo: 'login', pathMatch: 'full'},
+
 ];
 
 @NgModule({

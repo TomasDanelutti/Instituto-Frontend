@@ -31,8 +31,18 @@ import {BadgeModule} from "primeng/badge";
 import {
     DialogSolicitudesDesinscripcionComponent
 } from "../../components/Dialogs/dialog-solicitudes-desinscripcion/dialog-solicitudes-desinscripcion.component";
+import {TestComponent} from "../../components/test/test.component";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {ToastModule} from "primeng/toast";
+import {DialogEmpleadosComponent} from "../../components/Dialogs/dialog-empleados/dialog-empleados.component";
+import {DialogAlumnosComponent} from "../../components/Dialogs/dialog-alumnos/dialog-alumnos.component";
+import {DialogCursosComponent} from "../../components/Dialogs/dialog-cursos/dialog-cursos.component";
+import {
+    DialogDatosPersonalesComponent
+} from "../../components/Dialogs/dialog-datos-personales/dialog-datos-personales.component";
 
 ;
+
 @NgModule({
     declarations: [
         CabeceraComponent,
@@ -55,7 +65,12 @@ import {
         EstadoCivilComponent,
         NivelEducativoComponent,
         VolverComponent,
-        DialogSolicitudesDesinscripcionComponent
+        DialogSolicitudesDesinscripcionComponent,
+        DialogEmpleadosComponent,
+        DialogAlumnosComponent,
+        DialogCursosComponent,
+        DialogDatosPersonalesComponent,
+        TestComponent
     ],
     imports: [
         CommonModule,
@@ -67,6 +82,8 @@ import {
         AvatarModule,
         InputNumberModule,
         BadgeModule,
+        ConfirmDialogModule,
+        ToastModule,
     ],
     exports: [
         CabeceraComponent,
@@ -89,7 +106,12 @@ import {
         EstadoCivilComponent,
         NivelEducativoComponent,
         VolverComponent,
-        DialogSolicitudesDesinscripcionComponent
+        DialogSolicitudesDesinscripcionComponent,
+        DialogEmpleadosComponent,
+        DialogAlumnosComponent,
+        DialogCursosComponent,
+        DialogDatosPersonalesComponent,
+        TestComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -4,7 +4,7 @@ import {Curso} from '../../model/Curso';
 import {Select} from "@ngxs/store";
 import {UsuarioLogueadoState} from "../../state/states/usuarioLogueado.state";
 import {Observable} from "rxjs";
-import {Usuario} from "../../model/Usuario";
+import {Persona} from "../../model/Persona";
 
 @Component({
   selector: 'app-home',
@@ -12,7 +12,7 @@ import {Usuario} from "../../model/Usuario";
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit{
-  @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioState: Observable<Usuario>;
+  @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioState: Observable<Persona>;
   cursos: Curso[] = [];
   constructor(private cursoService: CursosService) {}
 

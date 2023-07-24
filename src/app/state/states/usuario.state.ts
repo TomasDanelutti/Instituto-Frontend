@@ -1,12 +1,12 @@
 import {Reseteable} from "../Reseteable";
 import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {Injectable} from "@angular/core";
-import {Usuario} from "../../model/Usuario";
+import {Persona} from "../../model/Persona";
 
 export class SetUsuarioAction {
     static readonly type = '[Usuario] Definir usuario';
 
-    constructor(public usuario: Usuario) {
+    constructor(public persona: Persona) {
     }
 }
 
@@ -19,11 +19,11 @@ export class ResetUsuario {
 }
 
 export class UsuarioModel {
-    public usuario: Usuario;
+    public persona: Persona;
 }
 
 const usuarioStateDefault: UsuarioModel = {
-    usuario: null,
+    persona: null,
 };
 
 @State<UsuarioModel>({
@@ -35,13 +35,13 @@ const usuarioStateDefault: UsuarioModel = {
 export class UsuarioState {
 
     @Selector()
-    static getUsuario(state: UsuarioModel): Usuario {
-        return state.usuario;
+    static getUsuario(state: UsuarioModel): Persona {
+        return state.persona;
     }
 
     @Action(SetUsuarioAction)
     setCurso(ctx: StateContext<UsuarioModel>, action: SetUsuarioAction) {
-        ctx.patchState({ usuario: action.usuario });
+        ctx.patchState({ persona: action.persona });
     }
 
     @Action(ResetUsuario)

@@ -1,5 +1,83 @@
 :host ::ng-deep {
   .p-card.p-component {
-    border-radius: 1em !important;
+    border-radius: 10px !important;
+  }
+  .p-dialog{
+    border-radius: 15px;
+    border: none;
+    @media screen and (max-width: 500px){
+      max-height: 100% !important;
+      height: 100% !important;
+      width: 100vw !important;
+      border-radius: 0;
+    }
+    // En modo desktop
+    .p-dialog-header{
+      font-family: 'Roboto Slab';
+      font-style: normal;
+      font-weight: 400;
+      line-height: 37px;
+      letter-spacing: 0.25px;
+      height: 80px !important;
+      background: #1262e0 !important;
+      @media screen and (min-width: 500px){
+        border-radius: 15px 15px 0 0;
+        height: 50px !important;
+      }
+
+      .p-dialog-title{
+        font-size: 20px !important;
+      }
+    }
+    .p-dialog-footer{
+      border: none;
+      @media screen and (min-width: 500px) {
+        border-radius: 0 0 15px 15px;
+      }
+    }
+  }
+
+  .secondary-button::part(native) {
+    border: 2px solid #1262e0;
+    color: #1262e0 !important;
+    border-radius: 10px;
+  }
+
+  ion-button::part(native){
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    border-radius: 10px;
+  }
+
+  .searchbar-input.sc-ion-searchbar-md {
+    border-radius: 10px;
+  }
+
+  .p-badge {
+    background: #1262e0;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+  }
+
+  .p-accordion-header-link{
+    background: #1262e0 !important;
+    color: #000 !important;
+    border-radius: 10px!important;
+    font-family: 'Roboto Slab';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 37px;
+    letter-spacing: 0.25px;
   }
 }
+ion.button {
+  border-radius: 30px;
+}
+

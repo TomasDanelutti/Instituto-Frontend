@@ -7,10 +7,6 @@ const routes: Routes = [
   {
     path: '',
     component: AlumnosPage
-  },
-  {
-    path: 'crear-modificar-alumno',
-    loadChildren: () => import('./crear-modificar-alumno/crear-modificar-alumno.module').then( m => m.CrearModificarAlumnoPageModule)
   }
 ];
 

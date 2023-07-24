@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {Usuario} from '../../../../model/Usuario';
 import {ColumnaTable} from "../../cursos/cursos.page";
 import {Alumno} from "../../../../model/Alumno";
 import {SetUsuarioAction} from "../../../../state/states/usuario.state";
@@ -9,6 +8,7 @@ import {Empleado} from "../../../../model/Empleado";
 import {EmpleadoService} from "../../../../services/empleado.service";
 import {map, mergeMap} from "rxjs/operators";
 import {FormControl} from "@angular/forms";
+import {Persona} from "../../../../model/Persona";
 
 @Component({
   selector: 'app-empleados',
@@ -16,13 +16,14 @@ import {FormControl} from "@angular/forms";
   styleUrls: ['./empleados.page.scss'],
 })
 export class EmpleadosPage implements OnInit {
-  empleados: Usuario[] = [];
+  empleados: Empleado[] = [];
   cols: ColumnaTable[];
   totalRegistrosBackend = 1;
   empleadosTable: any[] = [];
   page: number
   paginador: boolean;
   buscador: FormControl;
+  dialogEmpleado = false;
 
   constructor(private router: Router,
               private empleadoService: EmpleadoService,
@@ -38,6 +39,7 @@ export class EmpleadosPage implements OnInit {
         .pipe(mergeMap(cantidadElementos => this.empleadoService
             .getEmpleadosPaginados(numPage, 5, this.buscador.value)
             .pipe(map(empleados => {
+              console.log(empleados)
               this.paginador = cantidadElementos > 5;
               this.totalRegistrosBackend = cantidadElementos;
               this.empleados = empleados;
@@ -51,7 +53,7 @@ export class EmpleadosPage implements OnInit {
                   dni: empleado.dni,
                   activo: empleado.activo ? "Activo" : "Inactivo"
                 }
-              })
+              });
             })))).subscribe();
   }
 
@@ -61,14 +63,14 @@ export class EmpleadosPage implements OnInit {
   }
 
   editarAdministrativo(idUsuario: number) {
-    const alumnoSeleccionado = this.empleados.find(
-        (alumnoSelected: Alumno) => idUsuario === alumnoSelected.idPersona);
-    this.store.dispatch(new SetUsuarioAction(alumnoSeleccionado as Empleado));
-    this.router.navigate(['administrar/empleados/crear-modificar-empleado']);
+    const empleadoSeleccionado = this.empleados.find(
+        (empleadoSelected: Empleado) => idUsuario === empleadoSelected.idPersona);
+    this.store.dispatch(new SetUsuarioAction(empleadoSeleccionado));
+    this.dialogEmpleado = true;
   }
 
   crearAdministrativo() {
-      this.router.navigate(['administrar/empleados/crear-modificar-empleado']);
+    this.dialogEmpleado = true;
   }
 
   buscar(buscador: any) {
@@ -77,5 +79,14 @@ export class EmpleadosPage implements OnInit {
     } else if (buscador.length === 0){
       this.buscarAdministrativosPaginados(this.page);
     }
+  }
+
+  cancelEmpleado($event: boolean) {
+    this.dialogEmpleado = $event;
+  }
+
+  GuardarEmpleaddo($event: boolean) {
+    this.dialogEmpleado = $event;
+    this.buscarAdministrativosPaginados(this.page);
   }
 }

@@ -4,7 +4,6 @@ import {Select, Store} from '@ngxs/store';
 import {Observable} from 'rxjs';
 import {UsuarioLogueadoState} from '../../state/states/usuarioLogueado.state';
 import {CursosService} from "../../services/cursos.service";
-import {Usuario} from "../../model/Usuario";
 import {InscripcionDTO} from "../../model/DTOS/InscripcionDTO";
 import {ColumnaTable} from "../administracion/cursos/cursos.page";
 import {InscripcionService} from "../../services/inscripcion.service";
@@ -13,6 +12,7 @@ import {SweetAlertResult} from "sweetalert2";
 import {DesinscripcionService} from "../../services/desinscripcion.service";
 import {DesinscripcionDTO} from "../../model/DTOS/DesinscripcionDTO";
 import {SetCantDesinscripcionesAction} from "../../state/states/desinscripcion.state";
+import {Persona} from "../../model/Persona";
 
 @Component({
   selector: 'app-lista-cursos',
@@ -20,12 +20,12 @@ import {SetCantDesinscripcionesAction} from "../../state/states/desinscripcion.s
   styleUrls: ['./lista-cursos.page.scss'],
 })
 export class ListaCursosPage implements OnInit {
-  @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioLogueadoState: Observable<Usuario>;
+  @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioLogueadoState: Observable<Persona>;
   cols: ColumnaTable[];
   totalRegistrosBackend = 1;
   cursosTable: any[] = [];
   page: number
-  usuario: Usuario = new Usuario();
+  persona: Persona = new Persona();
   cursos: Curso[] = [];
   idCursosInscriptos: number[] = [];
 
@@ -38,7 +38,7 @@ export class ListaCursosPage implements OnInit {
 
   ngOnInit() {
     this.cols = [{field: 'nombre', header: 'Nombre'},{field: 'profesor', header: 'Profesor'},{field: 'turno', header: 'Turno'}];
-    this.usuarioLogueadoState.subscribe((usuarioState: Usuario) => this.usuario = usuarioState);
+    this.usuarioLogueadoState.subscribe((usuarioState: Persona) => this.persona = usuarioState);
   }
 
   ionViewWillEnter() {
@@ -46,7 +46,7 @@ export class ListaCursosPage implements OnInit {
   }
 
   buscarIdCursosInscriptos(numPage: number, cant: number) {
-    this.cursosService.getCursoInscriptosByUsuario(this.usuario.idPersona)
+    this.cursosService.getCursoInscriptosByUsuario(this.persona.idPersona)
         .subscribe(cursos => {
           this.idCursosInscriptos = [];
           this.cursos = cursos;
@@ -121,7 +121,7 @@ export class ListaCursosPage implements OnInit {
       if (result.isConfirmed) {
         let inscripcionDTO: InscripcionDTO = new InscripcionDTO();
         inscripcionDTO.idCurso = idCurso;
-        inscripcionDTO.idPersona = this.usuario.idPersona;
+        inscripcionDTO.idPersona = this.persona.idPersona;
         this.inscripcionService.inscribirse(inscripcionDTO).subscribe(respuesta => {
           this.messagesService.ventanaExitosa('Éxito', respuesta.mensaje);
           this.buscarIdCursosInscriptos(this.page,5);
@@ -134,7 +134,7 @@ export class ListaCursosPage implements OnInit {
     if (motivo) {
       let desinscripcion: DesinscripcionDTO = new DesinscripcionDTO();
       desinscripcion.idCurso = idCurso;
-      desinscripcion.idAlumno = this.usuario.idPersona;
+      desinscripcion.idAlumno = this.persona.idPersona;
       desinscripcion.motivo = motivo;
       this.crearToken(desinscripcion);
     }

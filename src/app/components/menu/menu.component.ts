@@ -5,7 +5,7 @@ import {ResetUsuarioLogueado, UsuarioLogueadoState} from '../../state/states/usu
 import {Observable} from 'rxjs';
 import {Rol} from '../../model/rol';
 import {MenuController, Platform} from "@ionic/angular";
-import {Usuario} from "../../model/Usuario";
+import {Persona} from "../../model/Persona";
 
 @Component({
     selector: 'app-menu',
@@ -13,9 +13,9 @@ import {Usuario} from "../../model/Usuario";
     styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit, OnChanges {
-    @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioState: Observable<Usuario>;
+    @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioState: Observable<Persona>;
     rolSeleccionado: Rol;
-    usuario: Usuario;
+    usuario: Persona;
     navigate: any;
 
     constructor(
@@ -61,8 +61,8 @@ export class MenuComponent implements OnInit, OnChanges {
                             icon  : 'home'
                         },
                         {
-                            title : 'Mi Perfil',
-                            url   : '/mi-perfil',
+                            title : 'Datos personales',
+                            url   : '/datosPersonales',
                             icon  : 'logo-snapchat'
                         },
                         {
@@ -92,8 +92,8 @@ export class MenuComponent implements OnInit, OnChanges {
                             icon  : 'home'
                         },
                         {
-                            title : 'Mi Perfil',
-                            url   : '/mi-perfil',
+                            title : 'Datos personales',
+                            url   : '/datosPersonales',
                             icon  : 'logo-snapchat'
                         },
                         {
@@ -127,8 +127,8 @@ export class MenuComponent implements OnInit, OnChanges {
                             icon  : 'home'
                         },
                         {
-                            title : 'Mi Perfil',
-                            url   : '/mi-perfil',
+                            title : 'Datos personales',
+                            url   : '/datosPersonales',
                             icon  : 'logo-snapchat'
                         },
                         {

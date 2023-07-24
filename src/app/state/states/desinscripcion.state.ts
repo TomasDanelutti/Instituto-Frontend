@@ -3,8 +3,6 @@ import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {Injectable} from "@angular/core";
 import {DesinscripcionService} from "../../services/desinscripcion.service";
 import {tap} from "rxjs/operators";
-import {Usuario} from "../../model/Usuario";
-import {UsuarioModel} from "./usuario.state";
 
 export class SetCantDesinscripcionesAction {
     static readonly type = '[Desinscripcion] Contar desinscripciones';

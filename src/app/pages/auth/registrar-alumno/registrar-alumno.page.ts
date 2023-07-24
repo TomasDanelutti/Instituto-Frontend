@@ -1,15 +1,14 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
-import {Usuario} from "../../../model/Usuario";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Archivo} from "../../../model/Archivo";
 import {ColumnaTable} from "../../administracion/cursos/cursos.page";
 import {MessagesService} from "../../../services/messages.service";
 import {AlumnoService} from "../../../services/alumno.service";
 import {ArchivoService} from "../../../services/Archivo.service";
-import {Alumno} from "../../../model/Alumno";
 import {UsuarioService} from "../../../services/usuario.service";
 import {AlumnoExt} from "../../../model/EXTS/AlumnoExt";
+import {Persona} from "../../../model/Persona";
 
 @Component({
   selector: 'app-registrar-alumno',
@@ -24,7 +23,7 @@ export class RegistrarAlumnoPage implements OnInit {
   imagen: Archivo = new Archivo();
   imagenHeader: string;
   cols: ColumnaTable[];
-  usuario: Usuario = new Usuario();
+  persona: Persona = new Persona();
   disableInputs: boolean;
 
   constructor(

@@ -35,19 +35,19 @@
         {{data[col.field]}}
       </td>
       <td style="text-align: center" *ngIf="editButton">
-        <ion-button color="secondary" size="small" *ngIf="editButton" pTooltip="Editar"
+        <ion-button size="small" color="light" class="secondary-button" *ngIf="editButton" pTooltip="Editar elemento"
                     (click)="emitirIdParaEditar(data.id)">
           <ion-icon name="create"></ion-icon>
         </ion-button>
       </td>
       <td style="text-align: center" *ngIf="deleteButton">
-        <ion-button color="secondary" size="small" *ngIf="deleteButton" pTooltip="Eliminar"
+        <ion-button size="small" color="light" class="secondary-button" *ngIf="deleteButton" pTooltip="Eliminar elemento"
                     (click)="emitirIdParaBorrar(data.id)">
           <ion-icon name="trash-outline"></ion-icon>
         </ion-button>
       </td>
       <td style="text-align: center" *ngIf="inspectButton">
-        <ion-button color="secondary" size="small" *ngIf="inspectButton" pTooltip="Inspeccionar"
+        <ion-button size="small" color="light" class="secondary-button" *ngIf="inspectButton" pTooltip="Inspeccionar elemento"
                     (click)="emitirIdParaInspeccionar(data.id)">
           <ion-icon name="eye"></ion-icon>
         </ion-button>

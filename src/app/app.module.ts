@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import {RouteReuseStrategy, RouterModule} from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +13,7 @@ import {CustomComponentsModule} from "./modules/custom-components/custom-compone
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { AppHttpInterceptor } from './app.httpInterceptor';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {TestComponent} from "./components/test/test.component";
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +27,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     NgxsLoggerPluginModule.forRoot({disabled: true}),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     CustomComponentsModule,
-    HttpClientModule],
+    HttpClientModule,
+    RouterModule.forRoot([{ path: '', component: TestComponent }])],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true},
       { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

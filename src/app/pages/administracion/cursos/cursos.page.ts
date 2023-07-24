@@ -28,7 +28,8 @@ export class CursosPage implements OnInit, OnDestroy {
   cursosTable: any[] = [];
   page: number
   paginador: boolean;
-  buscador: FormControl
+  buscador: FormControl;
+  dialogCursos = false;
   constructor(private cursoService: CursosService,
               private inscripcionService: InscripcionService,
               private router: Router,
@@ -68,14 +69,14 @@ export class CursosPage implements OnInit, OnDestroy {
 
 
   crearCurso() {
-    this.router.navigate(['administrar/cursos/crear-modificar-curso'], {replaceUrl: true});
+    this.dialogCursos = true;
   }
 
   modificar(idCurso: number) {
     const cursoSeleccionado = this.cursos.find(
         (cursoSelected: Curso) => idCurso === cursoSelected.idCurso);
     this.store.dispatch(new SetCursoAction(cursoSeleccionado));
-    this.router.navigate(['administrar/cursos/crear-modificar-curso'], { replaceUrl: true });
+    this.dialogCursos = true;
   }
 
   eliminar(idCurso: number) {
@@ -85,6 +86,16 @@ export class CursosPage implements OnInit, OnDestroy {
     }, error => {
       this.messagesService.ventanaError('Atención', 'No se pudo eliminar el curso');
     });
+  }
+
+  cancelCurso($event: boolean) {
+    this.dialogCursos = false;
+
+  }
+
+  GuardarCurso($event: boolean) {
+    this.dialogCursos = false;
+    this.buscarCursosPaginados(this.page);
   }
 
   buscar(buscador: any) {
@@ -98,5 +109,4 @@ export class CursosPage implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach(value => value.unsubscribe());
   }
-
 }

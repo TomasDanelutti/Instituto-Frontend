@@ -3,8 +3,8 @@ import {Curso} from '../../../model/Curso';
 import {UsuarioLogueadoState} from '../../../state/states/usuarioLogueado.state';
 import {Select} from '@ngxs/store';
 import {Observable} from 'rxjs';
-import {Usuario} from '../../../model/Usuario';
 import {Router} from '@angular/router';
+import {Persona} from "../../../model/Persona";
 
 @Component({
   selector: 'app-lista-cursos-inscriptos',
@@ -12,15 +12,15 @@ import {Router} from '@angular/router';
   styleUrls: ['./lista-cursos-inscriptos.component.scss'],
 })
 export class ListaCursosInscriptosComponent implements OnInit {
-  @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioLogueado: Observable<Usuario>;
+  @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioLogueado: Observable<Persona>;
   @Input() cursos: Curso[];
-  usuario: Usuario;
+  persona: Persona;
   displayDialog = false;
 
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.usuarioLogueado.subscribe(value => this.usuario = value);
+    this.usuarioLogueado.subscribe(value => this.persona = value);
   }
 
   verAlumnos(curso: Curso) {

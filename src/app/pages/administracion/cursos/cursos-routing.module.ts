@@ -5,10 +5,6 @@ import { CursosPage } from './cursos.page';
 
 const routes: Routes = [
   {
-    path: 'crear-modificar-curso',
-    loadChildren: () => import('./crear-modificar-curso/crear-modificar-curso.module').then( m => m.CrearModificarCursoPageModule)
-  },
-  {
     path: '',
     component: CursosPage
   }

@@ -4,7 +4,7 @@ import {UsuarioLogueadoState} from "../../state/states/usuarioLogueado.state";
 import {Observable} from "rxjs";
 import {Curso} from "../../model/Curso";
 import {CursosService} from "../../services/cursos.service";
-import {Usuario} from "../../model/Usuario";
+import {Persona} from "../../model/Persona";
 
 @Component({
   selector: 'app-mis-cursos',
@@ -12,7 +12,7 @@ import {Usuario} from "../../model/Usuario";
   styleUrls: ['./mis-cursos.page.scss'],
 })
 export class MisCursosPage implements OnInit {
-  @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioLogueadoState: Observable<Usuario>;
+  @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioLogueadoState: Observable<Persona>;
   cursosInscriptos: Curso[] = [];
   constructor(private cursosService: CursosService) { }
 

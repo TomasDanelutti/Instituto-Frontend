@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {Usuario} from "../../../model/Usuario";
 import {Curso} from "../../../model/Curso";
+import {Persona} from "../../../model/Persona";
 
 @Component({
   selector: 'app-dialog-docente',
@@ -10,7 +10,7 @@ import {Curso} from "../../../model/Curso";
 export class DialogDocenteComponent implements OnInit {
   @Output() showDialogConsultaVistaPrevia = new EventEmitter<boolean>();
   @Input() curso: Curso;
-  alumnos: Usuario[] = [];
+  alumnos: Persona[] = [];
   display: boolean = false;
   header = '';
 

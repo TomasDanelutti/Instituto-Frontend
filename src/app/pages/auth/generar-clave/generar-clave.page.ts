@@ -3,8 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MessagesService} from 'src/app/services/messages.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from "../../../services/auth.service";
-import {Usuario} from "../../../model/Usuario";
 import {SolicitudGenerarClave} from "../../../model/SolicitudGenerarClave";
+import {Persona} from "../../../model/Persona";
 
 @Component({
   selector: 'app-generar-clave',
@@ -13,7 +13,7 @@ import {SolicitudGenerarClave} from "../../../model/SolicitudGenerarClave";
 })
 export class GenerarClavePage implements OnInit {
   uuid: string;
-  usuario: Usuario = new Usuario();
+  persona: Persona = new Persona();
   btnAceptarTxt: string;
   disableBtnAceptar: boolean;
   postulanteForm: FormGroup;
@@ -50,7 +50,7 @@ export class GenerarClavePage implements OnInit {
 
     this.authService.getUsuarioByUuid(this.uuid)
         .subscribe((usuario) => {
-          this.usuario = usuario;
+          this.persona = usuario;
         },error => this.messagesService.ventanaError('Atención', error.error));
   }
 
@@ -68,7 +68,7 @@ export class GenerarClavePage implements OnInit {
       this.btnAceptarTxt = 'Procesando';
       this.disableBtnAceptar = true;
       let solicitudCambiarClave = new SolicitudGenerarClave();
-      solicitudCambiarClave.dni = this.usuario.dni;
+      solicitudCambiarClave.dni = this.persona.dni;
       solicitudCambiarClave.clave = this.postulanteForm.controls.clave.value;
       this.authService.cambiarClave(solicitudCambiarClave).subscribe(respuesta => {
         this.messagesService.ventanaExitosa("Exitó", respuesta.mensaje);

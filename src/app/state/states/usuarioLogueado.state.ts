@@ -1,17 +1,15 @@
-
-import {Usuario} from '../../model/Usuario';
 import {CursosService} from '../../services/cursos.service';
 import {Injectable} from '@angular/core';
-
 import {Reseteable} from '../Reseteable';
 import {Rol} from '../../model/rol';
 import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {SetCantDesinscripcionesAction} from "./desinscripcion.state";
+import {Persona} from "../../model/Persona";
 
 export class SetUsuarioLogueadoAction {
     static readonly type = '[UsuarioLogueado] Definir usuario';
 
-    constructor(public usuario: Usuario) {
+    constructor(public persona: Persona) {
     }
 }
 
@@ -24,11 +22,11 @@ export class ResetUsuarioLogueado {
 }
 
 export class UsuarioLogueadoModel {
-    public usuario: Usuario;
+    public persona: Persona;
 }
 
 const usuarioLogueadoStateDefault: UsuarioLogueadoModel = {
-    usuario: null,
+    persona: null,
 };
 
 @State<UsuarioLogueadoModel>({
@@ -44,18 +42,18 @@ export class UsuarioLogueadoState {
 
 
     @Selector()
-    static getUsuarioLogueado(state: UsuarioLogueadoModel): Usuario {
-        return state.usuario;
+    static getUsuarioLogueado(state: UsuarioLogueadoModel): Persona {
+        return state.persona;
     }
 
     @Selector()
     static getRol(state: UsuarioLogueadoModel): Rol {
-        return state.usuario.rol;
+        return state.persona.rol;
     }
 
     @Action(SetUsuarioLogueadoAction)
     setUsuarioLogueado(ctx: StateContext<UsuarioLogueadoModel>, action: SetUsuarioLogueadoAction) {
-        ctx.patchState({ usuario: action.usuario });
+        ctx.patchState({ persona: action.persona });
         ctx.dispatch(new SetCantDesinscripcionesAction());
     }
 

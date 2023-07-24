@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {Respuesta} from "../model/respuesta";
 import {HttpClient} from "@angular/common/http";
-import {Usuario} from "../model/Usuario";
 import {SolicitudGenerarClave} from "../model/SolicitudGenerarClave";
+import {Persona} from "../model/Persona";
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +16,8 @@ export class AuthService {
     return this.httpClient.post<Respuesta>('auth/olvideMiClave' , dni);
   }
 
-  getUsuarioByUuid(uuid: string): Observable<Usuario>{
-    return this.httpClient.get<Usuario>('auth/findBy/' + uuid);
+  getUsuarioByUuid(uuid: string): Observable<Persona>{
+    return this.httpClient.get<Persona>('auth/findBy/' + uuid);
   }
 
   cambiarClave(solicitudGenerarClave: SolicitudGenerarClave): Observable<Respuesta> {

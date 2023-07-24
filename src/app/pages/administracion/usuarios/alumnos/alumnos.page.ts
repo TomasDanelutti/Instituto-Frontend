@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {Usuario} from '../../../../model/Usuario';
 import {ColumnaTable} from "../../cursos/cursos.page";
 import {AlumnoService} from "../../../../services/alumno.service";
 import {Alumno} from "../../../../model/Alumno";
 import {SetUsuarioAction} from "../../../../state/states/usuario.state";
 import {Store} from "@ngxs/store";
 import {map, mergeMap} from "rxjs/operators";
-import {Curso} from "../../../../model/Curso";
 import {FormControl} from "@angular/forms";
-import {of} from "rxjs";
+import {Persona} from "../../../../model/Persona";
 
 @Component({
   selector: 'app-alumnos',
@@ -17,13 +15,14 @@ import {of} from "rxjs";
   styleUrls: ['./alumnos.page.scss'],
 })
 export class AlumnosPage implements OnInit {
-  alumnos: Usuario[] = [];
+  alumnos: Alumno[] = [];
   cols: ColumnaTable[];
   totalRegistrosBackend = 1;
   alumnosTable: any[] = [];
   page: number
   paginador: boolean;
   buscador: FormControl
+  dialogAlumno = false;
   constructor(private router: Router,
               private alumnoService: AlumnoService,
               private store: Store) { }
@@ -59,11 +58,20 @@ export class AlumnosPage implements OnInit {
     this.buscarAlumnosPaginados($event)
   }
 
+  cancelAlumno($event: boolean) {
+    this.dialogAlumno = $event;
+  }
+
+  GuardarAlummno($event: boolean) {
+    this.dialogAlumno = $event;
+    this.buscarAlumnosPaginados(this.page);
+  }
+
   editarAlumno(idUsuario: number) {
     const alumnoSeleccionado = this.alumnos.find(
         (alumnoSelected: Alumno) => idUsuario === alumnoSelected.idPersona);
-    this.store.dispatch(new SetUsuarioAction(alumnoSeleccionado as Alumno));
-    this.router.navigate(['administrar/alumnos/crear-modificar-alumno'], { replaceUrl: true });
+    this.store.dispatch(new SetUsuarioAction(alumnoSeleccionado));
+    this.dialogAlumno = true;
   }
 
   buscar(buscador: any) {
