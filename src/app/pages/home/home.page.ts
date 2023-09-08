@@ -18,12 +18,9 @@ export class HomePage implements OnInit{
 
   ngOnInit(): void {
     this.usuarioState.subscribe(value => {
-      this.cursoService.getCursoNoInscriptosByUsuario(value.idPersona).subscribe(value1 => this.cursos = value1);
+      this.cursoService.getCursosPaginado(0,5).subscribe(cursos => this.cursos = cursos)
     })
   }
 
-  ionViewDidEnter() {
-    // this.cursoService.getCursos().subscribe(value => this.cursos = value);
-  }
 
 }

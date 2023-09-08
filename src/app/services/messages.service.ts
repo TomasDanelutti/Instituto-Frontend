@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import Swal, { SweetAlertOptions, SweetAlertResult } from 'sweetalert2';
+import {Message, MessageService} from "primeng/api";
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ import Swal, { SweetAlertOptions, SweetAlertResult } from 'sweetalert2';
 export class MessagesService {
 
   toast: HTMLIonToastElement;
+
+  toastService: MessageService;
 
   constructor(private toastController: ToastController, private alertController: AlertController) { }
 
@@ -252,5 +255,13 @@ export class MessagesService {
       }
     })
     return text;
+  }
+
+  configurarToast(toastServicePrime: MessageService): void {
+    this.toastService = toastServicePrime;
+  }
+
+  showToast(message: Message): void {
+    this.toastService.add(message);
   }
 }

@@ -1,7 +1,9 @@
 :host ::ng-deep {
   .p-card.p-component {
     border-radius: 10px !important;
+
   }
+
   .p-dialog{
     border-radius: 15px;
     border: none;
@@ -50,6 +52,23 @@
     font-size: 14px;
     line-height: 16px;
     border-radius: 10px;
+  }
+
+  .inner-scroll {
+    left: 0px;
+    right: 0px;
+    top: calc(var(--offset-top) * -1);
+    bottom: calc(var(--offset-bottom) * -1);
+    padding-left: var(--padding-start);
+    padding-right: var(--padding-end);
+    padding-top: calc(var(--padding-top) + var(--offset-top));
+    padding-bottom: calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom));
+    /* position: absolute; */
+    color: var(--color);
+    position: static!important;
+    box-sizing: border-box;
+    overflow: hidden;
+    touch-action: pan-x pan-y pinch-zoom;
   }
 
   .searchbar-input.sc-ion-searchbar-md {

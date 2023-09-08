@@ -3,33 +3,18 @@
 </ion-header>
 <ion-content>
   <div id="container">
+    <h1>Cursos disponibles</h1>
     <ion-row class="ion-justify-content-center">
-    <p-card class="p-col-7">
-    <div class="p-col-12">
-        <p-carousel [value]="cursos" [numVisible]="3" [autoplayInterval]="3000" [circular]="true" [numScroll]="3">
-            <ng-template let-product pTemplate="item">
-                <img src="{{product.imagen.foto}}" style="height: 130px; width: 200px" [alt]="product.nombre" class="product-image">
-            </ng-template>
-        </p-carousel>
-      <br>
-      <ion-row class="ion-justify-content-center">
-        <ion-col style="margin-top: 10px">
-          <label>Instituto T&L S.A</label>
-        </ion-col>
-        <ion-col>
-          <ion-button>
-            <ion-icon name="logo-linkedin"></ion-icon>
-          </ion-button>
-          <ion-button>
-            <ion-icon name="logo-facebook"></ion-icon>
-          </ion-button>
-          <ion-button>
-            <ion-icon name="logo-youtube"></ion-icon>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </div>
-    </p-card>
+      <p-carousel
+              [value]="cursos"
+              [numScroll]="3"
+              [numVisible]="3"
+              [showNavigators]="true">
+        <ng-template let-curso pTemplate="item">
+          <app-curso [curso]="curso"></app-curso>
+        </ng-template>
+
+      </p-carousel>
     </ion-row>
   </div>
 </ion-content>

@@ -4,7 +4,6 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PrimeNgModule} from '../primeng/primeng.module';
 import {CabeceraComponent} from '../../components/cabecera/cabecera.component';
-import {MenuComponent} from '../../components/menu/menu.component';
 import {TurnoComponent} from '../../components/dropdowns/turno/turno.component';
 import {GeneroComponent} from '../../components/dropdowns/genero/genero.component';
 import {ListaCursosInscriptosComponent
@@ -31,22 +30,21 @@ import {BadgeModule} from "primeng/badge";
 import {
     DialogSolicitudesDesinscripcionComponent
 } from "../../components/Dialogs/dialog-solicitudes-desinscripcion/dialog-solicitudes-desinscripcion.component";
-import {TestComponent} from "../../components/test/test.component";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {ToastModule} from "primeng/toast";
 import {DialogEmpleadosComponent} from "../../components/Dialogs/dialog-empleados/dialog-empleados.component";
 import {DialogAlumnosComponent} from "../../components/Dialogs/dialog-alumnos/dialog-alumnos.component";
 import {DialogCursosComponent} from "../../components/Dialogs/dialog-cursos/dialog-cursos.component";
 import {
     DialogDatosPersonalesComponent
 } from "../../components/Dialogs/dialog-datos-personales/dialog-datos-personales.component";
+import {CursoComponent} from "../../components/curso/curso.component";
+import {ToastModule} from "primeng/toast";
 
 ;
 
 @NgModule({
     declarations: [
         CabeceraComponent,
-        MenuComponent,
         TurnoComponent,
         GeneroComponent,
         FechaComponent,
@@ -70,7 +68,7 @@ import {
         DialogAlumnosComponent,
         DialogCursosComponent,
         DialogDatosPersonalesComponent,
-        TestComponent
+        CursoComponent,
     ],
     imports: [
         CommonModule,
@@ -87,7 +85,6 @@ import {
     ],
     exports: [
         CabeceraComponent,
-        MenuComponent,
         TurnoComponent,
         GeneroComponent,
         FechaComponent,
@@ -111,7 +108,7 @@ import {
         DialogAlumnosComponent,
         DialogCursosComponent,
         DialogDatosPersonalesComponent,
-        TestComponent
+        CursoComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

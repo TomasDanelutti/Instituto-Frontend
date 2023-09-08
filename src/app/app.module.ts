@@ -13,25 +13,39 @@ import {CustomComponentsModule} from "./modules/custom-components/custom-compone
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { AppHttpInterceptor } from './app.httpInterceptor';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {TestComponent} from "./components/test/test.component";
+import {ToastModule} from "primeng/toast";
+import {MessageService} from "primeng/api";
+import {MenuComponent} from "./components/menu/menu.component";
+import {PrimeNgModule} from "./modules/primeng/primeng.module";
+import {AvatarModule} from "primeng/avatar";
+import {NgxsLogoutPluginModule} from "./state/logoutModule";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    IonicModule.forRoot(),
-    AppRoutingModule,
-    NgxsModule.forRoot(states),
-    NgxsStoragePluginModule.forRoot(),
-    NgxsLoggerPluginModule.forRoot({disabled: true}),
-    NgxsReduxDevtoolsPluginModule.forRoot(),
-    CustomComponentsModule,
-    HttpClientModule,
-    RouterModule.forRoot([{ path: '', component: TestComponent }])],
+  declarations: [AppComponent, MenuComponent],
+    imports: [
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        NgxsModule.forRoot(states),
+        NgxsLogoutPluginModule.forRoot(),
+        NgxsStoragePluginModule.forRoot(),
+        NgxsLoggerPluginModule.forRoot({disabled: true}),
+        NgxsReduxDevtoolsPluginModule.forRoot(),
+        CustomComponentsModule,
+        HttpClientModule,
+        ToastModule,
+        PrimeNgModule,
+        AvatarModule,
+    ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true},
       { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+      {provide: MessageService, multi: true}
   ],
   bootstrap: [AppComponent],
 })
