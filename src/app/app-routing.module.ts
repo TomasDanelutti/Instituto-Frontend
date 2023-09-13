@@ -35,10 +35,6 @@ const routes: Routes = [
     path: 'generarClave/:uuid',
     loadChildren: () => import('./pages/auth/generar-clave/generar-clave.module').then( m => m.GenerarClavePageModule)
   },
-  {
-    path: 'datosPersonales',
-    loadChildren: () => import('./pages/datos-personales/datos-personales.module').then( m => m.DatosPersonalesPageModule)
-  },
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: '**', redirectTo: 'login', pathMatch: 'full'},
 

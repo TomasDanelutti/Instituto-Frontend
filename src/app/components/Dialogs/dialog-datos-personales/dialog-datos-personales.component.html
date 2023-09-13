@@ -1,0 +1,79 @@
+<p-dialog header="Datos personales" [modal]="true" [(visible)]="display" [style]="{ width: '60vw' }" [baseZIndex]="10000"
+          [draggable]="false" (onHide)="hideDialogDatosPersonales()">
+  <form [formGroup]="personaForm">
+    <ion-row>
+      <ion-col size-lg="3" size-md="3" size-sm="12" size-xs="12" class="ion-text-center">
+        <div style="margin-top: 0.5em" class="profile-pic" [ngStyle]="{'background-image': 'url(' + persona?.imagen?.foto + ')'}">
+          <div class="edit" (click)="clickBtn()">
+            <ion-icon name="color-wand-outline"></ion-icon>
+          </div>
+          <input #imagenInput hidden type="file" (change)="capturarFoto($event)">
+          <br>
+          <label><b>Imagen de perfil</b></label>
+        </div>
+      </ion-col>
+      <ion-col size-lg="9" size-md="9" size-sm="12" size-xs="12">
+        <ion-row style="margin-bottom: 1em">
+          <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                              <span class="p-float-label">
+                                  <input oninput="this.value=this.value.replace(/[^\d]/,'')" formControlName="dni" minlength="7" maxlength="8"
+                                         id="float-dni" type="text" pInputText [style]="{'minWidth':'100%', 'width': '100%'}">
+                                  <label for="float-nombre">Dni *</label>
+                              </span>
+          </ion-col>
+          <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                              <span class="p-float-label">
+                                  <input id="float-nombre" formControlName="nombre" type="text" pInputText [style]="{'minWidth':'100%', 'width': '100%'}">
+                                  <label for="float-nombre">Nombre *</label>
+                              </span>
+          </ion-col>
+        </ion-row>
+        <ion-row style="margin-bottom: 1em">
+          <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                             <span class="p-float-label">
+                                 <input id="float-apellido" formControlName="apellido" type="text" pInputText [style]="{'minWidth':'100%', 'width': '100%'}">
+                                 <label for="float-apellido">Apellido *</label>
+                             </span>
+          </ion-col>
+          <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                              <span class="p-float-label">
+                                  <input oninput="this.value=this.value.replace(/[^\d]/,'')" formControlName="telefono" minlength="7" maxlength="12" id="float-telefono" type="text" pInputText [style]="{'minWidth':'100%', 'width': '100%'}">
+                                  <label for="float-nombre">Telefono *</label>
+                              </span>
+          </ion-col>
+        </ion-row>
+        <ion-row style="margin-bottom: 1em">
+          <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                              <span class="p-float-label">
+                                  <input pInputText formControlName="email" id="float-email" mask="99-aa" [style]="{'minWidth':'100%', 'width': '100%'}"
+                                         characterPattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})">
+                                  <label for="float-email">Email *</label>
+                             </span>
+          </ion-col>
+          <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
+            <app-fecha (fechaSeleccionada)="setearFecha($event)" [fechaPadre]="personaForm.controls.fechaNacimiento.value" label="Fecha de Nacimiento *"></app-fecha>
+          </ion-col>
+        </ion-row>
+        <ion-row style="margin-bottom: 1em">
+          <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
+            <app-genero formControlName="genero"></app-genero>
+          </ion-col>
+          <ion-col size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                      <span class="p-float-label">
+                         <input type="text" formControlName="domicilio" pInputText [style]="{'minWidth':'100%', 'width': '100%'}">
+                         <label>Domicilio *</label>
+                      </span>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </form>
+  <ng-template pTemplate="footer">
+    <div class="ion-justify-content-end">
+      <ion-button (click)="guardarPerfil()">
+        Guardar
+        <ion-icon class="padding-left-icono" name="save"></ion-icon>
+      </ion-button>
+    </div>
+  </ng-template>
+</p-dialog>

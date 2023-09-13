@@ -31,14 +31,13 @@ import {
     DialogSolicitudesDesinscripcionComponent
 } from "../../components/Dialogs/dialog-solicitudes-desinscripcion/dialog-solicitudes-desinscripcion.component";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {ToastModule} from "primeng/toast";
 import {DialogEmpleadosComponent} from "../../components/Dialogs/dialog-empleados/dialog-empleados.component";
 import {DialogAlumnosComponent} from "../../components/Dialogs/dialog-alumnos/dialog-alumnos.component";
 import {DialogCursosComponent} from "../../components/Dialogs/dialog-cursos/dialog-cursos.component";
 import {
     DialogDatosPersonalesComponent
 } from "../../components/Dialogs/dialog-datos-personales/dialog-datos-personales.component";
-import {CursoComponent} from "../../components/curso/curso.component";
-import {ToastModule} from "primeng/toast";
 
 ;
 
@@ -68,7 +67,6 @@ import {ToastModule} from "primeng/toast";
         DialogAlumnosComponent,
         DialogCursosComponent,
         DialogDatosPersonalesComponent,
-        CursoComponent,
     ],
     imports: [
         CommonModule,
@@ -108,7 +106,6 @@ import {ToastModule} from "primeng/toast";
         DialogAlumnosComponent,
         DialogCursosComponent,
         DialogDatosPersonalesComponent,
-        CursoComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

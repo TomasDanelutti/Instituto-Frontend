@@ -17,6 +17,7 @@ export class MenuComponent implements OnInit, OnChanges {
     rolSeleccionado: Rol;
     usuario: Persona;
     navigate: any;
+    dialogDatosPersonales = false;
 
     constructor(
         private platform: Platform,
@@ -62,7 +63,6 @@ export class MenuComponent implements OnInit, OnChanges {
                         },
                         {
                             title : 'Datos personales',
-                            url   : '/datosPersonales',
                             icon  : 'logo-snapchat'
                         },
                         {
@@ -93,7 +93,6 @@ export class MenuComponent implements OnInit, OnChanges {
                         },
                         {
                             title : 'Datos personales',
-                            url   : '/datosPersonales',
                             icon  : 'logo-snapchat'
                         },
                         {
@@ -128,7 +127,6 @@ export class MenuComponent implements OnInit, OnChanges {
                         },
                         {
                             title : 'Datos personales',
-                            url   : '/datosPersonales',
                             icon  : 'logo-snapchat'
                         },
                         {
@@ -171,12 +169,18 @@ export class MenuComponent implements OnInit, OnChanges {
         });
     }
 
-
-
     salir(title: string | HTMLTitleElement | SVGTitleElement) {
-        if (title === "Salir") {
-            this.store.dispatch(new ResetUsuarioLogueado());
-            this.router.navigate(['/login'], {replaceUrl: true});
+        switch (title) {
+            case "Datos personales":
+                this.dialogDatosPersonales = true;
+                break;
+            case "Salir":
+                this.store.dispatch(new ResetUsuarioLogueado());
+                this.router.navigate(['/login'], {replaceUrl: true});
+                break;
         }
+    }
+    cerrarDialogDatosPersonales($event: boolean) {
+        this.dialogDatosPersonales = $event;
     }
 }
