@@ -1,0 +1,145 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+@import "~primeng/resources/themes/rhea/theme.css";
+@import "~primeng/resources/primeng.min.css";
+@import "~primeicons/primeicons.css";
+@import "~primeflex/primeflex.css";
+
+ion-content {
+  --background: linear-gradient(rgba(100, 150, 255, 9), rgba(144, 164, 174, .7)) no-repeat center center / cover;
+}
+
+@media (min-width: 720px) {
+  .autoComplete {
+    z-index: 1000;
+    width: 80%;
+    height: 70%;
+    min-width: 300px;
+    overflow-y: scroll;
+    box-shadow: -5px 5px 5px 0 #c7c7c7;
+    -webkit-box-shadow: -5px 5px 5px 0 #c7c7c7;
+    -moz-box-shadow: -5px 5px 5px 0 #c7c7c7;
+  }
+}
+
+ion-icon.padding-left-icono {
+  padding-left: 0.5em !important;
+}
+
+ion-icon.padding-right-icono {
+  padding-right: 0.5em !important;
+}
+
+.select-item {
+  max-height: 47px;
+}
+
+.localidadList {
+  max-height: 205px;
+  min-height: 55px;
+}
+
+.custom-font-size {
+  font-size: 0.80em !important;
+}
+
+.item-tabla-obs {
+  white-space: pre-line !important;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+.small-font {
+  font-size: 0.85em !important;
+}
+
+.sc-ion-label-md-h {
+  white-space: normal !important;
+  padding-right: 0.5em;
+}
+
+.popover-content {
+  width: auto !important;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  padding: 0.5em;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  color: black;
+  text-align: center !important;
+}
+
+p-checkbox > div > div.p-checkbox-box.p-highlight {
+  border-color: #e91e63 !important;
+  background-color: #e91e63 !important;
+  background: #e91e63 !important;
+}
+
+p-checkbox > div > div.p-checkbox-box.p-focus {
+  border-color: #e91e63 !important;
+}
+
+.dataView-list-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+
+  img {
+    width: 100px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    margin-right: 2rem;
+  }
+
+  .postulante-list-detail {
+    flex: 1 1 0;
+  }
+}
+
+p-card>div {
+  margin-bottom: 10px !important;
+}
+
+//Paginadores
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight{
+  /* background: #AFD3C8;
+  border-color: #AFD3C8;
+  color: #385048; */
+  background: #1262e0;
+  border-color: #1262e0;
+  color: #FFFFFF;
+}
+
