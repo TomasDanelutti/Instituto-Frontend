@@ -1,15 +1,13 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {Select, Store} from "@ngxs/store";
 import {CursoState, ResetCurso} from "../../../state/states/curso.state";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {Curso} from "../../../model/Curso";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Archivo} from "../../../model/Archivo";
-import {Router} from "@angular/router";
 import {CursosService} from "../../../services/cursos.service";
 import {MessagesService} from "../../../services/messages.service";
 import {ArchivoService} from "../../../services/Archivo.service";
-import {ResetUsuario} from "../../../state/states/usuario.state";
 
 @Component({
   selector: 'app-dialog-cursos',
@@ -20,6 +18,7 @@ export class DialogCursosComponent implements OnInit {
   @Select(CursoState.getCurso) cursoState: Observable<Curso>;
   @Output() showDialogGuardarCurso = new EventEmitter<boolean>();
   @Output() showDialogCancelarCurso = new EventEmitter<boolean>();
+  subscriptions: Subscription[] = [];
   @ViewChild('imagenInput')
   imagenInput: ElementRef;
   @ViewChild('archivoInput')
@@ -32,7 +31,6 @@ export class DialogCursosComponent implements OnInit {
   imagenHeader: string;
   programaHeader: string;
   constructor(
-      private router: Router,
       private formBuilder: FormBuilder,
       private cursoService: CursosService,
       private messagesService: MessagesService,
@@ -129,20 +127,19 @@ export class DialogCursosComponent implements OnInit {
 
   guardarCurso() {
     if (this.programa.foto) {
-      let curso: Curso;
+      let curso: Curso = new Curso();
       curso = this.cursoForm.value;
       curso.imagen = this.imagen;
       curso.programa = this.programa;
-      this.cursoService.guardarCurso(curso).subscribe(rta => {
+      this.subscriptions.push(this.cursoService.guardarCurso(curso).subscribe(rta => {
         const estado: string = this.cursoForm.value.idCurso ? 'modificado' : 'creado';
-
         this.messagesService.showToast({key: 'mensaje', severity: 'success', summary: 'Exitó', detail: `El curso ${this.cursoForm.value.nombre} ha sido ${estado} correctamente`});
         this.showDialogGuardarCurso.emit(false);
       }, error => {
-        this.messagesService.ventanaErrorConFooter('Atención', 'No se pudo guardar el curso');
-      });
+        this.messagesService.showToast({key: 'mensaje', severity: 'error', summary: 'Error', detail: `No se pudo guardar el curso`});
+      }));
     } else {
-      this.messagesService.ventanaError('Atención', 'Formulario invalido');
+      this.messagesService.showToast({key: 'mensaje', severity: 'warn', summary: 'Atención', detail: `Formulario invalido`});
     }
   }
 

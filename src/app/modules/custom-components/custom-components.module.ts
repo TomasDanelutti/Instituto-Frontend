@@ -67,6 +67,7 @@ import {
         DialogAlumnosComponent,
         DialogCursosComponent,
         DialogDatosPersonalesComponent,
+        DniComponent,
     ],
     imports: [
         CommonModule,

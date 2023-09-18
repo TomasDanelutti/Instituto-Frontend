@@ -1,13 +1,12 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {ResetUsuario, UsuarioState} from "../../../state/states/usuario.state";
 import {Persona} from "../../../model/Persona";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {Select, Store} from "@ngxs/store";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Archivo} from "../../../model/Archivo";
 import {ColumnaTable} from "../../../pages/administracion/cursos/cursos.page";
 import {Alumno} from "../../../model/Alumno";
-import {Router} from "@angular/router";
 import {MessagesService} from "../../../services/messages.service";
 import {AlumnoService} from "../../../services/alumno.service";
 import {ArchivoService} from "../../../services/Archivo.service";
@@ -24,10 +23,11 @@ import {AlumnoExt} from "../../../model/EXTS/AlumnoExt";
   templateUrl: './dialog-alumnos.component.html',
   styleUrls: ['./dialog-alumnos.component.scss'],
 })
-export class DialogAlumnosComponent implements OnInit {
+export class DialogAlumnosComponent implements OnInit, OnDestroy {
   @Select(UsuarioState.getUsuario) usuarioState: Observable<Persona>
   @Output() showDialogGuardarAlumno = new EventEmitter<boolean>();
   @Output() showDialogCancelarAlumno = new EventEmitter<boolean>();
+  subscriptions: Subscription[] = [];
   @ViewChild('fileInput')
   fileInput: ElementRef;
   cardHeader: string;
@@ -41,7 +41,6 @@ export class DialogAlumnosComponent implements OnInit {
   alumno: Alumno = new Alumno();
 
   constructor(
-      private router: Router,
       private formBuilder: FormBuilder,
       private messagesService: MessagesService,
       private alumnoService: AlumnoService,
@@ -56,33 +55,34 @@ export class DialogAlumnosComponent implements OnInit {
     this.display = true;
     this.alumnoForm = this.formBuilder.group({
       idPersona: [],
-      dni: [,Validators.required],
-      nombre: [, Validators.required],
-      apellido: [, Validators.required],
-      fechaNacimiento: [, Validators.required],
-      genero: [, Validators.required],
-      telefono: [, Validators.required],
-      estadoCivil: [, Validators.required],
-      nivelEducativo: [, Validators.required],
-      domicilio: [, Validators.required],
-      email: [, Validators.required],
+      dni: [ ,Validators.required],
+      nombre: [ ,Validators.required],
+      apellido: [ ,Validators.required],
+      fechaNacimiento: [ ,Validators.required],
+      genero: [ ,Validators.required],
+      telefono: [ ,Validators.required],
+      estadoCivil: [ ,Validators.required],
+      nivelEducativo: [ ,Validators.required],
+      domicilio: [ ,Validators.required],
+      email: [ ,Validators.required],
     });
 
     this.usuarioState.subscribe((alumno: Alumno) => {
-      this.cols = [{field: 'nombre', header: 'Nombre'},{field: 'profesor', header: 'Profesor'},{field: 'turno', header: 'Turno'}];
       if (alumno) {
         this.alumno = alumno;
         this.alumnoForm.patchValue(alumno);
         this.imagen = alumno.imagen;
         this.imagenHeader = alumno?.imagen?.nombre;
         this.armarTabla();
+        this.alumnoForm.controls.dni.disable();
       }
+      this.cols = [{field: 'nombre', header: 'Nombre'},{field: 'profesor', header: 'Profesor'},{field: 'turno', header: 'Turno'}];
       this.cardHeader = this.alumnoForm.value.idPersona ? 'Modificar alumno' : 'Crear alumno';
     });
   }
 
   armarTabla() {
-    this.cursosServce.getCursoInscriptosByUsuario(this.alumno.idPersona)
+    this.subscriptions.push(this.cursosServce.getCursoInscriptosByUsuario(this.alumno.idPersona)
         .subscribe(cursos => {
           cursos.forEach((item: Curso) => {
             const auxObjeto = {
@@ -95,7 +95,7 @@ export class DialogAlumnosComponent implements OnInit {
             };
             this.cursosTable.push(auxObjeto);
           });
-        });
+        }));
   }
 
   desinscribirse(idCurso: number) {
@@ -104,10 +104,10 @@ export class DialogAlumnosComponent implements OnInit {
         const inscripcionDto = new InscripcionDTO();
         inscripcionDto.idCurso = idCurso;
         inscripcionDto.idPersona = this.alumnoForm.controls.idPersona.value;
-        this.inscripcionService.desinscribirse(inscripcionDto).subscribe(respuesta => {
+        this.subscriptions.push(this.inscripcionService.desinscribirse(inscripcionDto).subscribe(respuesta => {
           this.store.dispatch(new SetCantDesinscripcionesAction());
-          this.messagesService.ventanaExitosa("Exitò", respuesta.mensaje);
-        }, error => this.messagesService.ventanaError("Atenciòn", error.error));
+          this.messagesService.showToast({key: 'mensaje', severity: 'success', summary: 'Exitó', detail: respuesta.mensaje});
+        }, error =>  this.messagesService.showToast({key: 'mensaje', severity: 'error', summary: 'Error', detail: error.error})));
       }
     });
   }
@@ -117,16 +117,23 @@ export class DialogAlumnosComponent implements OnInit {
   }
 
   guardarAlumno() {
-    let alumno: AlumnoExt;
-    alumno.alumno = this.alumnoForm.value;
-    alumno.alumno.imagen = this.imagen;
-    this.alumnoService.guardarAlumno(alumno).subscribe(rta => {
-      const estado: string = this.alumnoForm.value.idUsuario ? 'modificado' : 'creado';
-      this.messagesService.ventanaExitosa('Éxito', `Alumno ${this.alumnoForm.value.nombre} ${estado}`);
-      this.showDialogGuardarAlumno.emit(false);
-    }, error => {
-      this.messagesService.ventanaError('Atención', 'No se pudo guardar el Alumno');
-    });
+    this.alumnoForm.controls.dni.enable();
+    if (this.alumnoForm.valid) {
+      let alumno: Alumno = new Alumno();
+      alumno = this.alumnoForm.value;
+      alumno.imagen = this.imagen;
+      console.log(alumno)
+      this.subscriptions.push(this.alumnoService.guardarAlumno(alumno).subscribe(rta => {
+        this.messagesService.showToast({key: 'mensaje', severity: 'success', summary: 'Exitó', detail: `El alumno ${this.alumnoForm.value.nombre} ha sido modificado correctamente`});
+        this.showDialogGuardarAlumno.emit(false);
+      }, error => {
+        this.messagesService.showToast({key: 'mensaje', severity: 'error', summary: 'Error', detail: error.error});
+      }));
+    }
+    else {
+      this.messagesService.showToast({key: 'mensaje', severity: 'warn', summary: 'Atención', detail: `Formulario invalido`});
+    }
+
   }
 
   setearFecha($event: string) {
@@ -152,6 +159,7 @@ export class DialogAlumnosComponent implements OnInit {
   ngOnDestroy(): void {
     this.alumnoForm.reset();
     this.store.dispatch(ResetUsuario);
+    this.subscriptions.forEach(value => value.unsubscribe());
   }
 
 }

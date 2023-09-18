@@ -9,6 +9,7 @@ import {ArchivoService} from "../../../services/Archivo.service";
 import {UsuarioService} from "../../../services/usuario.service";
 import {AlumnoExt} from "../../../model/EXTS/AlumnoExt";
 import {Persona} from "../../../model/Persona";
+import {Alumno} from "../../../model/Alumno";
 
 @Component({
   selector: 'app-registrar-alumno',
@@ -84,10 +85,9 @@ export class RegistrarAlumnoPage implements OnInit {
   }
 
   guardarAlumno() {
-      let alumno: AlumnoExt = new AlumnoExt();
-      alumno.alumno = this.alumnoForm.value;
-      alumno.alumno.imagen = this.imagen;
-      alumno.clave = this.alumnoForm.controls.clave.value;
+      let alumno: Alumno = new Alumno();
+      alumno = this.alumnoForm.value;
+      alumno.imagen = this.imagen;
       this.alumnoService.guardarAlumno(alumno).subscribe(rta => {
         const estado: string = this.alumnoForm.value.idUsuario ? 'modificado' : 'creado';
         this.messagesService.ventanaExitosa('Éxito', `Alumno ${this.alumnoForm.value.nombre} ${estado}`);

@@ -34,7 +34,7 @@ export class AlumnoService {
     return this.httpClient.get<Alumno[]>('alumno/findByNombre/' + nombre);
   }
 
-  guardarAlumno(alumno: AlumnoExt): Observable<Respuesta> {
+  guardarAlumno(alumno: Alumno): Observable<Respuesta> {
     return this.httpClient.post<Respuesta>('alumno/guardar', alumno);
   }
 }

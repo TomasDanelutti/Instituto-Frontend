@@ -11,17 +11,12 @@ import { FormControl, ControlValueAccessor, Validators, NG_VALUE_ACCESSOR, NG_VA
       useExisting: forwardRef(() => DniComponent),
       multi: true
     },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => DniComponent),
-      multi: true
-    }
   ]
 })
 export class DniComponent implements OnInit, ControlValueAccessor {
 
   @Input() labelDNI: string;
-  @Input() disabledInput: boolean;
+  @Input() disabled = false;
 
   onChange: any = () => { };
   onTouched: any = () => { };
@@ -37,7 +32,7 @@ export class DniComponent implements OnInit, ControlValueAccessor {
       Validators.max(99999999),
     ]);
 
-    if(this.disabledInput){
+    if(this.disabled){
       this.dni.disable();
     } else {
       this.dni.enable();
@@ -60,7 +55,7 @@ export class DniComponent implements OnInit, ControlValueAccessor {
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    this.disabledInput = isDisabled;
+    this.disabled = isDisabled;
   }
 
   writeValue(value: any) {
