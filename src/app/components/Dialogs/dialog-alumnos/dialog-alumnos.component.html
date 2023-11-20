@@ -72,7 +72,7 @@
             <app-tabla-lista-cursos [imageButton]="true"  [inspectButton]="true" [accionButton]="true"
                                     [cantidadElementos]="5" [cols]="cols" [totalRegistrosBackend]="totalRegistrosBackend"
                                     [dataBackend]="cursosTable" (cargarData)="loadData($event)"
-                                    (desinscribirseItem)="desinscribirse($event)"
+                                    (desinscribirseItem)="desinscribir($event)"
                                     (inspeccionarItem)="ver($event)" [paginator]="true"></app-tabla-lista-cursos>
         </p-accordionTab>
     </p-accordion>

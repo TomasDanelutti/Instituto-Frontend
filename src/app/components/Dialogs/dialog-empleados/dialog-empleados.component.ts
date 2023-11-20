@@ -40,19 +40,19 @@ export class DialogEmpleadosComponent implements OnInit {
     this.display = true;
     this.empleadoForm = this.formBuilder.group({
       idPersona: [],
-      dni: ["",Validators.required],
-      nombre: ["", Validators.required],
-      apellido: ["", Validators.required],
-      fechaNacimiento: ["", Validators.required],
-      genero: ["", Validators.required],
-      telefono: ["", Validators.required],
-      estadoCivil: ["", Validators.required],
-      nivelEducativo: ["", Validators.required],
-      domicilio: ["", Validators.required],
-      email: ["", Validators.required],
-      confirmacionEmail: ["", Validators.required],
-      sueldo: ["", Validators.required],
-      puesto: ["", Validators.required]
+      dni: [,Validators.required],
+      nombre: [, Validators.required],
+      apellido: [, Validators.required],
+      fechaNacimiento: [, Validators.required],
+      genero: [, Validators.required],
+      telefono: [, Validators.required],
+      estadoCivil: [, Validators.required],
+      nivelEducativo: [, Validators.required],
+      domicilio: [, Validators.required],
+      email: [, Validators.required],
+      confirmacionEmail: [, Validators.required],
+      sueldo: [, Validators.required],
+      puesto: [, Validators.required]
     });
 
     this.usuarioState.subscribe((empleado: Persona) => {

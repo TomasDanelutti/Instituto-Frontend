@@ -41,6 +41,9 @@ export class MenuComponent implements OnInit, OnChanges {
                 this.rolSeleccionado = value.rol;
                 this.armarMenu();
             }
+            else {
+                this.usuario = new Persona();
+            }
         });
     }
 
@@ -52,7 +55,7 @@ export class MenuComponent implements OnInit, OnChanges {
     }
 
     armarMenu() {
-        switch (this.rolSeleccionado.idRol) {
+        switch (this.rolSeleccionado?.idRol) {
             case 0:
                 this.navigate =
                     [
@@ -176,6 +179,7 @@ export class MenuComponent implements OnInit, OnChanges {
                 break;
             case "Salir":
                 this.store.dispatch(new ResetUsuarioLogueado());
+                console.log(this.usuario)
                 this.router.navigate(['/login'], {replaceUrl: true});
                 break;
         }

@@ -4,13 +4,11 @@ import {Select, Store} from '@ngxs/store';
 import {Observable} from 'rxjs';
 import {UsuarioLogueadoState} from '../../state/states/usuarioLogueado.state';
 import {CursosService} from "../../services/cursos.service";
-import {InscripcionDTO} from "../../model/DTOS/InscripcionDTO";
 import {ColumnaTable} from "../administracion/cursos/cursos.page";
 import {InscripcionService} from "../../services/inscripcion.service";
 import {MessagesService} from "../../services/messages.service";
 import {SweetAlertResult} from "sweetalert2";
-import {DesinscripcionService} from "../../services/desinscripcion.service";
-import {DesinscripcionDTO} from "../../model/DTOS/DesinscripcionDTO";
+import {DesinscripcionService} from "../../services/desinscripcion.service";;
 import {SetCantDesinscripcionesAction} from "../../state/states/desinscripcion.state";
 import {Persona} from "../../model/Persona";
 
@@ -28,6 +26,8 @@ export class ListaCursosPage implements OnInit {
   persona: Persona = new Persona();
   cursos: Curso[] = [];
   idCursosInscriptos: number[] = [];
+  cursosInscriptos: any[] = [];
+  cursosNoInscriptos: any[] = [];
 
   constructor(
       private cursosService: CursosService,
@@ -39,10 +39,49 @@ export class ListaCursosPage implements OnInit {
   ngOnInit() {
     this.cols = [{field: 'nombre', header: 'Nombre'},{field: 'profesor', header: 'Profesor'},{field: 'turno', header: 'Turno'}];
     this.usuarioLogueadoState.subscribe((usuarioState: Persona) => this.persona = usuarioState);
+    console.log(this.persona)
+    this.cursosService.getCursoInscriptosByUsuario(this.persona.idPersona).subscribe(value => console.log(value))
+    this.cursosService.getCursoNoInscriptosByUsuario(this.persona.idPersona).subscribe(value => console.log(value))
+    this.buscarCursosInscriptos();
+    this.buscarCursosNoInscriptos();
   }
 
   ionViewWillEnter() {
     this.buscarIdCursosInscriptos(0,5);
+  }
+
+  buscarCursosInscriptos() {
+    this.cursosService.getCursoInscriptosByUsuario(this.persona.idPersona)
+        .subscribe(cursosInscriptos => {
+          cursosInscriptos.map(curso => {
+            const auxObjeto = {
+              id: curso.idCurso,
+              nombre: curso.nombre,
+              profesor: curso.profesor.nombre,
+              turno: curso.turno,
+              imagen: curso.imagen.foto,
+              inscripto: true
+            };
+            this.cursosInscriptos.push(auxObjeto);
+          })
+        });
+  }
+
+  buscarCursosNoInscriptos() {
+    this.cursosService.getCursoNoInscriptosByUsuario(this.persona.idPersona)
+        .subscribe(cursosNoInscriptos => {
+          cursosNoInscriptos.map(curso => {
+            const auxObjeto = {
+              id: curso.idCurso,
+              nombre: curso.nombre,
+              profesor: curso.profesor.nombre,
+              turno: curso.turno,
+              imagen: curso.imagen.foto,
+              inscripto: false
+            };
+            this.cursosNoInscriptos.push(auxObjeto);
+          })
+        });
   }
 
   buscarIdCursosInscriptos(numPage: number, cant: number) {
@@ -119,10 +158,7 @@ export class ListaCursosPage implements OnInit {
   inscribirse(idCurso: number) {
     this.messagesService.ventanaConfirmar("Atencion", "Estas seguro que deseas inscribirte al curso?").then((result: SweetAlertResult) => {
       if (result.isConfirmed) {
-        let inscripcionDTO: InscripcionDTO = new InscripcionDTO();
-        inscripcionDTO.idCurso = idCurso;
-        inscripcionDTO.idPersona = this.persona.idPersona;
-        this.inscripcionService.inscribirse(inscripcionDTO).subscribe(respuesta => {
+        this.inscripcionService.inscribirse(idCurso, this.persona.idPersona).subscribe(respuesta => {
           this.messagesService.ventanaExitosa('Éxito', respuesta.mensaje);
           this.buscarIdCursosInscriptos(this.page,5);
       },error => this.messagesService.ventanaError("Atención", error.error));
@@ -132,27 +168,22 @@ export class ListaCursosPage implements OnInit {
   desinscribirse(idCurso: number) {
   this.messagesService.ventanaVerificacionMotivo().then((motivo) => {
     if (motivo) {
-      let desinscripcion: DesinscripcionDTO = new DesinscripcionDTO();
-      desinscripcion.idCurso = idCurso;
-      desinscripcion.idAlumno = this.persona.idPersona;
-      desinscripcion.motivo = motivo;
-      this.crearToken(desinscripcion);
+      this.crearToken(idCurso, motivo);
     }
     this.buscarIdCursosInscriptos(this.page,5);
   });
   }
 
-  crearToken(desinscripcion: DesinscripcionDTO) {
-    this.desinscripcionService.getToken(desinscripcion).subscribe(() => {
+  crearToken(idCurso: number, motivo: string) {
+    this.desinscripcionService.getTokenDesinscripcion(idCurso, this.persona.idPersona, motivo).subscribe(() => {
     }, error => this.messagesService.ventanaError("Atención", error.error));
-    this.messagesService.ventanaVerificacionToken().then((token) => {
-      desinscripcion.token = token;
-      this.guardarDesinscripcion(desinscripcion);
+    this.messagesService.ventanaVerificacionToken().then((token) => {;
+      this.guardarDesinscripcion(idCurso, this.persona.idPersona, motivo, token);
     })
   }
 
-  guardarDesinscripcion(desinscripcion: DesinscripcionDTO) {
-    this.desinscripcionService.guardarDesinscripcion(desinscripcion).subscribe(respuesta => {
+  guardarDesinscripcion(idCurso: number, idAlumno: number, motivo: string, token: string) {
+    this.desinscripcionService.guardarDesinscripcion(idCurso, idAlumno, motivo, token).subscribe(respuesta => {
       this.messagesService.ventanaExitosa("Exitó", respuesta.mensaje);
       this.store.dispatch(new SetCantDesinscripcionesAction());
     }, error => this.messagesService.ventanaError("Atención", error.error));

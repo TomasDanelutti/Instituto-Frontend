@@ -14,9 +14,7 @@ import {CursosService} from "../../../services/cursos.service";
 import {InscripcionService} from "../../../services/inscripcion.service";
 import {Curso} from "../../../model/Curso";
 import {SweetAlertResult} from "sweetalert2";
-import {InscripcionDTO} from "../../../model/DTOS/InscripcionDTO";
 import {SetCantDesinscripcionesAction} from "../../../state/states/desinscripcion.state";
-import {AlumnoExt} from "../../../model/EXTS/AlumnoExt";
 
 @Component({
   selector: 'app-dialog-alumnos',
@@ -98,13 +96,10 @@ export class DialogAlumnosComponent implements OnInit, OnDestroy {
         }));
   }
 
-  desinscribirse(idCurso: number) {
-    this.messagesService.ventanaConfirmar("Atencion", "Estas seguro que deseas desinscribir al curso al alumno?").then((result: SweetAlertResult) => {
+  desinscribir(idCurso: number) {
+    this.messagesService.ventanaConfirmar("Atencion", "Estas seguro que deseas desinscribir del curso al alumno?").then((result: SweetAlertResult) => {
       if (result.isConfirmed) {
-        const inscripcionDto = new InscripcionDTO();
-        inscripcionDto.idCurso = idCurso;
-        inscripcionDto.idPersona = this.alumnoForm.controls.idPersona.value;
-        this.subscriptions.push(this.inscripcionService.desinscribirse(inscripcionDto).subscribe(respuesta => {
+        this.subscriptions.push(this.inscripcionService.desinscribirse(idCurso, this.alumnoForm.controls.idAlumno.value).subscribe(respuesta => {
           this.store.dispatch(new SetCantDesinscripcionesAction());
           this.messagesService.showToast({key: 'mensaje', severity: 'success', summary: 'Exitó', detail: respuesta.mensaje});
         }, error =>  this.messagesService.showToast({key: 'mensaje', severity: 'error', summary: 'Error', detail: error.error})));
@@ -117,6 +112,7 @@ export class DialogAlumnosComponent implements OnInit, OnDestroy {
   }
 
   guardarAlumno() {
+    console.log(this.alumnoForm)
     this.alumnoForm.controls.dni.enable();
     if (this.alumnoForm.valid) {
       let alumno: Alumno = new Alumno();

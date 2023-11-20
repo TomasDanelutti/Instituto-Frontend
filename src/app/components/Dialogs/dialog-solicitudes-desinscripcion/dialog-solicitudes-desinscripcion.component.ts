@@ -4,7 +4,6 @@ import {Desinscripcion} from "../../../model/Desinscripcion";
 import {Router} from "@angular/router";
 import {Select, Store} from "@ngxs/store";
 import {SetUsuarioAction} from "../../../state/states/usuario.state";
-import {DesinscripcionDTO} from "../../../model/DTOS/DesinscripcionDTO";
 import {MessagesService} from "../../../services/messages.service";
 import {UsuarioLogueadoState} from "../../../state/states/usuarioLogueado.state";
 import {Observable} from "rxjs";
@@ -46,13 +45,8 @@ export class DialogSolicitudesDesinscripcionComponent implements OnInit {
 
   cancelarDesinscripcion(desinscricion: Desinscripcion) {
     this.messageService.ventanaVerificacionMotivo().then((motivo) => {
-      const desinscripcionDTO = new DesinscripcionDTO();
       if (motivo) {
-        desinscripcionDTO.motivo = motivo;
-        desinscripcionDTO.idAlumno = desinscricion.alumno.idPersona;
-        desinscripcionDTO.idCurso = desinscricion.curso.idCurso;
-        desinscripcionDTO.idEmpleado = this.usuario.idPersona;
-        this.desinscripcionService.cancelarDesinscripcion(desinscripcionDTO).subscribe(respuesta => {
+        this.desinscripcionService.cancelarDesinscripcion(desinscricion.alumno.idPersona, this.usuario.idPersona, desinscricion.curso.idCurso, motivo).subscribe(respuesta => {
           this.messageService.ventanaExitosa("Exitó", respuesta.mensaje);
           this.store.dispatch(new SetCantDesinscripcionesAction());
           this.showDialogConsultaSolicitudesDsinscripcion.emit(false);

@@ -13,7 +13,6 @@ export class SetUsuarioLogueadoAction {
     }
 }
 
-@Reseteable
 export class ResetUsuarioLogueado {
     static readonly type = '[UsuarioLogueado] Resetear usuario';
 

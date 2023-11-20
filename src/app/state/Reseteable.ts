@@ -1,5 +1,5 @@
 export const accionesReseteables = [];
 
-export function Reseteable(target) {
+export const Reseteable = target => {
     accionesReseteables.push(Object.create(target));
-}
+};

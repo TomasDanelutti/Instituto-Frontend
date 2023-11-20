@@ -3,7 +3,6 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Respuesta} from "../model/respuesta";
 import {Alumno} from "../model/Alumno";
-import {AlumnoExt} from "../model/EXTS/AlumnoExt";
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +26,7 @@ export class AlumnoService {
     if (typeof nombre !== 'undefined' && nombre !== null) {
       queryParams = queryParams.set('nombre', nombre);
     }
-    return this.httpClient.get<number>('alumno/count');
+    return this.httpClient.get<number>('alumno/count', {params: queryParams});
   }
 
   getAlumnoByNombre(nombre: string): Observable<Alumno[]> {

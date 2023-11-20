@@ -5,10 +5,27 @@
   <ion-grid fullscreen>
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="9" size-md="9" size-sm="12" size-xs="12">
-        <p-card header="Lista de cursos disponibles">
+        <p-card>
+          <ng-template pTemplate="header">
+            <ion-row style="background-color: #1262e0; border-top-left-radius: 10px; border-top-right-radius: 10px" class="ion-justify-content-between ion-align-items-center">
+              <h1 class="headerTitle">Lista de cursos inscriptos</h1>
+            </ion-row>
+          </ng-template>
           <app-tabla-lista-cursos [imageButton]="true"  [inspectButton]="true" [accionButton]="true"
                                   [cantidadElementos]="5" [cols]="cols" [totalRegistrosBackend]="totalRegistrosBackend"
-                                  [dataBackend]="cursosTable" (cargarData)="loadData($event)"
+                                  [dataBackend]="cursosInscriptos" (cargarData)="loadData($event)"
+                                  (inscribirseItem)="inscribirse($event)" (desinscribirseItem)="desinscribirse($event)"
+                                  (inspeccionarItem)="ver($event)" [paginator]="true"></app-tabla-lista-cursos>
+        </p-card>
+        <p-card>
+          <ng-template pTemplate="header">
+            <ion-row style="background-color: #1262e0; border-top-left-radius: 10px; border-top-right-radius: 10px" class="ion-justify-content-between ion-align-items-center">
+              <h1 class="headerTitle">Lista de cursos disponibles</h1>
+            </ion-row>
+          </ng-template>
+          <app-tabla-lista-cursos [imageButton]="true"  [inspectButton]="true" [accionButton]="true"
+                                  [cantidadElementos]="5" [cols]="cols" [totalRegistrosBackend]="totalRegistrosBackend"
+                                  [dataBackend]="cursosNoInscriptos" (cargarData)="loadData($event)"
                                   (inscribirseItem)="inscribirse($event)" (desinscribirseItem)="desinscribirse($event)"
                                   (inspeccionarItem)="ver($event)" [paginator]="true"></app-tabla-lista-cursos>
         </p-card>

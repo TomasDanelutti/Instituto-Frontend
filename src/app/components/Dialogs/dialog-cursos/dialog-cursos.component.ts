@@ -41,15 +41,15 @@ export class DialogCursosComponent implements OnInit {
     this.display = true;
     this.cursoForm = this.formBuilder.group({
       idCurso: [],
-      nombre: ["", Validators.required],
-      turno: ["", Validators.required],
-      profesor: ["", Validators.required],
-      cupoMinimo: ["", Validators.required],
-      cupoMaximo: ["", Validators.required],
-      fechaInicio: ["", Validators.required],
-      fechaFinalizacion: ["", Validators.required],
-      horario: ["", Validators.required],
-      modalidad: ["", Validators.required],
+      nombre: [, Validators.required],
+      turno: [, Validators.required],
+      profesor: [, Validators.required],
+      cupoMinimo: [, Validators.required],
+      cupoMaximo: [, Validators.required],
+      fechaInicio: [, Validators.required],
+      fechaFinalizacion: [, Validators.required],
+      horario: [, Validators.required],
+      modalidad: [, Validators.required],
       aula: []
     });
     this.cursoState.subscribe(curso => {
@@ -131,6 +131,7 @@ export class DialogCursosComponent implements OnInit {
       curso = this.cursoForm.value;
       curso.imagen = this.imagen;
       curso.programa = this.programa;
+      console.log(curso)
       this.subscriptions.push(this.cursoService.guardarCurso(curso).subscribe(rta => {
         const estado: string = this.cursoForm.value.idCurso ? 'modificado' : 'creado';
         this.messagesService.showToast({key: 'mensaje', severity: 'success', summary: 'Exitó', detail: `El curso ${this.cursoForm.value.nombre} ha sido ${estado} correctamente`});
