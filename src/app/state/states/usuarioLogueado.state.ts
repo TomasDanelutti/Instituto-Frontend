@@ -5,11 +5,12 @@ import {Rol} from '../../model/rol';
 import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {SetCantDesinscripcionesAction} from "./desinscripcion.state";
 import {Persona} from "../../model/Persona";
+import {PersonasService} from "../../services/personas.service";
 
 export class SetUsuarioLogueadoAction {
     static readonly type = '[UsuarioLogueado] Definir usuario';
 
-    constructor(public persona: Persona) {
+    constructor() {
     }
 }
 
@@ -36,7 +37,7 @@ const usuarioLogueadoStateDefault: UsuarioLogueadoModel = {
 @Injectable()
 export class UsuarioLogueadoState {
 
-    constructor(private cursosService: CursosService) {
+    constructor(private personaService: PersonasService) {
     }
 
 
@@ -52,8 +53,10 @@ export class UsuarioLogueadoState {
 
     @Action(SetUsuarioLogueadoAction)
     setUsuarioLogueado(ctx: StateContext<UsuarioLogueadoModel>, action: SetUsuarioLogueadoAction) {
-        ctx.patchState({ persona: action.persona });
+        return this.personaService.getPersonaSession().subscribe((persona: Persona) => {
+        ctx.patchState({ persona: persona });
         ctx.dispatch(new SetCantDesinscripcionesAction());
+    });
     }
 
 

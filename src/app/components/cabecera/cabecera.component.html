@@ -1,4 +1,4 @@
-<ion-header [style]="{'background-color':'#ffffff','border-color':'#ffffff'}" *ngIf="persona?.rol">
+<ion-header [style]="{'background-color':'#ffffff','border-color':'#ffffff'}" *ngIf="isAuthenticated|async">
   <ion-row>
     <ion-col size-lg="5" size-md="5" size-sm="2" size-xs="2">
       <ion-buttons float-left="">
@@ -6,11 +6,11 @@
       </ion-buttons>
     </ion-col>
     <ion-col style="margin-top: 10px" size-lg="6" size-md="6" size-sm="12" size-xs="12">
-      <a style="color: #1262e0" *ngIf="persona" class="saraza" (click)="navegarHome()">
+      <a style="color: #1262e0" class="saraza" (click)="navegarHome()">
         Instituto T&L S.A
       </a>
     </ion-col>
-    <ion-col *ngIf="rol?.idRol === 1 || rol?.idRol === 2" style="margin-top: 15px" size-lg="1" size-md="1" size-sm="12" size-xs="12">
+    <ion-col *ngIf="(rolState|async)?.idRol === 0 ||  (rolState|async)?.idRol === 1" style="margin-top: 15px" size-lg="1" size-md="1" size-sm="12" size-xs="12">
       <span class="p-overlay-badge" pTooltip="Notificaciones">
         <i class="pi pi-bell" style="font-size: 1.5em; color: #1262e0!important;" (click)="openDialog()" ></i>
         <span class="p-badge">{{cantDesinscripcionesState|async}}</span>

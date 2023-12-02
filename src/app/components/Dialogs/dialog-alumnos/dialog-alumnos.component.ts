@@ -80,20 +80,6 @@ export class DialogAlumnosComponent implements OnInit, OnDestroy {
   }
 
   armarTabla() {
-    this.subscriptions.push(this.cursosServce.getCursoInscriptosByUsuario(this.alumno.idPersona)
-        .subscribe(cursos => {
-          cursos.forEach((item: Curso) => {
-            const auxObjeto = {
-              id: item.idCurso,
-              imagen: item.imagen.foto,
-              nombre: item.nombre,
-              turno: item.turno,
-              profesor: item.profesor.nombre,
-              inscripto: true
-            };
-            this.cursosTable.push(auxObjeto);
-          });
-        }));
   }
 
   desinscribir(idCurso: number) {

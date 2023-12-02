@@ -18,7 +18,7 @@ export class HomePage implements OnInit{
 
   ngOnInit(): void {
     this.usuarioState.subscribe(value => {
-      this.cursoService.getCursosPaginado(0,5).subscribe(cursos => this.cursos = cursos)
+      this.cursoService.getCursosPaginado(0,5).subscribe(cursos => console.log(cursos))
     })
   }
 

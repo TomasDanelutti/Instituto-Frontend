@@ -22,7 +22,10 @@ import {NgxsLogoutPluginModule} from "./state/logoutModule";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent],
+  declarations: [
+      AppComponent,
+      MenuComponent
+  ],
     imports: [
         BrowserModule,
         HttpClientModule,

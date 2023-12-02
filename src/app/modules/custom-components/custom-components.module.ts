@@ -8,7 +8,6 @@ import {TurnoComponent} from '../../components/dropdowns/turno/turno.component';
 import {GeneroComponent} from '../../components/dropdowns/genero/genero.component';
 import {ListaCursosInscriptosComponent
 } from "../../components/tables/lista-cursos-inscriptos/lista-cursos-inscriptos.component";
-import {DialogDocenteComponent} from "../../components/Dialogs/dialog-docente/dialog-docente.component";
 import {DialogModule} from "primeng/dialog";
 import {AvatarModule} from "primeng/avatar";
 import {TablaListaCursosComponent} from "../../components/tables/tabla-lista-cursos/tabla-lista-cursos.component";
@@ -48,7 +47,6 @@ import {
         GeneroComponent,
         FechaComponent,
         ListaCursosInscriptosComponent,
-        DialogDocenteComponent,
         TableComponent,
         TablaListaCursosComponent,
         LoadingComponent,
@@ -88,7 +86,6 @@ import {
         GeneroComponent,
         FechaComponent,
         ListaCursosInscriptosComponent,
-        DialogDocenteComponent,
         TableComponent,
         TablaListaCursosComponent,
         LoadingComponent,

@@ -29,12 +29,8 @@ export class EmpleadoService {
     return this.httpClient.get<number>('empleados/count');
   }
 
-  getEmpleadosByNombre(nombre: string): Observable<Empleado[]> {
-    return this.httpClient.get<Empleado[]>('empleados/findByNombre/' + nombre);
-  }
-
-  getEmpleadosByPuesto(puesto: string): Observable<Empleado[]> {
-    return this.httpClient.get<Empleado[]>('empleados/findByPuesto/' + puesto);
+  getEmpleadosByPuesto(idPuestoEmpleado: number): Observable<Empleado[]> {
+    return this.httpClient.get<Empleado[]>('empleados/findByPuesto/' + idPuestoEmpleado);
   }
 
   guardarEmpleado(administrativo: Empleado): Observable<Respuesta> {

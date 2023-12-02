@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import { Router } from '@angular/router';
 import {Select} from '@ngxs/store';
 import {Observable} from 'rxjs';
@@ -6,30 +6,22 @@ import {UsuarioLogueadoState} from '../../state/states/usuarioLogueado.state';
 import {Rol} from "../../model/rol";
 import {DesinscripcionState} from "../../state/states/desinscripcion.state";
 import {MessagesService} from "../../services/messages.service";
-import {Persona} from "../../model/Persona";
+import {AuthState} from "../../state/states/auth.state";
 
 @Component({
   selector: 'app-cabecera',
   templateUrl: './cabecera.component.html',
   styleUrls: ['./cabecera.component.scss'],
 })
-export class CabeceraComponent implements OnInit {
-  @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioLogueado: Observable<Persona>;
-  @Select(UsuarioLogueadoState.getRol) rolState: Observable<Rol>;
+export class CabeceraComponent {
+  @Select(AuthState.isAuthenticated) isAuthenticated: Observable<boolean>;
   @Select(DesinscripcionState.getCantDesinscripciones) cantDesinscripcionesState: Observable<number>;
-  persona: Persona;
-  rol: Rol;
+  @Select(UsuarioLogueadoState.getRol) rolState: Observable<Rol>;
   cantDesinscripciones: number;
   dialogSolicitudesDesinscripcion = false;
   constructor(
       private router: Router,
       private messagesService: MessagesService) { }
-
-  ngOnInit() {
-    this.rolState.subscribe(rolState => this.rol = rolState);
-    this.usuarioLogueado.subscribe(value => this.persona = value);
-    this.cantDesinscripcionesState.subscribe(value => this.cantDesinscripciones = value);
-  }
 
   navegarHome() {
     this.router.navigate(['home']);

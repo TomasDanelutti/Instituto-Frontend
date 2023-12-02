@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {ColumnaTable} from "../../cursos/cursos.page";
-import {Alumno} from "../../../../model/Alumno";
 import {SetUsuarioAction} from "../../../../state/states/usuario.state";
 import {Store} from "@ngxs/store";
 import {Empleado} from "../../../../model/Empleado";
 import {EmpleadoService} from "../../../../services/empleado.service";
 import {map, mergeMap} from "rxjs/operators";
 import {FormControl} from "@angular/forms";
-import {Persona} from "../../../../model/Persona";
 
 @Component({
   selector: 'app-empleados',
@@ -39,7 +37,6 @@ export class EmpleadosPage implements OnInit {
         .pipe(mergeMap(cantidadElementos => this.empleadoService
             .getEmpleadosPaginados(numPage, 5, this.buscador.value)
             .pipe(map(empleados => {
-              console.log(empleados)
               this.paginador = cantidadElementos > 5;
               this.totalRegistrosBackend = cantidadElementos;
               this.empleados = empleados;

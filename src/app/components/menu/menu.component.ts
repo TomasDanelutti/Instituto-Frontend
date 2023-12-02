@@ -56,7 +56,7 @@ export class MenuComponent implements OnInit, OnChanges {
 
     armarMenu() {
         switch (this.rolSeleccionado?.idRol) {
-            case 0:
+            case 2:
                 this.navigate =
                     [
                         {
@@ -120,7 +120,7 @@ export class MenuComponent implements OnInit, OnChanges {
                         },
                     ];
                 break;
-            case 2:
+            case 0:
                 this.navigate =
                     [
                         {

@@ -47,7 +47,7 @@ export class ProfesorComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit(): void {
-    this.empleadoService.getEmpleadosByPuesto("Profesor")
+    this.empleadoService.getEmpleadosByPuesto(1)
         .subscribe(profesores => this.profesores = profesores);
   }
 

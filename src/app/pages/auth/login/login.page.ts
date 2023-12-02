@@ -5,6 +5,8 @@ import {Store} from '@ngxs/store';
 import {SetUsuarioLogueadoAction} from "../../../state/states/usuarioLogueado.state";
 import {LoginService} from "../../../services/login.service";
 import {MessagesService} from "../../../services/messages.service";
+import {AuthService} from "../../../services/auth.service";
+import {LoginAction} from "../../../state/states/auth.state";
 
 @Component({
   selector: 'app-login',
@@ -20,6 +22,7 @@ export class LoginPage implements OnInit {
       private formBuilder: FormBuilder,
       private messages: MessagesService,
       private loginService: LoginService,
+      private authService: AuthService,
       private store: Store
   ) { }
 
@@ -42,17 +45,17 @@ export class LoginPage implements OnInit {
 
     login() {
     if (this.loginForm.valid){
-      this.loginService.login(this.loginForm.controls.dni.value, this.loginForm.controls.clave.value)
-          .subscribe(usuario => {
-            this.router.navigate(['/home']);
-            console.log(usuario);
-            this.store.dispatch(new SetUsuarioLogueadoAction(usuario));
-          }, error => this.messages.ventanaError('Error', 'usuario o clave incorrecto'));
+      this.authService.login(this.loginForm.controls.dni.value, this.loginForm.controls.clave.value).subscribe((data: any) => {
+        console.log(data);
+        this.store.dispatch(new LoginAction(data));
+        this.router.navigate(['/home']);
+      }, error => {this.messages.showMessage('Error', error.error.error_description, 5000); });
     }
     else {
       this.messages.showMessage('Error', 'Usuario o contraseña incorrecto', 5000);
     }
     }
+
 
   ionViewDidLeave() {
     this.loginForm.reset();

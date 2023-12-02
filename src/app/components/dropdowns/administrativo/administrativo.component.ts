@@ -48,7 +48,7 @@ export class AdministrativoComponent implements OnInit, ControlValueAccessor{
   }
 
   ngOnInit(): void {
-    this.empleadoService.getEmpleadosByPuesto("Administrativo")
+    this.empleadoService.getEmpleadosByPuesto(0)
         .subscribe(administrativos => this.administrativos = administrativos);
   }
 

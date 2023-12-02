@@ -29,12 +29,25 @@ export class CursosService {
     return this.httpClient.get<number>('curso/count', {params:queryParams});
   }
 
-  getCursoInscriptosByUsuario(idUsuario: number): Observable<Curso[]> {
-    return this.httpClient.get<Curso[]>('curso/findInscriptos/' + idUsuario);
+
+  getCursosByPersonaAndNombre(numPage: number, pageZize: number, inscripto: boolean, nombre?: string): Observable<Curso[]> {
+    let queryParams = new HttpParams()
+        .set('numPage', numPage.toString())
+        .set('pageSize', pageZize.toString())
+        .set('inscripto', inscripto.toString());
+    if (typeof nombre !== 'undefined' && nombre !== null) {
+        queryParams = queryParams.set('nombre', nombre);
+    }
+    return this.httpClient.get<Curso[]>('curso/findCursosByPersonaAndNombre/', {params: queryParams});
   }
 
-  getCursoNoInscriptosByUsuario(idUsuario: number): Observable<Curso[]> {
-    return this.httpClient.get<Curso[]>('curso/findNoInscriptos/' + idUsuario);
+  countCursosInscriptosByUsuario(inscripto: boolean, nombre?: string): Observable<number> {
+    let queryParams = new HttpParams()
+        .set('inscripto', inscripto.toString());
+    if (typeof nombre !== 'undefined' && nombre !== null) {
+        queryParams = queryParams.set('nombre', nombre.toString());
+    }
+    return this.httpClient.get<number>('curso/countCursosByPersonaAndNombre/', {params:queryParams});
   }
 
   guardarCurso(curso: Curso): Observable<Respuesta> {

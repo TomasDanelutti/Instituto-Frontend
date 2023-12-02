@@ -12,10 +12,10 @@
             </ion-row>
           </ng-template>
           <app-tabla-lista-cursos [imageButton]="true"  [inspectButton]="true" [accionButton]="true"
-                                  [cantidadElementos]="5" [cols]="cols" [totalRegistrosBackend]="totalRegistrosBackend"
-                                  [dataBackend]="cursosInscriptos" (cargarData)="loadData($event)"
+                                  [cantidadElementos]="5" [cols]="cols" [totalRegistrosBackend]="cantidadCursosInscriptos"
+                                  [dataBackend]="cursosInscriptosTable" (cargarData)="loadDataCursosInscriptos($event)"
                                   (inscribirseItem)="inscribirse($event)" (desinscribirseItem)="desinscribirse($event)"
-                                  (inspeccionarItem)="ver($event)" [paginator]="true"></app-tabla-lista-cursos>
+                                  (inspeccionarItem)="ver($event)" [paginator]="paginadorCursoInscriptos"></app-tabla-lista-cursos>
         </p-card>
         <p-card>
           <ng-template pTemplate="header">
@@ -24,10 +24,10 @@
             </ion-row>
           </ng-template>
           <app-tabla-lista-cursos [imageButton]="true"  [inspectButton]="true" [accionButton]="true"
-                                  [cantidadElementos]="5" [cols]="cols" [totalRegistrosBackend]="totalRegistrosBackend"
-                                  [dataBackend]="cursosNoInscriptos" (cargarData)="loadData($event)"
+                                  [cantidadElementos]="5" [cols]="cols" [totalRegistrosBackend]="cantidadCursosNoInscriptos"
+                                  [dataBackend]="cursosNoInscriptosTable" (cargarData)="loadDataCursosNoInscriptos($event)"
                                   (inscribirseItem)="inscribirse($event)" (desinscribirseItem)="desinscribirse($event)"
-                                  (inspeccionarItem)="ver($event)" [paginator]="true"></app-tabla-lista-cursos>
+                                  (inspeccionarItem)="ver($event)" [paginator]="paginadorCursoNoInscriptos"></app-tabla-lista-cursos>
         </p-card>
       </ion-col>
     </ion-row>

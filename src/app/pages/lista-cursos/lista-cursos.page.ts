@@ -11,6 +11,8 @@ import {SweetAlertResult} from "sweetalert2";
 import {DesinscripcionService} from "../../services/desinscripcion.service";;
 import {SetCantDesinscripcionesAction} from "../../state/states/desinscripcion.state";
 import {Persona} from "../../model/Persona";
+import {map, mergeMap} from "rxjs/operators";
+import {InformacionParaTabla} from "../../model/InformacionParaTabla";
 
 @Component({
   selector: 'app-lista-cursos',
@@ -20,14 +22,14 @@ import {Persona} from "../../model/Persona";
 export class ListaCursosPage implements OnInit {
   @Select(UsuarioLogueadoState.getUsuarioLogueado) usuarioLogueadoState: Observable<Persona>;
   cols: ColumnaTable[];
-  totalRegistrosBackend = 1;
-  cursosTable: any[] = [];
-  page: number
+  cursosInscriptosTable: any[] = [];
+  cantidadCursosInscriptos = 0;
+  paginadorCursoInscriptos: boolean = true;
+  cursosNoInscriptosTable: any[] = [];
+  cantidadCursosNoInscriptos = 0;
+  paginadorCursoNoInscriptos: boolean = true;
   persona: Persona = new Persona();
   cursos: Curso[] = [];
-  idCursosInscriptos: number[] = [];
-  cursosInscriptos: any[] = [];
-  cursosNoInscriptos: any[] = [];
 
   constructor(
       private cursosService: CursosService,
@@ -39,120 +41,50 @@ export class ListaCursosPage implements OnInit {
   ngOnInit() {
     this.cols = [{field: 'nombre', header: 'Nombre'},{field: 'profesor', header: 'Profesor'},{field: 'turno', header: 'Turno'}];
     this.usuarioLogueadoState.subscribe((usuarioState: Persona) => this.persona = usuarioState);
-    console.log(this.persona)
-    this.cursosService.getCursoInscriptosByUsuario(this.persona.idPersona).subscribe(value => console.log(value))
-    this.cursosService.getCursoNoInscriptosByUsuario(this.persona.idPersona).subscribe(value => console.log(value))
-    this.buscarCursosInscriptos();
-    this.buscarCursosNoInscriptos();
+    this.cursosService.getCursosByPersonaAndNombre(0, 5, false).subscribe(cursos => console.log(cursos));
   }
 
-  ionViewWillEnter() {
-    this.buscarIdCursosInscriptos(0,5);
-  }
 
-  buscarCursosInscriptos() {
-    this.cursosService.getCursoInscriptosByUsuario(this.persona.idPersona)
-        .subscribe(cursosInscriptos => {
-          cursosInscriptos.map(curso => {
-            const auxObjeto = {
-              id: curso.idCurso,
-              nombre: curso.nombre,
-              profesor: curso.profesor.nombre,
-              turno: curso.turno,
-              imagen: curso.imagen.foto,
-              inscripto: true
-            };
-            this.cursosInscriptos.push(auxObjeto);
-          })
+    getCursosInscriptos(numPage: number, pageSize: number) {
+        this.getCursos(numPage, pageSize, true).subscribe((informacionParaTabla: InformacionParaTabla<Curso>) => {
+            this.cantidadCursosInscriptos = informacionParaTabla.cantidadElementos;
+            this.paginadorCursoInscriptos = this.cantidadCursosInscriptos > 5;
+            this.cursosInscriptosTable = informacionParaTabla.elementos.map(curso => {
+                return {
+                    id: curso.idCurso,
+                    nombre: curso.nombre,
+                    profesor: curso.profesor.nombre,
+                    turno: curso.turno,
+                    imagen: curso.imagen.foto,
+                    inscripto: true
+                };
+            });
         });
-  }
+    };
 
-  buscarCursosNoInscriptos() {
-    this.cursosService.getCursoNoInscriptosByUsuario(this.persona.idPersona)
-        .subscribe(cursosNoInscriptos => {
-          cursosNoInscriptos.map(curso => {
-            const auxObjeto = {
-              id: curso.idCurso,
-              nombre: curso.nombre,
-              profesor: curso.profesor.nombre,
-              turno: curso.turno,
-              imagen: curso.imagen.foto,
-              inscripto: false
-            };
-            this.cursosNoInscriptos.push(auxObjeto);
-          })
-        });
-  }
-
-  buscarIdCursosInscriptos(numPage: number, cant: number) {
-    this.cursosService.getCursoInscriptosByUsuario(this.persona.idPersona)
-        .subscribe(cursos => {
-          this.idCursosInscriptos = [];
-          this.cursos = cursos;
-          cursos.forEach((item: Curso) => {
-            this.idCursosInscriptos.push(item.idCurso);
-          });
-          this.buscarCursosPaginados(0,5);
-        });
-  }
-
-  buscarCursosPaginados(numPage: number, cant: number) {
-    this.cursosService.getCursosPaginado(numPage, cant).subscribe(cursos => {
-      this.cursos = cursos;
-      this.cursosTable = [];
-      cursos.forEach((item: Curso) => {
-        if (this.idCursosInscriptos.length) {
-          this.idCursosInscriptos.forEach(idCurso => {
-            if (idCurso === item.idCurso) {
-              console.log("if")
-              const auxObjeto = {
-                id: item.idCurso,
-                nombre: item.nombre,
-                profesor: item.profesor.nombre,
-                turno: item.turno,
-                imagen: item.imagen.foto,
-                inscripto: true
-              };
-              this.cursosTable.push(auxObjeto);
-            }
-            else {
-              console.log("else")
-              const auxObjeto = {
-                id: item.idCurso,
-                nombre: item.nombre,
-                profesor: item.profesor.nombre,
-                turno: item.turno,
-                imagen: item.imagen.foto,
-                inscripto: false
-              };
-              this.cursosTable.push(auxObjeto);
-            }
-          })
-        }
-        else {
-          const auxObjeto = {
-            id: item.idCurso,
-            nombre: item.nombre,
-            profesor: item.profesor.nombre,
-            turno: item.turno,
-            imagen: item.imagen.foto,
-            inscripto: false
-          };
-          this.cursosTable.push(auxObjeto);
-        }
+  getCursosNoInscriptos(numPage: number, pageSize: number) {
+    this.getCursos(numPage, pageSize, false).subscribe((informacionParaTabla: InformacionParaTabla<Curso>) => {
+      this.cantidadCursosNoInscriptos = informacionParaTabla.cantidadElementos;
+        this.paginadorCursoNoInscriptos = this.cantidadCursosNoInscriptos > 5;
+      this.cursosNoInscriptosTable = informacionParaTabla.elementos.map(curso => {
+        return {
+          id: curso.idCurso,
+          nombre: curso.nombre,
+          profesor: curso.profesor.nombre,
+          turno: curso.turno,
+          imagen: curso.imagen.foto,
+          inscripto: false
+        };
       });
     });
   }
 
-  contarCursos() {
-    this.cursosService.contarCursos().subscribe(
-        value => this.totalRegistrosBackend = value);
+  loadDataCursosInscriptos($event: number) {
+    this.getCursosInscriptos($event, 5);
   }
 
-  loadData($event: number) {
-    this.page = $event;
-    this.buscarIdCursosInscriptos($event,5)
-    this.contarCursos();
+  loadDataCursosNoInscriptos($event: number) {
+    this.getCursosNoInscriptos($event, 5);
   }
 
   inscribirse(idCurso: number) {
@@ -160,7 +92,7 @@ export class ListaCursosPage implements OnInit {
       if (result.isConfirmed) {
         this.inscripcionService.inscribirse(idCurso, this.persona.idPersona).subscribe(respuesta => {
           this.messagesService.ventanaExitosa('Éxito', respuesta.mensaje);
-          this.buscarIdCursosInscriptos(this.page,5);
+          // this.buscarIdCursosInscriptos(this.page,5);
       },error => this.messagesService.ventanaError("Atención", error.error));
     }});
   }
@@ -170,7 +102,7 @@ export class ListaCursosPage implements OnInit {
     if (motivo) {
       this.crearToken(idCurso, motivo);
     }
-    this.buscarIdCursosInscriptos(this.page,5);
+    // this.buscarIdCursosInscriptos(this.page,5);
   });
   }
 
@@ -193,7 +125,12 @@ export class ListaCursosPage implements OnInit {
     
   }
 
+  getCursos(numPage: number, pageSize: number, inscripto: boolean) {
+    return this.cursosService.countCursosInscriptosByUsuario(false)
+        .pipe(mergeMap(cantidadElementos => this.cursosService.
+        getCursosByPersonaAndNombre(numPage, pageSize, inscripto).pipe(map(cursos => new InformacionParaTabla(cantidadElementos, cursos)))));
+  }
+
   ionViewWillLeave() {
-    this.cursosTable = [];
   }
 }
